@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "name": "Seal-Note",
+  "description": "Note-taking chrome extension that allows you to store and paste stickies wherever you are on the browser.",
+  "version": "0.5",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "side_panel":{
+    "default_path": "sidepanel.html"
+  },
+  "permissions": [
+    "sidePanel",
+    "contextMenus",
+    "storage"
+  ]
+}

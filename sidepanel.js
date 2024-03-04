@@ -11,45 +11,72 @@ function addNote(text) {
 
   const note = document.createElement("div");
   note.className = "note";
+
+  const deleteButton = document.createElement("button");
+  deleteButton.className = "del";
+  deleteButton.textContent = "x";
+  deleteButton.style.display = "none"; 
+
+  deleteButton.addEventListener("click", function () {
+    this.parentElement.remove();
+    updateStorageDelete();
+  });
+
+  note.appendChild(deleteButton);
+
   note.addEventListener("mouseover", function () {
-    const del = document.createElement("button");
-    del.className = "del";
-    del.textContent = "x";
-    del.addEventListener("mouseover", function () {
-      console.log("mouseover");
-      del.parentElement.remove();
-      chrome.storage.sync.set({ notes: notes });
-    });
-    note.appendChild(del);
+    deleteButton.style.display = "block";
   });
+
   note.addEventListener("mouseout", function () {
-    const del = note.querySelector(".del");
-    if (del) {
-      // If the delete button exists, remove it
-      del.remove();
-    }
+    deleteButton.style.display = "none"; 
   });
+
   const noteInfo = document.createElement("p");
-  if(text == "")
-    text = info.value;
+  if(text === "") text = info.value;
   noteInfo.textContent = text;
     
   note.appendChild(noteInfo);
 
   note.style.width = "200px";
   note.style.height = "100px";
-
   note.style.position = "absolute";
   note.style.left = "15%";
-
   note.style.top = x + "px";
 
   container.appendChild(note);
 
-  localStorage.setItem("notes", x/110);
-  localStorage.setItem("note" + (x / 110), text);
+  updateStorage(text);
 
   x += 110;
+}
+
+function updateStorage(text) {
+  const i = x / 110;
+  localStorage.setItem("notes", i);
+  localStorage.setItem("note" + i, text);
+}
+
+function updateStorageDelete() {
+  const notes = document.querySelectorAll(".note");
+  const noteCount = localStorage.getItem("notes");
+
+  for (let i = 0; i <= noteCount; i++) {
+    localStorage.removeItem("note" + i);
+  }
+
+  localStorage.setItem("notes", notes.length - 1);
+  
+  notes.forEach((note, i) => {
+    const text = note.querySelector("p").textContent; 
+    localStorage.setItem("note" + i, text);
+  });
+
+  x = 0;
+  notes.forEach((note) => {
+    note.style.top = x + "px";
+    x += 110;
+  });
 }
 
 add.addEventListener("click", function () {
@@ -57,9 +84,9 @@ add.addEventListener("click", function () {
 });
 
 document.addEventListener("DOMContentLoaded", function () {
-  noteCount = localStorage.getItem("notes");
+  const noteCount = localStorage.getItem("notes");
   for (let i = 0; i <= noteCount; i++) {
-    text = localStorage.getItem("note" + i);
+    const text = localStorage.getItem("note" + i);
     addNote(text);
   }
 });
@@ -68,33 +95,8 @@ del.addEventListener("click", function () {
   const notes = document.querySelectorAll(".note");
   const lastNote = notes[notes.length - 1];
 
-  if (x > 0) {
+  if (x > 0 && lastNote) {
     container.removeChild(lastNote);
-
-    x -= 110;
-    localStorage.setItem("notes", x / 110 - 1);
-    localStorage.removeItem("note" + (x / 110));
+    updateStorageDelete();
   }
 });
-/*
-function drag(note) {
-  let x = 0, y = 0, isDragging = false;
-
-  note.addEventListener("mousedown", function (e) {
-    isDragging = true;
-    x = e.clientX - note.getBoundingClientRect().left;
-    y = e.clientY - note.getBoundingClientRect().top;
-  });
-
-  document.addEventListener("mousemove", function (e) {
-    if (isDragging) {
-      note.style.left = e.clientX - x + "px";
-      note.style.top = e.clientY - y + "px";
-    }
-  });
-
-  document.addEventListener("mouseup", function () {
-    isDragging = false;
-  });
-}
-*/

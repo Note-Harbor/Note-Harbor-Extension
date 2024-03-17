@@ -24,3 +24,11 @@ body {
   border-radius: 50%;
   border-width: 1px;
 }
+
+.note-content {
+  border: 1px solid #ccc;
+  margin: 0px;
+  padding: 5px;
+  min-height: 88px;
+  overflow-y: auto;
+}

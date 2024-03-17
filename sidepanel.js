@@ -15,7 +15,7 @@ function addNote(text) {
   const deleteButton = document.createElement("button");
   deleteButton.className = "del";
   deleteButton.textContent = "x";
-  deleteButton.style.display = "none"; 
+  deleteButton.style.display = "none";
 
   deleteButton.addEventListener("click", function () {
     this.parentElement.remove();
@@ -29,14 +29,15 @@ function addNote(text) {
   });
 
   note.addEventListener("mouseout", function () {
-    deleteButton.style.display = "none"; 
+    deleteButton.style.display = "none";
   });
 
-  const noteInfo = document.createElement("p");
-  if(text === "") text = info.value;
-  noteInfo.textContent = text;
-    
-  note.appendChild(noteInfo);
+  const noteContent = document.createElement("div");
+  noteContent.contentEditable = true;
+  noteContent.className = "note-content";
+  noteContent.textContent = text === "" ? info.value : text;
+
+  note.appendChild(noteContent);
 
   note.style.width = "200px";
   note.style.height = "100px";
@@ -66,9 +67,9 @@ function updateStorageDelete() {
   }
 
   localStorage.setItem("notes", notes.length - 1);
-  
+
   notes.forEach((note, i) => {
-    const text = note.querySelector("p").textContent; 
+    const text = note.querySelector(".note-content").textContent;
     localStorage.setItem("note" + i, text);
   });
 

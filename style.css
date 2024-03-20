@@ -5,16 +5,19 @@ body {
 }
 
 #container {
+  display: flex;
+  flex-direction: column;
   position: relative;
-  height: 300px;
+  height: 1500px;
   width: 300px;
+  overflow-y: auto;
 }
 
 .note {
   width: 50px;
   height: 50px;
   background-color: lightblue;
-  position: absolute;
+  position: relative;
 }
 
 .del {

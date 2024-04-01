@@ -13,7 +13,7 @@ dAdd.style.borderRadius = "5px";
 dAdd.style.marginLeft = "auto";
 dAdd.style.marginRight = "auto";
 dAdd.style.width = "fit-content";
-dAdd.style.display = "none";
+dAdd.style.display = "block";
 
 dAdd.addEventListener("click", function () {
   addNote("",insertAfterNote);
@@ -64,9 +64,19 @@ function addNote(text, insertAfter = null) {
 
   if (insertAfter && insertAfter.nextElementSibling) {
     container.insertBefore(note, insertAfter.nextElementSibling);
-  } else {
+  }
+  else if(insertBeforeNote) {
+    container.insertBefore(note, insertBeforeNote);
+  }
+  else {
     container.appendChild(note);
-}
+  }
+
+  dAdd.style.display = "none";
+  // pushedNote.style.marginTop = "";
+  // pushedNote = null; 
+  // insertAfterNote = null;
+  // insertBeforeNote = null;
 }
 
 add.addEventListener("click", function () {
@@ -98,10 +108,27 @@ document.addEventListener("visibilitychange", function() {
 
 let pushedNote = null;
 let insertAfterNote = null;
+let insertBeforeNote = null;
 
 container.addEventListener("mousemove", function(event) {
+  
     const notes = container.querySelectorAll('.note');
     let foundGap = false;
+
+    if (notes.length > 0) {
+      const firstNoteRect = notes[0].getBoundingClientRect();
+      if (event.clientY < firstNoteRect.top) {
+          dAdd.style.position = "absolute";
+          dAdd.style.display = "block";
+          dAdd.style.left = `${firstNoteRect.left + (firstNoteRect.width - dAdd.offsetWidth) / 2}px`;
+          dAdd.style.top = `${0}px`;
+          notes[0].style.marginTop = `${dAdd.offsetHeight + 25}px`;
+          insertAfterNote = null;
+          insertBeforeNote = notes[0];
+          foundGap = true;
+          pushedNote = notes[0];
+      }
+    }
 
     for (let i = 0; i < notes.length; i++) {
         const note = notes[i];
@@ -115,24 +142,26 @@ container.addEventListener("mousemove", function(event) {
         
         if (event.clientY > gapTop && event.clientY < gapBottom) {
             dAdd.style.position = "absolute";
+            dAdd.style.display = "block";
             dAdd.style.left = `${noteRect.left + (noteRect.width - dAdd.offsetWidth) / 2}px`;
             dAdd.style.top = `${gapTop-25}px`;
-            dAdd.style.display = "block";
 
             if (nextNote) {
                 nextNote.style.marginTop = `${dAdd.offsetHeight + 10}px`; 
                 pushedNote = nextNote;
             }
             insertAfterNote = note;
+            insertBeforeNote = null;
             foundGap = true;
             break;
         }
     }
 
-    if (!foundGap && dAdd.style.display !== "none") {
+    if (!foundGap && dAdd.style.display !== "none" && notes.length > 0) {
         dAdd.style.display = "none";
-        pushedNote.style.marginTop = "";
+        pushedNote.style.marginTop = "10px";
         pushedNote = null; 
         insertAfterNote = null;
+        insertBeforeNote = null;
     }
 });

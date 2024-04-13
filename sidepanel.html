@@ -1,11 +1,15 @@
 <html>
   <head>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <input id ="info" type="text" placeholder="Write Here!">
+    <textarea
+      id="info"
+      oninput="auto_grow(this)"
+      placeholder="Write Here!"
+    ></textarea>
     <button id="add">Add</button>
     <div id="container"></div>
   </body>
-  <script src='sidepanel.js'></script>
+  <script src="sidepanel.js"></script>
 </html>

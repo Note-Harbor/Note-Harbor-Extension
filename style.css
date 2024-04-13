@@ -1,16 +1,18 @@
 body {
   background-color: aliceblue;
-  height: 300px;
-  width: 300px;
+  width: 340px;
+  overflow: hidden;
+  margin: 10px;
 }
 
 #container {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   position: relative;
-  height: 1500px;
-  width: 300px;
-  overflow-y: auto;
+  width: 340px;
+  overflow-y: visible;
 }
 
 .note {
@@ -18,6 +20,7 @@ body {
   height: 50px;
   background-color: lightblue;
   position: relative;
+  border-radius: 10px;
 }
 
 .del {
@@ -30,8 +33,25 @@ body {
 
 .note-content {
   border: 1px solid #ccc;
+  border-radius: 10px;
   margin: 0px;
   padding: 5px;
   min-height: 88px;
   overflow-y: auto;
+}
+
+#info {
+  resize: none;
+  overflow: hidden;
+  width: 340px;
+  border-radius: 10px;
+}
+
+#add {
+  width: 340px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  border: 1px;
+  height: 25px;
 }

@@ -35,7 +35,8 @@ function addNote(text, insertAfter = null) {
   deleteButton.textContent = "x";
   deleteButton.style.display = "none";
 
-  deleteButton.addEventListener("click", function () {
+  deleteButton.addEventListener("click", function (event) {
+    event.stopPropagation();
     this.parentElement.remove();
   });
 
@@ -47,6 +48,37 @@ function addNote(text, insertAfter = null) {
 
   note.addEventListener("mouseout", function () {
     deleteButton.style.display = "none";
+  });
+
+  note.addEventListener("click", function () {
+    if (!this.classList.contains("overlay-created")) {
+        const overlay = document.createElement("div");
+        overlay.className = "overlay";
+        document.body.appendChild(overlay);
+
+        const noteRect = this.getBoundingClientRect();
+
+        const left = noteRect.left - 3;
+        const top = noteRect.top - 3;
+        const right = noteRect.right + 3;
+        const bottom = noteRect.bottom + 3;
+        overlay.style.position = "fixed";
+        overlay.style.top = "0";
+        overlay.style.left = "0";
+        overlay.style.width = "100%";
+        overlay.style.height = "100%";
+        overlay.style.background = "rgba(0, 0, 0, 0.5)";
+        overlay.style.zIndex = "999";
+
+        overlay.style.clipPath = `polygon(0% 0%, 0% 100%, ${left}px 100%, ${left}px ${top}px, ${right}px ${top}px, ${right}px ${bottom}px, ${left}px ${bottom}px, ${left}px 100%, 100% 100%, 100% 0%)`;
+
+        overlay.addEventListener("click", function () {
+            document.body.removeChild(overlay);
+            note.classList.remove("overlay-created");
+        });
+
+        this.classList.add("overlay-created");
+    }
   });
 
   const noteContent = document.createElement("div");
@@ -66,7 +98,7 @@ function addNote(text, insertAfter = null) {
     container.insertBefore(note, insertAfter.nextElementSibling);
   } else {
     container.appendChild(note);
-}
+  }
 }
 
 add.addEventListener("click", function () {

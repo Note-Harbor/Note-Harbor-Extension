@@ -23,9 +23,6 @@ container.appendChild(dAdd);
 
 function addNote(text, insertAfter = null) {
   const notes = document.querySelectorAll(".note");
-  if (notes.length == 5) {
-    return;
-  }
 
   const note = document.createElement("div");
   note.className = "note";

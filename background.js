@@ -16,5 +16,6 @@ chrome.runtime.onStartup.addListener(()=>{
 	chrome.storage.sync.get(["savedNotes"]).then((result) => {
 		for (i = 0; i < result.savedNotes.length; i++) {
 			container.appendChild(result.savedNotes[i])
-	}
+		}
+	})
 })

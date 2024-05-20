@@ -56,30 +56,24 @@ function addNote(text, insertAfter = null) {
         overlay.className = "overlay";
         document.body.appendChild(overlay);
 
-        const noteRect = this.getBoundingClientRect();
-
-        const left = noteRect.left - 3;
-        const top = noteRect.top - 3;
-        const right = noteRect.right + 3;
-        const bottom = noteRect.bottom + 3;
         overlay.style.position = "fixed";
         overlay.style.top = "0";
         overlay.style.left = "0";
         overlay.style.width = "100%";
         overlay.style.height = "100%";
         overlay.style.background = "rgba(0, 0, 0, 0.5)";
-        overlay.style.zIndex = "999";
-
-        overlay.style.clipPath = `polygon(0% 0%, 0% 100%, ${left}px 100%, ${left}px ${top}px, ${right}px ${top}px, ${right}px ${bottom}px, ${left}px ${bottom}px, ${left}px 100%, 100% 100%, 100% 0%)`;
+        overlay.style.zIndex = "1";
 
         overlay.addEventListener("click", function () {
             document.body.removeChild(overlay);
             note.classList.remove("overlay-created");
+            note.style.zIndex = "0";
         });
 
         this.classList.add("overlay-created");
+        this.style.zIndex = "999";
     }
-  });
+});
 
   const noteContent = document.createElement("div");
   noteContent.contentEditable = true;
@@ -130,47 +124,47 @@ document.addEventListener("visibilitychange", function () {
 let pushedNote = null;
 let insertAfterNote = null;
 
-container.addEventListener("mousemove", function (event) {
-  const notes = container.querySelectorAll(".note");
-  let foundGap = false;
+// container.addEventListener("mousemove", function (event) {
+//   const notes = container.querySelectorAll(".note");
+//   let foundGap = false;
 
-  for (let i = 0; i < notes.length; i++) {
-    const note = notes[i];
-    const nextNote = notes[i + 1];
+//   for (let i = 0; i < notes.length; i++) {
+//     const note = notes[i];
+//     const nextNote = notes[i + 1];
 
-    const noteRect = note.getBoundingClientRect();
-    const nextNoteRect = nextNote ? nextNote.getBoundingClientRect() : null;
+//     const noteRect = note.getBoundingClientRect();
+//     const nextNoteRect = nextNote ? nextNote.getBoundingClientRect() : null;
 
-    const gapTop = noteRect.bottom - 5;
-    const gapBottom = nextNoteRect
-      ? nextNoteRect.top - 10
-      : container.getBoundingClientRect().bottom;
+//     const gapTop = noteRect.bottom - 5;
+//     const gapBottom = nextNoteRect
+//       ? nextNoteRect.top - 10
+//       : container.getBoundingClientRect().bottom;
 
-    if (event.clientY > gapTop && event.clientY < gapBottom) {
-      dAdd.style.position = "absolute";
-      dAdd.style.display = "block";
-      dAdd.style.left = `${
-        noteRect.left + (noteRect.width - dAdd.offsetWidth) / 2
-      }px`;
-      dAdd.style.top = `${gapTop - 30}px`;
+//     if (event.clientY > gapTop && event.clientY < gapBottom) {
+//       dAdd.style.position = "absolute";
+//       dAdd.style.display = "block";
+//       dAdd.style.left = `${
+//         noteRect.left + (noteRect.width - dAdd.offsetWidth) / 2
+//       }px`;
+//       dAdd.style.top = `${gapTop - 30}px`;
 
-      if (nextNote) {
-        nextNote.style.marginTop = `${dAdd.offsetHeight + 10}px`;
-        pushedNote = nextNote;
-      }
-      insertAfterNote = note;
-      foundGap = true;
-      break;
-    }
-  }
+//       if (nextNote) {
+//         nextNote.style.marginTop = `${dAdd.offsetHeight + 10}px`;
+//         pushedNote = nextNote;
+//       }
+//       insertAfterNote = note;
+//       foundGap = true;
+//       break;
+//     }
+//   }
 
-  if (!foundGap && dAdd.style.display !== "none") {
-    dAdd.style.display = "none";
-    pushedNote.style.marginTop = "10px";
-    pushedNote = null;
-    insertAfterNote = null;
-  }
-});
+//   if (!foundGap && dAdd.style.display !== "none") {
+//     dAdd.style.display = "none";
+//     pushedNote.style.marginTop = "10px";
+//     pushedNote = null;
+//     insertAfterNote = null;
+//   }
+// });
 
 function auto_grow(info) {
   info.style.height = "20px";

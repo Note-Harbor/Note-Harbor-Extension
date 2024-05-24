@@ -12,8 +12,15 @@
   "permissions": [
     "sidePanel",
     "contextMenus",
-    "storage",
-    "tabs",
-    "activeTab"
-  ]
+    "storage"
+  ],
+  "action": {
+    "default_title": "Click to open panel"
+  },
+  "commands": {
+    "open-sidebar": {
+      "suggested_key": "Ctrl+Shift+L",
+      "description": "Opens our glorious sidebar!"
+    }
+  }
 }

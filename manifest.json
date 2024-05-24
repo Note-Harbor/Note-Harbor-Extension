@@ -18,7 +18,7 @@
     "default_title": "Click to open panel"
   },
   "commands": {
-    "open-sidebar": {
+    "_execute_action": {
       "suggested_key": "Ctrl+Shift+L",
       "description": "Opens our glorious sidebar!"
     }

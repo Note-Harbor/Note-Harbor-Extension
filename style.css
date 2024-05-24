@@ -50,17 +50,17 @@ body {
   z-index: 999; /* Make sure it's on top */
 }
 #info {
+  width: 340px;
+  height: 100px;
   resize: none;
   overflow: hidden;
-  width: 340px;
-  border-radius: 10px;
+  border-radius: 5px;
 }
 
 #add {
   width: 340px;
   margin-top: 10px;
   margin-bottom: 10px;
-  border-radius: 10px;
-  border: 1px;
+  border: 1px solid black;
   height: 25px;
 }

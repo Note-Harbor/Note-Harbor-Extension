@@ -22,11 +22,12 @@ dAdd.addEventListener("click", function () {
 container.appendChild(dAdd);
 
 function addNote(text, insertAfter = null) {
-  const notes = document.querySelectorAll(".note");
-
+  // don't make empty notes
+  if (text === "" && info.value === "") return;
+  
+  // create note elements, then add event listeners
   const note = document.createElement("div");
   note.className = "note";
-
   const deleteButton = document.createElement("button");
   deleteButton.className = "del";
   deleteButton.textContent = "x";
@@ -34,7 +35,7 @@ function addNote(text, insertAfter = null) {
 
   deleteButton.addEventListener("click", function (event) {
     event.stopPropagation();
-    this.parentElement.remove();
+    note.remove();
   });
 
   note.appendChild(deleteButton);
@@ -53,14 +54,6 @@ function addNote(text, insertAfter = null) {
         overlay.className = "overlay";
         document.body.appendChild(overlay);
 
-        overlay.style.position = "fixed";
-        overlay.style.top = "0";
-        overlay.style.left = "0";
-        overlay.style.width = "100%";
-        overlay.style.height = "100%";
-        overlay.style.background = "rgba(0, 0, 0, 0.5)";
-        overlay.style.zIndex = "1";
-
         overlay.addEventListener("click", function () {
             document.body.removeChild(overlay);
             note.classList.remove("overlay-created");
@@ -77,6 +70,7 @@ function addNote(text, insertAfter = null) {
   noteContent.className = "note-content";
 
   noteContent.textContent = text === "" ? info.value : text;
+  info.value = "";
 
   note.appendChild(noteContent);
 
@@ -163,7 +157,7 @@ let insertAfterNote = null;
 //   }
 // });
 
-function auto_grow(info) {
-  info.style.height = "20px";
+info.onload = info.oninput = () => {
+  info.style.height = "100px";
   info.style.height = info.scrollHeight + "px";
 }

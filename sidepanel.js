@@ -69,14 +69,44 @@ function addNote(text, insertAfter = null) {
   noteContent.contentEditable = true;
   noteContent.className = "note-content";
 
-  noteContent.textContent = text === "" ? info.value : text;
+  noteContent.innerHTML = text === "" ? info.value : text;
   info.value = "";
 
   note.appendChild(noteContent);
 
+  const formatBar = document.createElement("div");
+  formatBar.className = "format-bar";
+  
+  const bold = document.createElement("button");
+  bold.textContent = "B";
+  bold.style.fontWeight = "bold";
+  bold.addEventListener("click", function () {
+    document.execCommand('bold');
+  });
+  
+  const italic = document.createElement("button");
+  italic.textContent = "I";
+  italic.style.fontStyle = "italic";
+  italic.addEventListener("click", function () {
+    document.execCommand('italic');
+  });
+  
+  const underline = document.createElement("button");
+  underline.textContent = "U";
+  underline.style.textDecoration = "underline";
+  underline.addEventListener("click", function () {
+    document.execCommand('underline');
+  });
+  
+  formatBar.appendChild(bold);
+  formatBar.appendChild(italic);
+  formatBar.appendChild(underline);
+  
+  note.appendChild(formatBar);
+
   note.style.width = "340px";
   note.style.height = "100px";
-  note.style.marginBottom = "10px";
+  note.style.marginBottom = "25px";
 
   if (insertAfter && insertAfter.nextElementSibling) {
     container.insertBefore(note, insertAfter.nextElementSibling);
@@ -106,7 +136,7 @@ document.addEventListener("visibilitychange", function () {
 
     for (let i = 0; i < notes.length; i++) {
       const note = notes[i];
-      const text = note.querySelector(".note-content").textContent;
+      const text = note.querySelector(".note-content").innerHTML;
       localStorage.setItem("note" + (i + 1), text);
     }
   }

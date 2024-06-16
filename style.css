@@ -3,6 +3,8 @@ body {
   width: 340px;
   overflow: hidden;
   margin: 10px;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 #container {
@@ -21,6 +23,9 @@ body {
   background-color: lightblue;
   position: relative;
   border-radius: 10px;
+
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .del {
@@ -38,6 +43,9 @@ body {
   padding: 5px;
   min-height: 88px;
   overflow-y: auto;
+  max-width: 100%;
+  overflow-x: hidden;
+
 }
 
 .overlay {
@@ -64,3 +72,24 @@ body {
   border: 1px solid black;
   height: 25px;
 }
+
+/* width */
+::-webkit-scrollbar {
+  width: 2px;
+  height: 2%;
+  color: 006884;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 

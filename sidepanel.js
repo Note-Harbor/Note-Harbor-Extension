@@ -6,14 +6,6 @@ const info = document.getElementById("info");
 const dAdd = document.createElement("button");
 dAdd.id = "dAdd";
 dAdd.textContent = "Add Note";
-dAdd.style.marginTop = "10px";
-dAdd.style.padding = "10px";
-dAdd.style.border = "none";
-dAdd.style.borderRadius = "5px";
-dAdd.style.marginLeft = "auto";
-dAdd.style.marginRight = "auto";
-dAdd.style.width = "fit-content";
-dAdd.style.display = "none";
 
 dAdd.addEventListener("click", function () {
   addNote("", insertAfterNote);
@@ -36,6 +28,12 @@ function addNote(text, insertAfter = null) {
   deleteButton.addEventListener("click", function (event) {
     event.stopPropagation();
     note.remove();
+    
+    // remove overlay
+    let ove = document.getElementsByClassName("overlay");
+    if (ove.length !== 0) {
+      document.body.removeChild(ove[0]);
+    }
   });
 
   note.appendChild(deleteButton);
@@ -57,7 +55,7 @@ function addNote(text, insertAfter = null) {
         overlay.addEventListener("click", function () {
             document.body.removeChild(overlay);
             note.classList.remove("overlay-created");
-            note.style.zIndex = "0";
+            note.style.zIndex = null;
         });
 
         this.classList.add("overlay-created");

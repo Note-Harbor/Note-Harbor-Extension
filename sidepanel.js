@@ -104,10 +104,6 @@ function addNote(text, insertAfter = null) {
   
   note.appendChild(formatBar);
 
-  note.style.width = "340px";
-  note.style.height = "100px";
-  note.style.marginBottom = "25px";
-
   if (insertAfter && insertAfter.nextElementSibling) {
     container.insertBefore(note, insertAfter.nextElementSibling);
   } else {

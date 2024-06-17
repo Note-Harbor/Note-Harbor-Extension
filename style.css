@@ -1,31 +1,28 @@
 body {
   background-color: aliceblue;
-  width: 340px;
   overflow: hidden;
   margin: 10px;
   overflow-y: scroll;
   overflow-x: hidden;
 }
 
+.topContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
 #container {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   position: relative;
-  width: 340px;
+  width: 100%;
   overflow-y: visible;
-}
-
-.note {
-  width: 50px;
-  height: 50px;
-  background-color: lightblue;
-  position: relative;
-  border-radius: 10px;
-
-  overflow-y: scroll;
-  overflow-x: hidden;
+  gap: 10px;
 }
 
 .del {
@@ -36,16 +33,25 @@ body {
   border-width: 1px;
 }
 
+.note {
+  width: 340px;
+  height: 100px;
+  padding: 0px;
+  background-color: lightblue;
+  position: relative;
+  border-radius: 10px;
+
+  overflow-x: hidden;
+}
+
 .note-content {
   border: 1px solid #ccc;
   border-radius: 10px;
   margin: 0px;
   padding: 5px;
   min-height: 88px;
-  overflow-y: auto;
+  overflow-x: scroll;
   max-width: 100%;
-  overflow-x: hidden;
-
 }
 
 .overlay {
@@ -58,7 +64,7 @@ body {
   z-index: 1; /* Make sure it's on top */
 }
 #info {
-  width: 340px;
+  width: 80%;
   height: 100px;
   resize: none;
   overflow: hidden;
@@ -66,11 +72,11 @@ body {
 }
 
 #add {
-  width: 340px;
+  width: 20%;
+  height: 100px;
   margin-top: 10px;
   margin-bottom: 10px;
   border: 1px solid black;
-  height: 25px;
 }
 
 /* width */

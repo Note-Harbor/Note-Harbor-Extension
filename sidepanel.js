@@ -3,13 +3,13 @@ const del = document.getElementById("delete");
 const container = document.getElementById("container");
 const info = document.getElementById("info");
 
-const dAdd = document.createElement("button");
-dAdd.id = "dAdd";
-dAdd.textContent = "Add Note";
+// const dAdd = document.createElement("button");
+// dAdd.id = "dAdd";
+// dAdd.textContent = "Add Note";
 
-dAdd.addEventListener("click", function () {
-  addNote("", insertAfterNote);
-});
+// dAdd.addEventListener("click", function () {
+//   addNote("", insertAfterNote);
+// });
 
 container.appendChild(dAdd);
 

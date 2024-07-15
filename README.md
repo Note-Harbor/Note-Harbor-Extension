@@ -12,18 +12,18 @@ The easiest way to do this is to download a zip file containing the source code.
 
 First, click the code button (colored green).
 
-![pic showing green code button](img\green_button.png)
+![pic showing green code button](https://github.com/Note-Harbor/Seal-Note-Extension/blob/main/img/green_button.png)
 
 Next, click "Download Zip" in the pulldown menu that appears.
 
-![pic showing pulldown from code button](img/green_button_pulldown.png)
+![pic showing pulldown from code button](https://github.com/Note-Harbor/Seal-Note-Extension/blob/main/img/green_button_pulldown.png)
 
 In file explorer (your computer's folders), extract the items from the created zip file.
 
-![pic showing extraction of zip file in file explorer](img\extract_zip.png)
+![pic showing extraction of zip file in file explorer](https://github.com/Note-Harbor/Seal-Note-Extension/blob/main/img/extract_zip.png)
 
 Keep track of the file path (highlighed blue). Please use command C to copy the path.
-![highlighed_path](img\highlighted_path.png)
+![highlighed_path](https://github.com/Note-Harbor/Seal-Note-Extension/blob/main/img/highlighted_path.png)
 
 If you forgot to copy the path in the last step, you can also copy the path by right-clicking the extracted file in file explorer (or whatever file system you're using).
 
@@ -31,11 +31,11 @@ If you forgot to copy the path in the last step, you can also copy the path by r
 
 For our next step, open Google Chrome:
 
-![dotdotdot wide view](chrome_menu_wide.png)
+![dotdotdot wide view](https://github.com/Note-Harbor/Seal-Note-Extension/blob/main/img/chrome_menu_wide.png)
 
-![dotdotdor narrow view](chrome_menu_closeup.png)
+![dotdotdor narrow view](https://github.com/Note-Harbor/Seal-Note-Extension/blob/main/img/chrome_menu_closeup.png)
 
-![Manage Extensions](manage_extensions_hover.png)
+![Manage Extensions](https://github.com/Note-Harbor/Seal-Note-Extension/blob/main/img/manage_extensions_hover.png)
 
 ### Part 3: Load Unpacked Extension
 
@@ -49,7 +49,7 @@ Paste the filepath (in your clipboard from step 1) into the input field.
 
 The extension should appear on your screen as follows:
 
-![alt text](final_product.png)
+![alt text](https://github.com/Note-Harbor/Seal-Note-Extension/blob/main/img/final_product.png)
 
 ## Usage
 

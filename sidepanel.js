@@ -8,9 +8,9 @@ dAdd.id = "dAdd";
 dAdd.textContent = "Add Note";
 let startY = 0;
 
-dAdd.addEventListener("click", function () {
-  addNote("", insertAfterNote);
-});
+// dAdd.addEventListener("click", function () {
+//   addNote("", insertAfterNote);
+// });
 
 let trans = "";
 

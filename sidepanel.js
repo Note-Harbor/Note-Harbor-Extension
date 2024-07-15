@@ -6,12 +6,31 @@ const info = document.getElementById("info");
 const dAdd = document.createElement("button");
 dAdd.id = "dAdd";
 dAdd.textContent = "Add Note";
+let startY = 0;
 
 dAdd.addEventListener("click", function () {
   addNote("", insertAfterNote);
 });
 
+let trans = "";
+
 container.appendChild(dAdd);
+
+function generateId(existingIds) {
+  const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  let id = '';
+
+  while (true) {
+    id = '';
+    for (let i = 0; i < 32; i++) {
+      const randomIndex = Math.floor(Math.random() * charset.length);
+      id += charset[randomIndex];
+    }
+    if (!existingIds.has(id)) break;
+  }
+
+  return id;
+}
 
 function addNote(text, insertAfter = null) {
   // don't make empty notes
@@ -20,6 +39,11 @@ function addNote(text, insertAfter = null) {
   // create note elements, then add event listeners
   const note = document.createElement("div");
   note.className = "note";
+  note.draggable = "true";
+
+  const existingIds = new Set(Array.from(document.querySelectorAll(".note")).map(n => n.id));
+  note.id = generateId(existingIds);
+
   const deleteButton = document.createElement("button");
   deleteButton.className = "del";
   deleteButton.textContent = "x";
@@ -61,7 +85,7 @@ function addNote(text, insertAfter = null) {
         this.classList.add("overlay-created");
         this.style.zIndex = "999";
     }
-});
+  });
 
   const noteContent = document.createElement("div");
   noteContent.contentEditable = true;
@@ -102,6 +126,32 @@ function addNote(text, insertAfter = null) {
   
   note.appendChild(formatBar);
 
+  note.addEventListener("dragstart", function (event) {
+    event.dataTransfer.setData("text/plain", note.id);
+    startY = event.clientY;
+  });
+
+  note.addEventListener("dragover", function (event) {
+    event.preventDefault();
+  });
+
+  note.addEventListener("drop", function (event) {
+    event.preventDefault();
+      
+    const draggedNoteId = event.dataTransfer.getData("text/plain");
+    const draggedNote = document.getElementById(draggedNoteId);
+    const endY = event.clientY;
+
+    if (draggedNote && draggedNote !== note) {
+      if (endY < startY) {
+        note.insertAdjacentElement('beforebegin', draggedNote);
+      } else {
+        note.insertAdjacentElement('afterend', draggedNote);
+      }
+    }
+  });
+
+
   if (insertAfter && insertAfter.nextElementSibling) {
     container.insertBefore(note, insertAfter.nextElementSibling);
   } else {
@@ -135,51 +185,6 @@ document.addEventListener("visibilitychange", function () {
     }
   }
 });
-
-let pushedNote = null;
-let insertAfterNote = null;
-
-// container.addEventListener("mousemove", function (event) {
-//   const notes = container.querySelectorAll(".note");
-//   let foundGap = false;
-
-//   for (let i = 0; i < notes.length; i++) {
-//     const note = notes[i];
-//     const nextNote = notes[i + 1];
-
-//     const noteRect = note.getBoundingClientRect();
-//     const nextNoteRect = nextNote ? nextNote.getBoundingClientRect() : null;
-
-//     const gapTop = noteRect.bottom - 5;
-//     const gapBottom = nextNoteRect
-//       ? nextNoteRect.top - 10
-//       : container.getBoundingClientRect().bottom;
-
-//     if (event.clientY > gapTop && event.clientY < gapBottom) {
-//       dAdd.style.position = "absolute";
-//       dAdd.style.display = "block";
-//       dAdd.style.left = `${
-//         noteRect.left + (noteRect.width - dAdd.offsetWidth) / 2
-//       }px`;
-//       dAdd.style.top = `${gapTop - 30}px`;
-
-//       if (nextNote) {
-//         nextNote.style.marginTop = `${dAdd.offsetHeight + 10}px`;
-//         pushedNote = nextNote;
-//       }
-//       insertAfterNote = note;
-//       foundGap = true;
-//       break;
-//     }
-//   }
-
-//   if (!foundGap && dAdd.style.display !== "none") {
-//     dAdd.style.display = "none";
-//     pushedNote.style.marginTop = "10px";
-//     pushedNote = null;
-//     insertAfterNote = null;
-//   }
-// });
 
 info.onload = info.oninput = () => {
   info.style.height = "100px";

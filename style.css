@@ -25,6 +25,10 @@ body {
   gap: 10px;
 }
 
+.highlight {
+  border: 2px solid rgba(6, 209, 255, 0.967); 
+}
+
 #dAdd {
   margin-top: 10px;
   padding: 10px;
@@ -42,6 +46,7 @@ body {
   right: -5px;
   border-radius: 50%;
   border-width: 1px;
+  display: none;
 }
 
 .note {
@@ -110,3 +115,4 @@ body {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555; 
+}

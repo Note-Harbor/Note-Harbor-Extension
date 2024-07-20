@@ -37,7 +37,8 @@ The easiest way to do this is to download a zip file containing the source code.
 
 ![dotdotdor narrow view](https://github.com/Note-Harbor/Seal-Note-Extension/blob/main/img/chrome_menu_closeup.png)
 
-- Finally, hover over "Extensions," and click "Manage Extensions" 
+- Finally, hover over "Extensions," and click "Manage Extensions"
+
 ![Manage Extensions](https://github.com/Note-Harbor/Seal-Note-Extension/blob/main/img/manage_extensions_hover.png)
 
 ### Part 3: Load Unpacked Extension

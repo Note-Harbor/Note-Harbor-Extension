@@ -33,17 +33,17 @@ The easiest way to do this is to download a zip file containing the source code.
 
 ![dotdotdot wide view](https://github.com/Note-Harbor/Seal-Note-Extension/blob/main/img/chrome_menu_wide.png)
 
-- Click the dot dot dot (...) menu on the top-right corner of the browser
+- Click the dot dot dot (...) menu on the top-right corner of the browser.
 
 ![dotdotdor narrow view](https://github.com/Note-Harbor/Seal-Note-Extension/blob/main/img/chrome_menu_closeup.png)
 
-- Finally, hover over "Extensions," and click "Manage Extensions"
+- Finally, hover over "Extensions," and click "Manage Extensions."
 
 ![Manage Extensions](https://github.com/Note-Harbor/Seal-Note-Extension/blob/main/img/manage_extensions_hover.png)
 
 ### Part 3: Load Unpacked Extension
 
-- Enter developer mode
+- Enter developer mode.
 - Press load upacked extensions. 
 - Paste the filepath (in your clipboard from step 1) into the input field.
 
@@ -53,6 +53,6 @@ The extension should appear on your screen as follows:
 
 ## Usage
 
-To open Note Harbor's side panel, press keybind *ctrl-shift-L*
+To open Note Harbor's side panel, press keybind *ctrl-shift-L*.
 
 **Warning:** clearing your browser's cache will delete all stored note data.

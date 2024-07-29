@@ -4,6 +4,8 @@ const container = document.getElementById("container");
 const info = document.getElementById("info");
 const deleteAllButton = document.getElementById("delall");
 
+let startY = 0;
+
 // notes are stored as an object
 // key: Date.now()
 // value: note contents
@@ -66,6 +68,8 @@ function addNoteHTML(text, id, insertAfter=null) {
   // create note elements, then add event listeners
   const note = document.createElement("div");
   note.className = "note";
+  note.id = id;
+  note.draggable = true;
 
   const deleteButton = document.createElement("button");
   deleteButton.className = "del";
@@ -81,6 +85,31 @@ function addNoteHTML(text, id, insertAfter=null) {
     if (ove.length !== 0) document.body.removeChild(ove[0]);
   });
   note.appendChild(deleteButton);
+
+  note.addEventListener("dragstart", function (event) {
+    event.dataTransfer.setData("text/plain", note.id);
+    startY = event.clientY;
+  });
+
+  note.addEventListener("dragover", function (event) {
+    event.preventDefault();
+  });
+
+  note.addEventListener("drop", function (event) {
+    event.preventDefault();
+
+    const draggedNoteId = event.dataTransfer.getData("text/plain");
+    const draggedNote = document.getElementById(draggedNoteId);
+    const endY = event.clientY;
+
+    if (draggedNote && draggedNote !== note) {
+      if (endY < startY) {
+        note.insertAdjacentElement('beforebegin', draggedNote);
+      } else {
+        note.insertAdjacentElement('afterend', draggedNote);
+      }
+    }
+  });
 
 
   note.addEventListener("mouseover", function () {

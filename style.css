@@ -13,13 +13,6 @@ body {
   justify-content: space-between;
 }
 
-.topContainer {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-}
-
 #container {
   display: flex;
   flex-direction: row;
@@ -30,6 +23,10 @@ body {
   width: 100%;
   overflow-y: visible;
   gap: 10px;
+}
+
+.highlight {
+  border: 2px solid rgba(6, 209, 255, 0.967); 
 }
 
 #dAdd {
@@ -49,6 +46,7 @@ body {
   right: -5px;
   border-radius: 50%;
   border-width: 1px;
+  display: none;
 }
 
 .note {
@@ -117,3 +115,4 @@ body {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555; 
+}

@@ -13,6 +13,13 @@ body {
   justify-content: space-between;
 }
 
+.topContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
 #container {
   display: flex;
   flex-direction: row;

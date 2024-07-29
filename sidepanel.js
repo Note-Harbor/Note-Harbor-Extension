@@ -2,41 +2,86 @@ const add = document.getElementById("add");
 const del = document.getElementById("delete");
 const container = document.getElementById("container");
 const info = document.getElementById("info");
+const deleteAllButton = document.getElementById("delall");
 
-// const dAdd = document.createElement("button");
-// dAdd.id = "dAdd";
-// dAdd.textContent = "Add Note";
+// notes are stored as an object
+// key: Date.now()
+// value: note contents
+// this lets us sort the notes by date, and delete by some ID
+let notes = {};
 
-// dAdd.addEventListener("click", function () {
-//   addNote("", insertAfterNote);
-// });
+// a bunch of helper functions in case we need them later
+// tbh we don't really need them but it's nicer to type
+function loadNotes() {
+  const notesText = localStorage.getItem("notesData") || "{}";
+  notes = JSON.parse(notesText);
+}
+function saveNotes() {
+  localStorage.setItem("notesData", JSON.stringify(notes));
+}
+function reloadNoteHTML() {
+  // delete all the current notes
+  const currentNotes = Array.from(document.getElementsByClassName("note"));
+  for (let i=0; i<currentNotes.length; i++) {
+    currentNotes[i].remove();
+  }
 
-container.appendChild(dAdd);
+  // add them all back from notes[]
+  Object.entries(notes).map(([id, text]) => addNoteHTML(text, id));
+}
+function deleteNote(id) {
+  delete notes[id];
+  saveNotes();
+}
+function deleteAllNotes() {
+  notes = {};
+  reloadNoteHTML();
+  saveNotes();
+}
 
-function addNote(text, insertAfter = null) {
-  // don't make empty notes
-  if (text === "" && info.value === "") return;
-  
+loadNotes();
+console.log(notes);
+
+// this function only creates the note in the notes[] array, then calls addNoteHTML
+function addNote(text, insertAfter) {
+  const content = (text === "")? info.value : text;
+  info.value = ""; // empty out the textbox
+
+  // stop if no text is provided
+  if (content === "") return;
+
+  const id = Date.now();
+  notes[id] = content;
+  saveNotes();
+
+  // create the actual HTML element
+  addNoteHTML(content, id, insertAfter);
+}
+
+// don't call directly unless you're reloading
+function addNoteHTML(text, id, insertAfter=null) {
+  if (!id) {
+    console.log("no ID provided!!!")
+  }
   // create note elements, then add event listeners
   const note = document.createElement("div");
   note.className = "note";
+
   const deleteButton = document.createElement("button");
   deleteButton.className = "del";
   deleteButton.textContent = "x";
   deleteButton.style.display = "none";
-
   deleteButton.addEventListener("click", function (event) {
     event.stopPropagation();
+    deleteNote(id);
     note.remove();
     
     // remove overlay
     let ove = document.getElementsByClassName("overlay");
-    if (ove.length !== 0) {
-      document.body.removeChild(ove[0]);
-    }
+    if (ove.length !== 0) document.body.removeChild(ove[0]);
   });
-
   note.appendChild(deleteButton);
+
 
   note.addEventListener("mouseover", function () {
     deleteButton.style.display = "block";
@@ -61,14 +106,12 @@ function addNote(text, insertAfter = null) {
         this.classList.add("overlay-created");
         this.style.zIndex = "999";
     }
-});
+  });
 
   const noteContent = document.createElement("div");
   noteContent.contentEditable = true;
   noteContent.className = "note-content";
-
-  noteContent.innerHTML = text === "" ? info.value : text;
-  info.value = "";
+  noteContent.innerHTML = text;
 
   note.appendChild(noteContent);
 
@@ -114,72 +157,17 @@ add.addEventListener("click", function () {
 });
 
 document.addEventListener("DOMContentLoaded", function () {
-  const noteCount = localStorage.getItem("notes");
-  for (let i = 0; i < noteCount; i++) {
-    const text = localStorage.getItem("note" + (i + 1));
-    addNote(text);
-  }
+  reloadNoteHTML();
 });
 
 document.addEventListener("visibilitychange", function () {
-  localStorage.clear();
-
-  if (document.visibilityState === "hidden") {
-    const notes = document.querySelectorAll(".note");
-    localStorage.setItem("notes", notes.length);
-
-    for (let i = 0; i < notes.length; i++) {
-      const note = notes[i];
-      const text = note.querySelector(".note-content").innerHTML;
-      localStorage.setItem("note" + (i + 1), text);
-    }
-  }
+  saveNotes();
 });
 
-let pushedNote = null;
-let insertAfterNote = null;
-
-// container.addEventListener("mousemove", function (event) {
-//   const notes = container.querySelectorAll(".note");
-//   let foundGap = false;
-
-//   for (let i = 0; i < notes.length; i++) {
-//     const note = notes[i];
-//     const nextNote = notes[i + 1];
-
-//     const noteRect = note.getBoundingClientRect();
-//     const nextNoteRect = nextNote ? nextNote.getBoundingClientRect() : null;
-
-//     const gapTop = noteRect.bottom - 5;
-//     const gapBottom = nextNoteRect
-//       ? nextNoteRect.top - 10
-//       : container.getBoundingClientRect().bottom;
-
-//     if (event.clientY > gapTop && event.clientY < gapBottom) {
-//       dAdd.style.position = "absolute";
-//       dAdd.style.display = "block";
-//       dAdd.style.left = `${
-//         noteRect.left + (noteRect.width - dAdd.offsetWidth) / 2
-//       }px`;
-//       dAdd.style.top = `${gapTop - 30}px`;
-
-//       if (nextNote) {
-//         nextNote.style.marginTop = `${dAdd.offsetHeight + 10}px`;
-//         pushedNote = nextNote;
-//       }
-//       insertAfterNote = note;
-//       foundGap = true;
-//       break;
-//     }
-//   }
-
-//   if (!foundGap && dAdd.style.display !== "none") {
-//     dAdd.style.display = "none";
-//     pushedNote.style.marginTop = "10px";
-//     pushedNote = null;
-//     insertAfterNote = null;
-//   }
-// });
+deleteAllButton.addEventListener("click", function (event) {
+  event.stopPropagation();
+  deleteAllNotes();
+});
 
 info.onload = info.oninput = () => {
   info.style.height = "100px";

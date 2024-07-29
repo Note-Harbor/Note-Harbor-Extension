@@ -202,3 +202,10 @@ info.onload = info.oninput = () => {
   info.style.height = "100px";
   info.style.height = info.scrollHeight + "px";
 }
+
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  const content = request.content;
+
+  // make that new message if it's non-empty
+  if (content) addNote(content);
+});

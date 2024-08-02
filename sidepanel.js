@@ -144,35 +144,36 @@ function addNoteHTML(text, id, insertAfter=null) {
 
   note.appendChild(noteContent);
 
-  const formatBar = document.createElement("div");
-  formatBar.className = "format-bar";
+  const bottomBar = document.createElement("div");
+  bottomBar.className = "flex";
   
   const bold = document.createElement("button");
   bold.textContent = "B";
   bold.style.fontWeight = "bold";
-  bold.addEventListener("click", function () {
-    document.execCommand('bold');
-  });
+  bold.addEventListener("click", () => { document.execCommand('bold'); });
   
   const italic = document.createElement("button");
   italic.textContent = "I";
   italic.style.fontStyle = "italic";
-  italic.addEventListener("click", function () {
-    document.execCommand('italic');
-  });
+  italic.addEventListener("click", () => { document.execCommand('italic'); });
   
   const underline = document.createElement("button");
   underline.textContent = "U";
   underline.style.textDecoration = "underline";
-  underline.addEventListener("click", function () {
-    document.execCommand('underline');
-  });
+  underline.addEventListener("click", () => { document.execCommand('underline'); });
+
+  const timeText = document.createElement("div");
+  timeText.className = "time-text";
+  timeText.style = "justify-content: right";
+  const noteCreatedTime = new Date(+id);
+  timeText.textContent = `Created: ${noteCreatedTime.toLocaleString([], { dateStyle: "short", timeStyle: "short" })}`;
   
-  formatBar.appendChild(bold);
-  formatBar.appendChild(italic);
-  formatBar.appendChild(underline);
+  bottomBar.appendChild(bold);
+  bottomBar.appendChild(italic);
+  bottomBar.appendChild(underline);
+  bottomBar.appendChild(timeText);
   
-  note.appendChild(formatBar);
+  note.appendChild(bottomBar);
 
   if (insertAfter && insertAfter.nextElementSibling) {
     container.insertBefore(note, insertAfter.nextElementSibling);

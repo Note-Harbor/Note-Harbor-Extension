@@ -26,6 +26,7 @@ body {
   position: relative;
   width: 100%;
   gap: 10px;
+  padding-top: 10px;
 }
 
 .highlight {
@@ -119,6 +120,47 @@ body {
   box-sizing: border-box;
   border: 1px solid black;
   border-radius: 5px;
+}
+
+#tagRow {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 2px;
+  padding-top: 2px;
+}
+
+.new-tag {
+  background-color: #006884;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 9999px;
+  align-items: center;
+}
+
+.tag {
+  background-color: lightblue;
+  color: black;
+  padding: 2px 8px;
+  border-radius: 9999px;
+  position: relative;
+}
+
+.tag-bar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 10px;
+  gap: 5px;
+}
+
+.note-tag {
+  background-color: #006884;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 9999px;
+  position: relative;
 }
 
 /* width */

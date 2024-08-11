@@ -3,7 +3,9 @@ const del = document.getElementById("delete");
 const container = document.getElementById("container");
 const info = document.getElementById("info");
 const deleteAllButton = document.getElementById("delall");
+const sortByDate = document.getElementById("sortdate");
 
+//keeps track of note position for dragging
 let startY = 0;
 
 // notes are stored as an object
@@ -37,6 +39,33 @@ function deleteNote(id) {
 }
 function deleteAllNotes() {
   notes = {};
+  reloadNoteHTML();
+  saveNotes();
+}
+
+function updateNotesOrder() {
+  const newNotesOrder = {};
+  const noteElements = Array.from(container.getElementsByClassName("note"));
+
+  noteElements.forEach(noteElement => {
+    const id = noteElement.id;
+    newNotesOrder[id] = notes[id];
+  });
+
+  notes = newNotesOrder;
+  saveNotes();
+}
+
+function sortNotesByDate() {
+  const notesArray = Object.entries(notes);
+  notesArray.sort(([idA], [idB]) => idA - idB);
+
+  const sortedNotes = {};
+  notesArray.forEach(([id, text]) => {
+    sortedNotes[id] = text;
+  });
+
+  notes = sortedNotes;
   reloadNoteHTML();
   saveNotes();
 }
@@ -109,6 +138,7 @@ function addNoteHTML(text, id, insertAfter = null) {
         note.insertAdjacentElement("afterend", draggedNote);
       }
     }
+    updateNotesOrder();
   });
 
   note.addEventListener("mouseover", function () {
@@ -205,6 +235,11 @@ document.addEventListener("visibilitychange", function () {
 deleteAllButton.addEventListener("click", function (event) {
   event.stopPropagation();
   deleteAllNotes();
+});
+
+sortByDate.addEventListener("click", function (event) {
+  event.stopPropagation();
+  sortNotesByDate();
 });
 
 info.onload = info.oninput = () => {

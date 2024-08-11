@@ -24,7 +24,7 @@ function saveNotes() {
 function reloadNoteHTML() {
   // delete all the current notes
   const currentNotes = Array.from(document.getElementsByClassName("note"));
-  for (let i=0; i<currentNotes.length; i++) {
+  for (let i = 0; i < currentNotes.length; i++) {
     currentNotes[i].remove();
   }
 
@@ -46,7 +46,7 @@ console.log(notes);
 
 // this function only creates the note in the notes[] array, then calls addNoteHTML
 function addNote(text, insertAfter) {
-  const content = (text === "")? info.value : text;
+  const content = text === "" ? info.value : text;
   info.value = ""; // empty out the textbox
 
   // stop if no text is provided
@@ -61,9 +61,9 @@ function addNote(text, insertAfter) {
 }
 
 // don't call directly unless you're reloading
-function addNoteHTML(text, id, insertAfter=null) {
+function addNoteHTML(text, id, insertAfter = null) {
   if (!id) {
-    console.log("no ID provided!!!")
+    console.log("no ID provided!!!");
   }
   // create note elements, then add event listeners
   const note = document.createElement("div");
@@ -79,7 +79,7 @@ function addNoteHTML(text, id, insertAfter=null) {
     event.stopPropagation();
     deleteNote(id);
     note.remove();
-    
+
     // remove overlay
     let ove = document.getElementsByClassName("overlay");
     if (ove.length !== 0) document.body.removeChild(ove[0]);
@@ -104,13 +104,12 @@ function addNoteHTML(text, id, insertAfter=null) {
 
     if (draggedNote && draggedNote !== note) {
       if (endY < startY) {
-        note.insertAdjacentElement('beforebegin', draggedNote);
+        note.insertAdjacentElement("beforebegin", draggedNote);
       } else {
-        note.insertAdjacentElement('afterend', draggedNote);
+        note.insertAdjacentElement("afterend", draggedNote);
       }
     }
   });
-
 
   note.addEventListener("mouseover", function () {
     deleteButton.style.display = "block";
@@ -122,18 +121,18 @@ function addNoteHTML(text, id, insertAfter=null) {
 
   note.addEventListener("click", function () {
     if (!this.classList.contains("overlay-created")) {
-        const overlay = document.createElement("div");
-        overlay.className = "overlay";
-        document.body.appendChild(overlay);
+      const overlay = document.createElement("div");
+      overlay.className = "overlay";
+      document.body.appendChild(overlay);
 
-        overlay.addEventListener("click", function () {
-            document.body.removeChild(overlay);
-            note.classList.remove("overlay-created");
-            note.style.zIndex = null;
-        });
+      overlay.addEventListener("click", function () {
+        document.body.removeChild(overlay);
+        note.classList.remove("overlay-created");
+        note.style.zIndex = null;
+      });
 
-        this.classList.add("overlay-created");
-        this.style.zIndex = "999";
+      this.classList.add("overlay-created");
+      this.style.zIndex = "999";
     }
   });
 
@@ -146,33 +145,42 @@ function addNoteHTML(text, id, insertAfter=null) {
 
   const bottomBar = document.createElement("div");
   bottomBar.className = "flex";
-  
+
   const bold = document.createElement("button");
   bold.textContent = "B";
   bold.style.fontWeight = "bold";
-  bold.addEventListener("click", () => { document.execCommand('bold'); });
-  
+  bold.addEventListener("click", () => {
+    document.execCommand("bold");
+  });
+
   const italic = document.createElement("button");
   italic.textContent = "I";
   italic.style.fontStyle = "italic";
-  italic.addEventListener("click", () => { document.execCommand('italic'); });
-  
+  italic.addEventListener("click", () => {
+    document.execCommand("italic");
+  });
+
   const underline = document.createElement("button");
   underline.textContent = "U";
   underline.style.textDecoration = "underline";
-  underline.addEventListener("click", () => { document.execCommand('underline'); });
+  underline.addEventListener("click", () => {
+    document.execCommand("underline");
+  });
 
   const timeText = document.createElement("div");
   timeText.className = "time-text";
   timeText.style = "justify-content: right";
   const noteCreatedTime = new Date(+id);
-  timeText.textContent = `Created: ${noteCreatedTime.toLocaleString([], { dateStyle: "short", timeStyle: "short" })}`;
-  
+  timeText.textContent = `Created: ${noteCreatedTime.toLocaleString([], {
+    dateStyle: "short",
+    timeStyle: "short",
+  })}`;
+
   bottomBar.appendChild(bold);
   bottomBar.appendChild(italic);
   bottomBar.appendChild(underline);
   bottomBar.appendChild(timeText);
-  
+
   note.appendChild(bottomBar);
 
   if (insertAfter && insertAfter.nextElementSibling) {
@@ -200,9 +208,9 @@ deleteAllButton.addEventListener("click", function (event) {
 });
 
 info.onload = info.oninput = () => {
-  info.style.height = "100px";
+  info.style.height = "auto";
   info.style.height = info.scrollHeight + "px";
-}
+};
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   const content = request.content;

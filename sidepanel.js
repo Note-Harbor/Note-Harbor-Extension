@@ -4,6 +4,7 @@ const container = document.getElementById("container");
 const info = document.getElementById("info");
 const deleteAllButton = document.getElementById("delall");
 const sortByDate = document.getElementById("sortdate");
+const tagContainer = document.getElementById("tagRow");
 
 //keeps track of note position for dragging
 let startY = 0;
@@ -31,7 +32,7 @@ function reloadNoteHTML() {
   }
 
   // add them all back from notes[]
-  Object.entries(notes).map(([id, text]) => addNoteHTML(text, id));
+  Object.entries(notes).map(([id, {content, tags}]) => addNoteHTML(content, tags, id));
 }
 function deleteNote(id) {
   delete notes[id];
@@ -70,8 +71,49 @@ function sortNotesByDate() {
   saveNotes();
 }
 
+// Insert empty tag to tagContainer
+function insertTag() {
+  const tag = document.createElement("div");
+  tag.className = "new-tag";
+  tag.contentEditable = true;
+  tag.textContent = "New Tag";
+
+  // If user press enter, create new tag
+  tag.addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+      tag.className = "tag";
+      tag.contentEditable = false;
+      tag.removeEventListener("keydown", this);
+
+      const deleteButton = document.createElement("button");
+      deleteButton.className = "del";
+      deleteButton.textContent = "x";
+      deleteButton.style.display = "none";
+      deleteButton.addEventListener("click", function (event) {
+        event.stopPropagation();
+        tag.remove();
+      });
+
+      tag.addEventListener("mouseover", function () {
+        deleteButton.style.display = "block";
+      });
+
+      tag.addEventListener("mouseout", function () {
+        deleteButton.style.display = "none";
+      });
+
+      tag.appendChild(deleteButton);
+
+      insertTag();
+    }
+  });
+
+  tagContainer.appendChild(tag);
+}
+
 loadNotes();
 console.log(notes);
+insertTag();
 
 // this function only creates the note in the notes[] array, then calls addNoteHTML
 function addNote(text, insertAfter) {
@@ -82,15 +124,24 @@ function addNote(text, insertAfter) {
   if (content === "") return;
 
   const id = Date.now();
-  notes[id] = content;
+  const tags = Array.from(document.getElementsByClassName("tag")).map(
+    (tag) => tag.textContent.slice(0, -1)
+  );
+  notes[id] = { content, tags };
   saveNotes();
 
+  // Delete all tags in tagContainer
+  const currentTags = Array.from(document.getElementsByClassName("tag"));
+  for (let i = 0; i < currentTags.length; i++) {
+    currentTags[i].remove();
+  }
+
   // create the actual HTML element
-  addNoteHTML(content, id, insertAfter);
+  addNoteHTML(content, tags, id, insertAfter);
 }
 
 // don't call directly unless you're reloading
-function addNoteHTML(text, id, insertAfter = null) {
+function addNoteHTML(text, tags, id, insertAfter = null) {
   if (!id) {
     console.log("no ID provided!!!");
   }
@@ -172,6 +223,19 @@ function addNoteHTML(text, id, insertAfter = null) {
   noteContent.innerHTML = text;
 
   note.appendChild(noteContent);
+
+  const tagBar = document.createElement("div");
+  tagBar.className = "tag-bar";
+
+  tags.forEach((tag) => {
+    const tagElement = document.createElement("div");
+    tagElement.className = "note-tag";
+    tagElement.textContent = tag;
+
+    tagBar.appendChild(tagElement);
+  });
+
+  note.appendChild(tagBar);
 
   const bottomBar = document.createElement("div");
   bottomBar.className = "flex";

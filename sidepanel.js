@@ -6,7 +6,6 @@ const deleteAllButton = document.getElementById("delall");
 const sortByDate = document.getElementById("sortdate");
 const tagContainer = document.getElementById("tagRow");
 
-//keeps track of note position for dragging
 let startY = 0;
 
 // notes are stored as an object
@@ -40,33 +39,6 @@ function deleteNote(id) {
 }
 function deleteAllNotes() {
   notes = {};
-  reloadNoteHTML();
-  saveNotes();
-}
-
-function updateNotesOrder() {
-  const newNotesOrder = {};
-  const noteElements = Array.from(container.getElementsByClassName("note"));
-
-  noteElements.forEach(noteElement => {
-    const id = noteElement.id;
-    newNotesOrder[id] = notes[id];
-  });
-
-  notes = newNotesOrder;
-  saveNotes();
-}
-
-function sortNotesByDate() {
-  const notesArray = Object.entries(notes);
-  notesArray.sort(([idA], [idB]) => idA - idB);
-
-  const sortedNotes = {};
-  notesArray.forEach(([id, text]) => {
-    sortedNotes[id] = text;
-  });
-
-  notes = sortedNotes;
   reloadNoteHTML();
   saveNotes();
 }
@@ -111,6 +83,33 @@ function insertTag() {
   tagContainer.appendChild(tag);
 }
 
+function saveNotesOrder() {
+  const newNotesOrder = {};
+  const noteElements = Array.from(container.getElementsByClassName("note"));
+
+  noteElements.forEach(noteElement => {
+    const id = noteElement.id;
+    newNotesOrder[id] = notes[id];
+  });
+
+  notes = newNotesOrder;
+  saveNotes();
+}
+
+function sortNotesByDate() {
+  const notesArray = Object.entries(notes);
+  notesArray.sort(([idA], [idB]) => idA - idB);
+
+  const sortedNotes = {};
+  notesArray.forEach(([id, text]) => {
+    sortedNotes[id] = text;
+  });
+
+  notes = sortedNotes;
+  reloadNoteHTML();
+  saveNotes();
+}
+
 loadNotes();
 console.log(notes);
 insertTag();
@@ -135,6 +134,7 @@ function addNote(text, insertAfter) {
   for (let i = 0; i < currentTags.length; i++) {
     currentTags[i].remove();
   }
+  console.log(tags);
 
   // create the actual HTML element
   addNoteHTML(content, tags, id, insertAfter);
@@ -189,7 +189,6 @@ function addNoteHTML(text, tags, id, insertAfter = null) {
         note.insertAdjacentElement("afterend", draggedNote);
       }
     }
-    updateNotesOrder();
   });
 
   note.addEventListener("mouseover", function () {
@@ -227,13 +226,15 @@ function addNoteHTML(text, tags, id, insertAfter = null) {
   const tagBar = document.createElement("div");
   tagBar.className = "tag-bar";
 
-  tags.forEach((tag) => {
-    const tagElement = document.createElement("div");
-    tagElement.className = "note-tag";
-    tagElement.textContent = tag;
+  if(tags) {
+    tags.forEach((tag) => {
+      const tagElement = document.createElement("div");
+      tagElement.className = "note-tag";
+      tagElement.textContent = tag;
 
-    tagBar.appendChild(tagElement);
-  });
+      tagBar.appendChild(tagElement);
+    });
+  }
 
   note.appendChild(tagBar);
 
@@ -293,7 +294,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 document.addEventListener("visibilitychange", function () {
-  saveNotes();
+  saveNotesOrder();
 });
 
 deleteAllButton.addEventListener("click", function (event) {

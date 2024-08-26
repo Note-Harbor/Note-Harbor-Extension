@@ -1,10 +1,10 @@
 const add = document.getElementById("add");
-const del = document.getElementById("delete");
 const container = document.getElementById("container");
 const info = document.getElementById("info");
 const deleteAllButton = document.getElementById("delall");
 const sortByDate = document.getElementById("sortdate");
 const tagContainer = document.getElementById("tagRow");
+const search = document.getElementById("search");
 
 let startY = 0;
 
@@ -311,6 +311,41 @@ info.onload = info.oninput = () => {
   info.style.height = "auto";
   info.style.height = info.scrollHeight + "px";
 };
+
+function searchNotesByTag(tag) {
+  const noteElements = Array.from(container.getElementsByClassName("note"));
+
+  for (let i = 0; i < noteElements.length; i++) {
+    const noteElement = noteElements[i];
+    const tagElements = noteElement.getElementsByClassName("note-tag");
+    let tags = [];
+    tags.push('');
+
+    for (let j = 0; j < tagElements.length; j++) {
+      tags.push(tagElements[j].textContent);
+    }
+
+    let matchFound = false;
+
+    for (let k = 0; k < tags.length; k++) {
+      if (tags[k].includes(tag)) {
+        matchFound = true;
+        break;
+      }
+    }
+
+    if (matchFound) {
+      noteElement.style.display = "block"; // Show the note
+    } else {
+      noteElement.style.display = "none"; // Hide the note
+    }
+  }
+}
+
+search.addEventListener("input", function () {
+  const searchTag = search.value.trim().toLowerCase();
+  searchNotesByTag(searchTag);
+});
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   const content = request.content;

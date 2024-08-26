@@ -312,12 +312,23 @@ info.onload = info.oninput = () => {
   info.style.height = info.scrollHeight + "px";
 };
 
+function handleInput(input) {
+  const tagPrefix = 'tag:';
+  
+  if (input.startsWith(tagPrefix)) {
+    const tag = input.slice(tagPrefix.length).trim();
+    searchNotesByTag(tag);
+  } else {
+    showAllNotes();
+  }
+}
+
 function searchNotesByTag(tag) {
-  const noteElements = Array.from(container.getElementsByClassName("note"));
+  const noteElements = Array.from(container.getElementsByClassName('note'));
 
   for (let i = 0; i < noteElements.length; i++) {
     const noteElement = noteElements[i];
-    const tagElements = noteElement.getElementsByClassName("note-tag");
+    const tagElements = noteElement.getElementsByClassName('note-tag');
     let tags = [];
     tags.push('');
 
@@ -335,16 +346,24 @@ function searchNotesByTag(tag) {
     }
 
     if (matchFound) {
-      noteElement.style.display = "block"; // Show the note
+      noteElement.style.display = 'block'; // Show the note
     } else {
-      noteElement.style.display = "none"; // Hide the note
+      noteElement.style.display = 'none'; // Hide the note
     }
+  }
+}
+
+function showAllNotes() {
+  const noteElements = document.getElementsByClassName('note');
+  
+  for (let i = 0; i < noteElements.length; i++) {
+    noteElements[i].style.display = 'block'; 
   }
 }
 
 search.addEventListener("input", function () {
   const searchTag = search.value.trim().toLowerCase();
-  searchNotesByTag(searchTag);
+  handleInput(searchTag);
 });
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {

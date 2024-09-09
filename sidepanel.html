@@ -7,7 +7,7 @@
       <h1>Note Harbor</h1>
       <div>
         <button id="sortdate">Sort By Date</button>
-        <button id="delall">Delete All</button>
+        <button id="openSettings">Settings</button>
       </div>
     </div>
     <div> 
@@ -23,6 +23,25 @@
       </div>
     </div>
     <div id="container"></div>
+
+    <dialog id="settingsModal" class="settings-modal">
+      <h1>Settings</h1>
+      <h2>General Settings</h2>
+      <label>Background Color: </label>
+      <input type="text" id="SI-color" />
+      <br><br>
+
+      <h2>Destructive Settings</h2>
+      <label>Delete All: </label>
+      <button id="delall">NUKE!!!</button>
+      <br>
+
+      <label>Reset to Default Settings: </label>
+      <button id="resetSettings">Reset</button>
+      
+      <br><br>
+      <button id="closeSettings">Close</button>
+    </dialog>
   </body>
   <script src="sidepanel.js"></script>
 </html>

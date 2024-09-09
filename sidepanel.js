@@ -1,10 +1,15 @@
 const add = document.getElementById("add");
 const container = document.getElementById("container");
 const info = document.getElementById("info");
-const deleteAllButton = document.getElementById("delall");
 const sortByDate = document.getElementById("sortdate");
 const tagContainer = document.getElementById("tagRow");
 const search = document.getElementById("search");
+
+// settings
+const dialog = document.getElementById("settingsModal");
+const openSettingsButton = document.getElementById("openSettings");
+const deleteAllButton = document.getElementById("delall");
+const customBackgroundColor = document.getElementById("SI-color");
 
 let startY = 0;
 
@@ -13,6 +18,11 @@ let startY = 0;
 // value: note contents
 // this lets us sort the notes by date, and delete by some ID
 let notes = {};
+const defaultSettings = {
+  customColor: "aliceblue"
+}
+let settings = {};
+Object.assign(settings, defaultSettings);
 
 // a bunch of helper functions in case we need them later
 // tbh we don't really need them but it's nicer to type
@@ -41,6 +51,37 @@ function deleteAllNotes() {
   notes = {};
   reloadNoteHTML();
   saveNotes();
+}
+
+function loadSettings() {
+  const settingsObject = JSON.parse(localStorage.getItem("settings")) || {};
+  const keys = Object.keys(settingsObject);
+  console.log("keys!!", keys);
+  
+  // avoid overwriting default settings object every time we load the settings
+  // instead just loop over the saved settings object and add new properties
+  for (let i=0; i<keys.length; i++) {
+    settings[keys[i]] = settingsObject[keys[i]];
+  }
+
+  console.log("Current Settings: ", settingsObject);
+  saveSettings();
+
+  applySettings();
+}
+
+function applySettings() {
+  // assume that all settings have valid values
+  document.body.style.backgroundColor = settings.customColor;
+}
+
+function saveSettings() {
+  if (settings === undefined || settings === null) {
+    console.log("WARNING: Settings object empty?");
+    settings = defaultSettings;
+  }
+
+  localStorage.setItem("settings", JSON.stringify(settings));
 }
 
 // Insert empty tag to tagContainer
@@ -110,8 +151,9 @@ function sortNotesByDate() {
   saveNotes();
 }
 
+loadSettings();
 loadNotes();
-console.log(notes);
+console.log("Current Notes: ", notes);
 insertTag();
 
 // this function only creates the note in the notes[] array, then calls addNoteHTML
@@ -298,8 +340,32 @@ document.addEventListener("visibilitychange", function () {
 });
 
 deleteAllButton.addEventListener("click", function (event) {
-  event.stopPropagation();
   deleteAllNotes();
+});
+
+openSettingsButton.addEventListener("click", function (event) {
+  dialog.showModal();
+});
+
+closeSettings.addEventListener("click", function() {
+  dialog.close();
+});
+
+resetSettings.addEventListener("click", function() {
+  Object.assign(settings, defaultSettings);
+  applySettings();
+  saveSettings();
+});
+
+customBackgroundColor.addEventListener("input", function (event) {
+  console.log(event)
+  const customColor = event.target.value;
+
+  if (customColor !== "" && CSS.supports("color", customColor)) {
+    settings.customColor = customColor;
+    document.body.style.backgroundColor = settings.customColor;
+    saveSettings();
+  }
 });
 
 sortByDate.addEventListener("click", function (event) {
@@ -372,3 +438,4 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   // make that new message if it's non-empty
   if (content) addNote(content);
 });
+

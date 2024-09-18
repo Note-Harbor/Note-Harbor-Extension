@@ -283,7 +283,7 @@ function addNoteHTML(text, tags, id, insertAfter = null) {
     deleteButton.style.display = "none";
   });
 
-  note.addEventListener("click", function () {
+  note.addEventListener("click", function (event) {
     if (!this.classList.contains("overlay-created")) {
       const overlay = document.createElement("div");
       overlay.className = "overlay";
@@ -304,7 +304,7 @@ function addNoteHTML(text, tags, id, insertAfter = null) {
   noteContent.contentEditable = true;
   noteContent.className = "note-content";
   noteContent.innerHTML = text;
-
+  
   note.appendChild(noteContent);
 
   const tagBar = document.createElement("div");

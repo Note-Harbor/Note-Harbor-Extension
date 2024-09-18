@@ -393,6 +393,13 @@ closeSettings.addEventListener("click", function() {
   dialog.close();
 });
 
+dialog.addEventListener("click", function(event) {
+  const modalContent = document.querySelector(".modal-content");
+  if (!modalContent.contains(event.target)) {
+    dialog.close();
+  }
+});
+
 resetSettings.addEventListener("click", function() {
   Object.assign(settings, defaultSettings);
   applySettings();

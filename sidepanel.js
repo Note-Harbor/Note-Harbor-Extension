@@ -252,7 +252,12 @@ function addNoteHTML(text, tags, id, insertAfter = null) {
 
   note.addEventListener("dragstart", function (event) {
     event.dataTransfer.setData("text/plain", note.id);
+    note.classList.add("dragging");
     startY = event.clientY;
+  });
+
+  note.addEventListener("dragend", function () {
+    note.classList.remove("dragging");
   });
 
   note.addEventListener("dragover", function (event) {
@@ -261,7 +266,6 @@ function addNoteHTML(text, tags, id, insertAfter = null) {
 
   note.addEventListener("drop", function (event) {
     event.preventDefault();
-
     const draggedNoteId = event.dataTransfer.getData("text/plain");
     const draggedNote = document.getElementById(draggedNoteId);
     const endY = event.clientY;
@@ -304,7 +308,7 @@ function addNoteHTML(text, tags, id, insertAfter = null) {
   noteContent.contentEditable = true;
   noteContent.className = "note-content";
   noteContent.innerHTML = text;
-  
+
   note.appendChild(noteContent);
 
   const tagBar = document.createElement("div");

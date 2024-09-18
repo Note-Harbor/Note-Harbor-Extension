@@ -66,6 +66,11 @@ label {
   height: 100%;
 }
 
+.note.dragging {
+  opacity: 0.5;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+}
+
 .note-content {
   margin: 0px;
   padding: 5px;

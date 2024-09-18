@@ -1,7 +1,7 @@
 const add = document.getElementById("add");
 const container = document.getElementById("container");
 const info = document.getElementById("info");
-const sortByDate = document.getElementById("sortdate");
+const sort = document.getElementById("sort");
 const tagContainer = document.getElementById("tagRow");
 const search = document.getElementById("search");
 
@@ -10,8 +10,10 @@ const dialog = document.getElementById("settingsModal");
 const openSettingsButton = document.getElementById("openSettings");
 const deleteAllButton = document.getElementById("delall");
 const customBackgroundColor = document.getElementById("SI-color");
+const sortDropdown = document.getElementById("sortBy");
 
 let startY = 0;
+let sortChoice = "date";
 
 // notes are stored as an object
 // key: Date.now()
@@ -150,6 +152,46 @@ function sortNotesByDate() {
   reloadNoteHTML();
   saveNotes();
 }
+
+function sortNotesByTag() {
+  const notesArray = Object.entries(notes);
+
+  notesArray.sort(([, noteA], [, noteB]) => {
+    const tagsA = noteA.tags.map(tag => tag.toLowerCase());
+    const tagsB = noteB.tags.map(tag => tag.toLowerCase());
+
+    for (let i = 0; i < Math.min(tagsA.length, tagsB.length); i++) {
+      const tagA = tagsA[i];
+      const tagB = tagsB[i];
+
+      if (tagA < tagB) {
+        return -1;
+      }
+      if (tagA > tagB) {
+        return 1;
+      }
+    }
+
+    if (tagsA.length > tagsB.length) {
+      return 1; 
+    }
+    if (tagsA.length < tagsB.length) {
+      return -1;
+    }
+
+    return 0; 
+  });
+
+  const sortedNotes = {};
+  notesArray.forEach(([id, note]) => {
+    sortedNotes[id] = note;
+  });
+
+  notes = sortedNotes;
+  reloadNoteHTML();
+  saveNotes();
+}
+
 
 loadSettings();
 loadNotes();
@@ -368,9 +410,14 @@ customBackgroundColor.addEventListener("input", function (event) {
   }
 });
 
-sortByDate.addEventListener("click", function (event) {
+sort.addEventListener("click", function (event) {
   event.stopPropagation();
-  sortNotesByDate();
+  if(sortChoice == "date") {
+    sortNotesByDate();
+  }
+  else if(sortChoice == "tag") {
+    sortNotesByTag();
+  }
 });
 
 info.onload = info.oninput = () => {
@@ -431,6 +478,20 @@ search.addEventListener("input", function () {
   const searchTag = search.value.trim().toLowerCase();
   handleInput(searchTag);
 });
+
+function sortEntries() {
+  const sortBy = sortDropdown.value;
+  console.log(sortBy);
+  if (sortBy === "date") {
+    sortChoice = "date";
+    sort.textContent = "Sort By Date";
+  } else if (sortBy === "tag") {
+    sortChoice = "tag";
+    sort.textContent = "Sort By Tag";
+  }
+}
+
+sortDropdown.addEventListener("change", sortEntries);
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   const content = request.content;

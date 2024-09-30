@@ -19,7 +19,7 @@ let startY = 0;
 // this lets us sort the notes by date, and delete by some ID
 let notes = {};
 const defaultSettings = {
-  customColor: "aliceblue"
+  customColor: "#97BCC7"
 }
 let settings = {};
 Object.assign(settings, defaultSettings);

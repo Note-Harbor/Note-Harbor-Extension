@@ -103,7 +103,6 @@ label {
 
 .topInput {
   min-width: 100px;
-  
   border-radius: 5px;
   padding: 5px;
   background-color: #F2F1EF;
@@ -124,14 +123,17 @@ label {
 }
 
 #title {
+  border-radius: 5px 5px 0px 0px;
   margin: 5px 5px 0px 5px;
   border: 1px solid black;
   color: black;
 }
 
 #info {
+  border-radius: 0px 0px 5px 5px;
   margin: 0px 5px 5px 5px;
   border: 1px solid black;
+  border-top: 0px;
   color: black;
   min-height: 74px;
   resize: none;

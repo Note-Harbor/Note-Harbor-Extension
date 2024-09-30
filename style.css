@@ -72,6 +72,10 @@ label {
   border: 1px solid black;
 }
 
+.note-title {
+  padding: 5px;
+}
+
 .note-content {
   border-radius: 10px;
   margin: 0px;
@@ -101,8 +105,6 @@ label {
 }
 
 .topInput {
-  flex: 1;
-  margin: 5px;
   min-width: 100px;
   
   border-radius: 5px;
@@ -111,15 +113,30 @@ label {
   color: #747474;
 }
 
+.inputContainer {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
 #search {
+  flex: 1;
   border: 1px solid #747474;
   height: 34px;
+  margin: 5px;
+}
+
+#title {
+  margin: 5px 5px 0px 5px;
+  border: 1px solid black;
+  color: black;
 }
 
 #info {
+  margin: 0px 5px 5px 5px;
   border: 1px solid black;
+  color: black;
   min-height: 74px;
-  height: auto;
   resize: none;
 }
 

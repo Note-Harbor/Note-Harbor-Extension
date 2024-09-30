@@ -1,6 +1,7 @@
 const add = document.getElementById("add");
 const container = document.getElementById("container");
-const info = document.getElementById("info");
+const titleInput = document.getElementById("title");
+const infoInput = document.getElementById("info");
 const sortByDate = document.getElementById("sortdate");
 const tagContainer = document.getElementById("tagRow");
 const search = document.getElementById("search");
@@ -41,7 +42,7 @@ function reloadNoteHTML() {
   }
 
   // add them all back from notes[]
-  Object.entries(notes).map(([id, {content, tags}]) => addNoteHTML(content, tags, id));
+  Object.entries(notes).map(([id, {title, content, tags}]) => addNoteHTML(title, content, tags, id));
 }
 function deleteNote(id) {
   delete notes[id];
@@ -158,8 +159,10 @@ insertTag();
 
 // this function only creates the note in the notes[] array, then calls addNoteHTML
 function addNote(text, insertAfter) {
-  const content = text === "" ? info.value : text;
-  info.value = ""; // empty out the textbox
+  const title = titleInput.value || "";
+  const content = text === "" ? infoInput.value : text;
+  infoInput.value = ""; // empty out the textbox
+  titleInput.value = "";
 
   // stop if no text is provided
   if (content === "") return;
@@ -168,7 +171,8 @@ function addNote(text, insertAfter) {
   const tags = Array.from(document.getElementsByClassName("tag")).map(
     (tag) => tag.textContent.slice(0, -1)
   );
-  notes[id] = { content, tags };
+
+  notes[id] = { title, content, tags, };
   saveNotes();
 
   // Delete all tags in tagContainer
@@ -179,11 +183,11 @@ function addNote(text, insertAfter) {
   console.log(tags);
 
   // create the actual HTML element
-  addNoteHTML(content, tags, id, insertAfter);
+  addNoteHTML(title, content, tags, id, insertAfter);
 }
 
 // don't call directly unless you're reloading
-function addNoteHTML(text, tags, id, insertAfter = null) {
+function addNoteHTML(title, text, tags, id, insertAfter = null) {
   if (!id) {
     console.log("no ID provided!!!");
   }
@@ -258,11 +262,17 @@ function addNoteHTML(text, tags, id, insertAfter = null) {
     }
   });
 
+  const noteTitle = document.createElement("div");
+  noteTitle.contentEditable = true;
+  noteTitle.className = "note-title";
+  noteTitle.innerText = title
+
   const noteContent = document.createElement("div");
   noteContent.contentEditable = true;
   noteContent.className = "note-content";
-  noteContent.innerHTML = text;
+  noteContent.innerText = text;
 
+  note.append(noteTitle);
   note.appendChild(noteContent);
 
   const tagBar = document.createElement("div");
@@ -280,6 +290,28 @@ function addNoteHTML(text, tags, id, insertAfter = null) {
 
   note.appendChild(tagBar);
 
+  const bottomBar = createFormatBar();
+
+  const timeText = document.createElement("div");
+  timeText.className = "time-text";
+  timeText.style = "justify-content: right";
+  const noteCreatedTime = new Date(+id);
+  timeText.textContent = `Created: ${noteCreatedTime.toLocaleString([], {
+    dateStyle: "short",
+    timeStyle: "short",
+  })}`;
+
+  bottomBar.appendChild(timeText);
+  note.appendChild(bottomBar);
+
+  if (insertAfter && insertAfter.nextElementSibling) {
+    container.insertBefore(note, insertAfter.nextElementSibling);
+  } else {
+    container.appendChild(note);
+  }
+}
+
+function createFormatBar() {
   const bottomBar = document.createElement("div");
   bottomBar.className = "flex";
 
@@ -304,27 +336,12 @@ function addNoteHTML(text, tags, id, insertAfter = null) {
     document.execCommand("underline");
   });
 
-  const timeText = document.createElement("div");
-  timeText.className = "time-text";
-  timeText.style = "justify-content: right";
-  const noteCreatedTime = new Date(+id);
-  timeText.textContent = `Created: ${noteCreatedTime.toLocaleString([], {
-    dateStyle: "short",
-    timeStyle: "short",
-  })}`;
-
   bottomBar.appendChild(bold);
   bottomBar.appendChild(italic);
   bottomBar.appendChild(underline);
-  bottomBar.appendChild(timeText);
+  
 
-  note.appendChild(bottomBar);
-
-  if (insertAfter && insertAfter.nextElementSibling) {
-    container.insertBefore(note, insertAfter.nextElementSibling);
-  } else {
-    container.appendChild(note);
-  }
+  return bottomBar;
 }
 
 add.addEventListener("click", function () {
@@ -371,11 +388,6 @@ sortByDate.addEventListener("click", function (event) {
   event.stopPropagation();
   sortNotesByDate();
 });
-
-info.onload = info.oninput = () => {
-  info.style.height = "auto";
-  info.style.height = info.scrollHeight + "px";
-};
 
 function handleInput(input) {
   const tagPrefix = 'tag:';

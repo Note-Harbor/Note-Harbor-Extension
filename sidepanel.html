@@ -10,17 +10,20 @@
     </div>
     
     <div class="topContainer">
-      <textarea id="info" class="topInput shadow" placeholder="Write Here!"></textarea>
+      <div class="inputContainer">
+        <input id="title" class="topInput" type="text" placeholder="Title">
+        <textarea id="info" class="topInput shadow" placeholder="Write Here!"></textarea>
+      </div>
 
       <button id="add" class="topButton shadow">Add<br>Note</button>
     </div>
     
-    <div class="topContainer"></div>
+    <div class="topContainer">
       <div id="tagRow"></div>
     </div>
 
 
-
+    <!-- Holds all the notes -->
     <div id="container"></div>
 
     <dialog id="settingsModal" class="settings-modal">

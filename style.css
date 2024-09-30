@@ -70,10 +70,11 @@ label {
 
 .note-title {
   padding: 5px;
+  border-radius: 10px 10px 0px 0px;
+  background-color: #e1e1e1
 }
 
 .note-content {
-  border-radius: 10px;
   margin: 0px;
   padding: 5px;
   min-height: 88px;

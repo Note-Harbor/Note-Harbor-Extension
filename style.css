@@ -22,10 +22,6 @@ label {
   gap: 5px;
 }
 
-#openSettings {
-  height: 34px;
-}
-
 #container {
   display: flex;
   flex-direction: row;
@@ -142,11 +138,18 @@ label {
 
 .topButton {
   width: 5em;
-  height: 5em;
   border: 1px solid black;
   border-radius: 5px;
   background-color: #006884;
   color: #F2F1EF;
+}
+
+#openSettings {
+  height: 34px;
+}
+
+#add {
+  height: 99px;
 }
 
 .shadow {

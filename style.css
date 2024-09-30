@@ -19,6 +19,11 @@ label {
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  gap: 5px;
+}
+
+#openSettings {
+  height: 34px;
 }
 
 #container {
@@ -59,7 +64,6 @@ label {
 
 .note {
   width: 340px;
-  height: 100px;
   padding: 0px;
   background-color: lightblue;
   position: relative;
@@ -96,36 +100,30 @@ label {
   /* Make sure it's on top */
 }
 
-#entryContainer {
-  display: flex;
-  flex-direction: row;
-  align-items: stretch;
-  gap: 5px;
-}
-
-#entryLeftCol {
-  flex: 0 0 80%;
-}
-
-#entryRightCol {
-  flex: 0 0 20%;
-}
-
-#info {
-  width: 100%;
-  height: auto;
-  resize: none;
-  box-sizing: border-box;
+.topInput {
+  flex: 1;
+  margin: 5px;
+  min-width: 100px;
+  border: 1px solid black;
   border-radius: 5px;
   padding: 5px;
 }
 
-#add {
-  width: 100%;
-  height: 100%;
-  box-sizing: border-box;
+.topButton {
+  width: 5em;
+  height: 5em;
   border: 1px solid black;
   border-radius: 5px;
+}
+
+#search {
+  height: 34px;
+}
+
+#info {
+  min-height: 74px;
+  height: auto;
+  resize: none;
 }
 
 #tagRow {

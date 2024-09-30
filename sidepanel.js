@@ -358,7 +358,6 @@ resetSettings.addEventListener("click", function() {
 });
 
 customBackgroundColor.addEventListener("input", function (event) {
-  console.log(event)
   const customColor = event.target.value;
 
   if (customColor !== "" && CSS.supports("color", customColor)) {

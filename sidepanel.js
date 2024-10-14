@@ -3,6 +3,8 @@ const container = document.getElementById("container");
 const info = document.getElementById("info");
 const sortByDate = document.getElementById("sortdate");
 const tagContainer = document.getElementById("tagRow");
+const newTag = document.getElementById("newTag");
+const tagMirror = document.getElementById("tag-mirror");
 const search = document.getElementById("search");
 
 // settings
@@ -84,46 +86,6 @@ function saveSettings() {
   localStorage.setItem("settings", JSON.stringify(settings));
 }
 
-// Insert empty tag to tagContainer
-function insertTag() {
-  const tag = document.createElement("div");
-  tag.className = "new-tag";
-  tag.contentEditable = true;
-  tag.textContent = "New Tag";
-
-  // If user press enter, create new tag
-  tag.addEventListener("keydown", function (event) {
-    if (event.key === "Enter") {
-      tag.className = "tag";
-      tag.contentEditable = false;
-      tag.removeEventListener("keydown", this);
-
-      const deleteButton = document.createElement("button");
-      deleteButton.className = "del";
-      deleteButton.textContent = "x";
-      deleteButton.style.display = "none";
-      deleteButton.addEventListener("click", function (event) {
-        event.stopPropagation();
-        tag.remove();
-      });
-
-      tag.addEventListener("mouseover", function () {
-        deleteButton.style.display = "block";
-      });
-
-      tag.addEventListener("mouseout", function () {
-        deleteButton.style.display = "none";
-      });
-
-      tag.appendChild(deleteButton);
-
-      insertTag();
-    }
-  });
-
-  tagContainer.appendChild(tag);
-}
-
 function saveNotesOrder() {
   const newNotesOrder = {};
   const noteElements = Array.from(container.getElementsByClassName("note"));
@@ -154,7 +116,6 @@ function sortNotesByDate() {
 loadSettings();
 loadNotes();
 console.log("Current Notes: ", notes);
-insertTag();
 
 // this function only creates the note in the notes[] array, then calls addNoteHTML
 function addNote(text, insertAfter) {
@@ -387,6 +348,58 @@ function handleInput(input) {
     showAllNotes();
   }
 }
+
+// ----------------- Tag Functions -----------------
+
+newTag.addEventListener("keydown", function (event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    const tag = newTag.value.trim();
+    if (tag === "") return;
+
+    const tagElement = document.createElement("div");
+    tagElement.className = "tag";
+    tagElement.addEventListener("click", function () {
+      tagElement.remove();
+    });
+    tagContainer.appendChild(tagElement);
+
+    // Text
+    const tagText = document.createElement("span");
+    tagText.className = "tag-text";
+    tagText.textContent = tag;  
+    tagElement.appendChild(tagText);
+
+    // Gray x div
+    const x = document.createElement("div");
+    x.className = "x";
+    x.textContent = "X";
+    x.style.display = "none";
+    tagElement.appendChild(x);
+
+    tagElement.addEventListener("mouseover", function () {
+      x.style.display = "block";
+    });
+
+    tagElement.addEventListener("mouseout", function () {
+      x.style.display = "none";
+    });
+
+    newTag.value = "";
+    tagMirror.textContent = "New Tag";
+    newTag.style.width = `${tagMirror.offsetWidth + 1}px`;
+  }
+});
+
+newTag.addEventListener("input", function () {
+  tagMirror.textContent = newTag.value || " ";
+  newTag.style.width = `${tagMirror.offsetWidth + 1}px`;
+})
+
+// Initialize new tag width
+newTag.value = "";
+tagMirror.textContent = "New Tag";
+newTag.style.width = `${tagMirror.offsetWidth + 1}px`;
 
 function searchNotesByTag(tag) {
   const noteElements = Array.from(container.getElementsByClassName('note'));

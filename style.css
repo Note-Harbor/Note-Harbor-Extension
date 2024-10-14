@@ -140,19 +140,55 @@ label {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: 2px;
+  gap: 4px;
   padding-top: 2px;
+  padding-left: 5px;
+  padding-right: 5px;
 }
 
-.new-tag {
+#newTag {
   background-color: #006884;
   color: white;
   padding: 2px 8px;
   border-radius: 9999px;
   align-items: center;
+  min-width: 10ch;
+  font-size: small;
+}
+
+#newTag::placeholder {
+  color: lightgray;
+}
+
+.tagMirror {
+  position: absolute;
+  visibility: hidden;
+  white-space: pre;
+  font-size: small;
+  padding: 2px 8px;
+}
+
+.tagWrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.x {
+  background-color: #747474;
+  padding: 2px;
+  height: 2ch;
+  width: 2ch;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .tag {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  gap: 5px;
   background-color: lightblue;
   color: black;
   padding: 2px 8px;

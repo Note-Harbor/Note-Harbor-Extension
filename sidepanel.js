@@ -208,7 +208,7 @@ function addNote(text, insertAfter) {
   titleInput.value = "";
 
   // stop if no text is provided
-  if (content === "") return;
+  if (title === "" && content === "") return;
 
   const id = Date.now();
   const tags = Array.from(document.getElementsByClassName("tag")).map(

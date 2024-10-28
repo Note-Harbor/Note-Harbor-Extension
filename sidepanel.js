@@ -312,7 +312,8 @@ function addNoteHTML(title, text, tags, id, insertAfter = null) {
   const noteTitle = document.createElement("div");
   noteTitle.contentEditable = true;
   noteTitle.className = "note-title";
-  noteTitle.innerText = title
+  noteTitle.innerText = title;
+  
 
   const noteContent = document.createElement("div");
   noteContent.contentEditable = true;

@@ -1,9 +1,11 @@
 const add = document.getElementById("add");
 const container = document.getElementById("container");
-const info = document.getElementById("info");
+const titleInput = document.getElementById("title");
+const infoInput = document.getElementById("info");
 const sort = document.getElementById("sort");
 const tagContainer = document.getElementById("tagRow");
 const search = document.getElementById("search");
+const formatBar = document.getElementById("formatBar");
 
 // settings
 const dialog = document.getElementById("settingsModal");
@@ -43,7 +45,7 @@ function reloadNoteHTML() {
   }
 
   // add them all back from notes[]
-  Object.entries(notes).map(([id, {content, tags}]) => addNoteHTML(content, tags, id));
+  Object.entries(notes).map(([id, {title, content, tags}]) => addNoteHTML(title, content, tags, id));
 }
 function deleteNote(id) {
   delete notes[id];
@@ -200,8 +202,10 @@ insertTag();
 
 // this function only creates the note in the notes[] array, then calls addNoteHTML
 function addNote(text, insertAfter) {
-  const content = text === "" ? info.value : text;
-  info.value = ""; // empty out the textbox
+  const title = titleInput.value || "";
+  const content = text === "" ? infoInput.value : text;
+  infoInput.value = ""; // empty out the textbox
+  titleInput.value = "";
 
   // stop if no text is provided
   if (content === "") return;
@@ -210,7 +214,8 @@ function addNote(text, insertAfter) {
   const tags = Array.from(document.getElementsByClassName("tag")).map(
     (tag) => tag.textContent.slice(0, -1)
   );
-  notes[id] = { content, tags };
+
+  notes[id] = { title, content, tags, };
   saveNotes();
 
   // Delete all tags in tagContainer
@@ -221,11 +226,11 @@ function addNote(text, insertAfter) {
   console.log(tags);
 
   // create the actual HTML element
-  addNoteHTML(content, tags, id, insertAfter);
+  addNoteHTML(title, content, tags, id, insertAfter);
 }
 
 // don't call directly unless you're reloading
-function addNoteHTML(text, tags, id, insertAfter = null) {
+function addNoteHTML(title, text, tags, id, insertAfter = null) {
   if (!id) {
     console.log("no ID provided!!!");
   }
@@ -304,11 +309,17 @@ function addNoteHTML(text, tags, id, insertAfter = null) {
     }
   });
 
+  const noteTitle = document.createElement("div");
+  noteTitle.contentEditable = true;
+  noteTitle.className = "note-title";
+  noteTitle.innerText = title
+
   const noteContent = document.createElement("div");
   noteContent.contentEditable = true;
   noteContent.className = "note-content";
-  noteContent.innerHTML = text;
+  noteContent.innerText = text;
 
+  note.append(noteTitle);
   note.appendChild(noteContent);
 
   const tagBar = document.createElement("div");
@@ -326,29 +337,7 @@ function addNoteHTML(text, tags, id, insertAfter = null) {
 
   note.appendChild(tagBar);
 
-  const bottomBar = document.createElement("div");
-  bottomBar.className = "flex";
-
-  const bold = document.createElement("button");
-  bold.textContent = "B";
-  bold.style.fontWeight = "bold";
-  bold.addEventListener("click", () => {
-    document.execCommand("bold");
-  });
-
-  const italic = document.createElement("button");
-  italic.textContent = "I";
-  italic.style.fontStyle = "italic";
-  italic.addEventListener("click", () => {
-    document.execCommand("italic");
-  });
-
-  const underline = document.createElement("button");
-  underline.textContent = "U";
-  underline.style.textDecoration = "underline";
-  underline.addEventListener("click", () => {
-    document.execCommand("underline");
-  });
+  const bottomBar = createFormatBar();
 
   const timeText = document.createElement("div");
   timeText.className = "time-text";
@@ -359,11 +348,7 @@ function addNoteHTML(text, tags, id, insertAfter = null) {
     timeStyle: "short",
   })}`;
 
-  bottomBar.appendChild(bold);
-  bottomBar.appendChild(italic);
-  bottomBar.appendChild(underline);
   bottomBar.appendChild(timeText);
-
   note.appendChild(bottomBar);
 
   if (insertAfter && insertAfter.nextElementSibling) {
@@ -372,6 +357,44 @@ function addNoteHTML(text, tags, id, insertAfter = null) {
     container.appendChild(note);
   }
 }
+
+function createFormatBar() {
+  const bottomBar = document.createElement("div");
+  bottomBar.className = "bottom-bar";
+
+  const bold = document.createElement("button");
+  bold.textContent = "B";
+  bold.style.fontWeight = "bold";
+  bold.addEventListener("pointerdown", evt => {
+    evt.preventDefault();
+    document.execCommand("bold");
+  });
+
+  const italic = document.createElement("button");
+  italic.textContent = "I";
+  italic.style.fontStyle = "italic";
+  italic.addEventListener("pointerdown", evt => {
+    evt.preventDefault();
+    document.execCommand("italic");
+  });
+
+  const underline = document.createElement("button");
+  underline.textContent = "U";
+  underline.style.textDecoration = "underline";
+  underline.addEventListener("pointerdown", evt => {
+    evt.preventDefault();
+    document.execCommand("underline");
+  });
+
+  bottomBar.appendChild(bold);
+  bottomBar.appendChild(italic);
+  bottomBar.appendChild(underline);
+  
+
+  return bottomBar;
+}
+
+// formatBar.append(createFormatBar());
 
 add.addEventListener("click", function () {
   addNote("");
@@ -429,11 +452,6 @@ sort.addEventListener("click", function (event) {
     sortNotesByTag();
   }
 });
-
-info.onload = info.oninput = () => {
-  info.style.height = "auto";
-  info.style.height = info.scrollHeight + "px";
-};
 
 function handleInput(input) {
   const tagPrefix = 'tag:';

@@ -5,6 +5,7 @@ const infoInput = document.getElementById("info");
 const sortByDate = document.getElementById("sortdate");
 const tagContainer = document.getElementById("tagRow");
 const search = document.getElementById("search");
+const formatBar = document.getElementById("formatBar");
 
 // settings
 const dialog = document.getElementById("settingsModal");
@@ -313,26 +314,29 @@ function addNoteHTML(title, text, tags, id, insertAfter = null) {
 
 function createFormatBar() {
   const bottomBar = document.createElement("div");
-  bottomBar.className = "flex";
+  bottomBar.className = "bottom-bar";
 
   const bold = document.createElement("button");
   bold.textContent = "B";
   bold.style.fontWeight = "bold";
-  bold.addEventListener("click", () => {
+  bold.addEventListener("pointerdown", evt => {
+    evt.preventDefault();
     document.execCommand("bold");
   });
 
   const italic = document.createElement("button");
   italic.textContent = "I";
   italic.style.fontStyle = "italic";
-  italic.addEventListener("click", () => {
+  italic.addEventListener("pointerdown", evt => {
+    evt.preventDefault();
     document.execCommand("italic");
   });
 
   const underline = document.createElement("button");
   underline.textContent = "U";
   underline.style.textDecoration = "underline";
-  underline.addEventListener("click", () => {
+  underline.addEventListener("pointerdown", evt => {
+    evt.preventDefault();
     document.execCommand("underline");
   });
 
@@ -343,6 +347,8 @@ function createFormatBar() {
 
   return bottomBar;
 }
+
+// formatBar.append(createFormatBar());
 
 add.addEventListener("click", function () {
   addNote("");

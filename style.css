@@ -69,7 +69,9 @@ label {
 }
 
 .note-title {
+  font-size: 13.3px;
   padding: 5px;
+  font-weight: bold;
   border-radius: 10px 10px 0px 0px;
   background-color: #e1e1e1
 }
@@ -123,6 +125,7 @@ label {
 }
 
 #title {
+  font-weight: bold;
   border-radius: 5px 5px 0px 0px;
   margin: 5px 5px 0px 5px;
   border: 1px solid black;
@@ -190,6 +193,11 @@ label {
   justify-content: space-between;
   padding: 5px 10px;
   gap: 5px;
+}
+
+.bottom-bar {
+  display: flex;
+  padding-left: 5px;
 }
 
 .note-tag {

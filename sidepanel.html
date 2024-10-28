@@ -5,7 +5,6 @@
   <body>
     <div class="topContainer">
       <input id="search" class="topInput" type="text" placeholder="Search">
-      
       <button id="openSettings" class="topButton">Settings</button>
     </div>
     
@@ -15,6 +14,7 @@
         <textarea id="info" class="topInput shadow" placeholder="Write Here!"></textarea>
       </div>
 
+
       <button id="add" class="topButton shadow">Add<br>Note</button>
     </div>
     
@@ -23,29 +23,35 @@
       <div id="tagRow"></div>
     </div>
 
-
     <!-- Holds all the notes -->
     <div id="container"></div>
 
     <dialog id="settingsModal" class="settings-modal">
-      <h1>Settings</h1>
-      <h2>General Settings</h2>
-      <label><a href="https://www.w3schools.com/cssref/css_colors.php">Background Color</a>: </label>
-      <input type="text" id="SI-color" />
-      <br><br>
-      <button id="sortdate">Sort By Date</button>
-      <br><br>
+      <div class="modal-content">
+        <h1>Settings</h1>
+        <h2>General Settings</h2>
+        <label><a href="https://www.w3schools.com/cssref/css_colors.php">Background Color</a>: </label>
+        <input type="text" id="SI-color" />
+        <br><br>
+        <label>Sort By: </label>
+        <select id="sortBy">
+          <option value="date">Date</option>
+          <option value="tag">Tag</option>
+        </select>
+        <button id="sort">Sort By Date</button>
+        <br><br>
 
-      <h2>Destructive Settings</h2>
-      <label>Delete All: </label>
-      <button id="delall">NUKE!!!</button>
-      <br>
+        <h2>Destructive Settings</h2>
+        <label>Delete All: </label>
+        <button id="delall">NUKE!!!</button>
+        <br>
 
-      <label>Reset to Default Settings: </label>
-      <button id="resetSettings">Reset</button>
-      
-      <br><br>
-      <button id="closeSettings">Close</button>
+        <label>Reset to Default Settings: </label>
+        <button id="resetSettings">Reset</button>
+        
+        <br><br>
+        <button id="closeSettings">Close</button>
+      </div>
     </dialog>
   </body>
 

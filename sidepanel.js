@@ -19,7 +19,7 @@ let sortChoice = "date";
 
 // notes are stored as an object
 // key: Date.now()
-// value: note contents
+// value: {content: string, tags: string[], title: string}
 // this lets us sort the notes by date, and delete by some ID
 let notes = {};
 const defaultSettings = {
@@ -298,10 +298,28 @@ function addNoteHTML(title, text, tags, id, insertAfter = null) {
       overlay.className = "overlay";
       document.body.appendChild(overlay);
 
+      // show only noteContent
+      const noteTitle = note.getElementsByClassName("note-title")[0];
+      const noteContent = note.getElementsByClassName("note-content")[0];
+      const noteDisplay = note.getElementsByClassName("note-display")[0];
+      noteContent.classList.remove("displayNone");
+      noteDisplay.classList.add("displayNone");
+
       overlay.addEventListener("click", function () {
+        // remove overlay
         document.body.removeChild(overlay);
         note.classList.remove("overlay-created");
         note.style.zIndex = null;
+
+        // update noteDisplay, persist to notes
+        notes[note.id].title = noteTitle.innerText;
+        notes[note.id].content = noteContent.value;
+        //TODO: persist tags as well
+        noteDisplay.innerHTML = DOMPurify.sanitize(marked.parse(noteContent.value));
+
+        // only show noteDisplay
+        noteContent.classList.add("displayNone");
+        noteDisplay.classList.remove("displayNone");
       });
 
       this.classList.add("overlay-created");
@@ -313,15 +331,16 @@ function addNoteHTML(title, text, tags, id, insertAfter = null) {
   noteTitle.contentEditable = true;
   noteTitle.className = "note-title";
   noteTitle.innerText = title;
-  
+  const noteContent = document.createElement("textarea");
+  noteContent.className = "note-content displayNone";
+  noteContent.value = text;
+  const noteDisplay = document.createElement("div");
+  noteDisplay.className = "note-display";
+  noteDisplay.innerHTML = DOMPurify.sanitize(marked.parse(text));
 
-  const noteContent = document.createElement("div");
-  noteContent.contentEditable = true;
-  noteContent.className = "note-content";
-  noteContent.innerText = text;
-
-  note.append(noteTitle);
+  note.appendChild(noteTitle);
   note.appendChild(noteContent);
+  note.appendChild(noteDisplay);
 
   const tagBar = document.createElement("div");
   tagBar.className = "tag-bar";

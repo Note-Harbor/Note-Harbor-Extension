@@ -10,8 +10,23 @@ label {
   font-size: medium;
 }
 
+h1, h2, h3, h4, h5, h6, p {
+  margin: 0px;
+  overflow-wrap: break-word;
+}
+/* Codeblocks */
+pre {
+  background-color: rgb(207 207 207);
+  margin: 0px;
+  padding: 5px;
+  border: solid 1px black;
+}
+
 .flex {
   display: flex
+}
+.displayNone {
+  display: none;
 }
 
 .topContainer {
@@ -82,17 +97,29 @@ label {
 }
 
 .note-content {
-  margin: 0px;
+  height: 100px;
+  width: 100%;
+  background-color: #F2F1EF;
+  border: none;
   padding: 5px;
   min-height: 88px;
   overflow-x: scroll;
-  max-width: 100%;
-  height: 100px;
   white-space: pre-wrap;
 }
 .note-content:focus {
-  border: none;
   outline: none;
+}
+
+
+.note-display {
+  height: 100px;
+  max-width: 100%;
+  background-color: #F2F1EF;
+  border: none;
+  padding: 5px;
+  min-height: 88px;
+  overflow-x: scroll;
+  white-space: pre-wrap;
 }
 
 .time-text {

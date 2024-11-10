@@ -270,13 +270,13 @@ function addNoteHTML(text, tags, id, insertAfter = null) {
     const draggedNote = document.getElementById(draggedNoteId);
     const endY = event.clientY;
 
-    if (draggedNote && draggedNote !== note) {
-      if (endY < startY) {
-        note.insertAdjacentElement("beforebegin", draggedNote);
-      } else {
-        note.insertAdjacentElement("afterend", draggedNote);
-      }
-    }
+    // if (draggedNote && draggedNote !== note) {
+    //   if (endY < startY) {
+    //     note.insertAdjacentElement("beforebegin", draggedNote);
+    //   } else {
+    //     note.insertAdjacentElement("afterend", draggedNote);
+    //   }
+    // }
   });
 
   note.addEventListener("mouseover", function () {
@@ -511,3 +511,47 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (content) addNote(content);
 });
 
+container.addEventListener("dragover", function (event) {
+  event.preventDefault();
+  const draggingNote = document.querySelector(".dragging");
+  const afterElement = getDragAfterElement(container, event.clientY);
+  
+  if (afterElement == null) {
+    container.appendChild(draggingNote);
+  } else {
+    container.insertBefore(draggingNote, afterElement);
+  }
+});
+
+container.addEventListener("drop", function (event) {
+  event.preventDefault();
+  const draggedNoteId = event.dataTransfer.getData("text/plain");
+  const draggedNote = document.getElementById(draggedNoteId);
+
+  if (draggedNote) {
+    const afterElement = getDragAfterElement(container, event.clientY);
+    
+    if (afterElement == null) {
+      container.appendChild(draggedNote);
+    } else {
+      container.insertBefore(draggedNote, afterElement);
+    }
+
+    saveNotesOrder();
+  }
+});
+
+function getDragAfterElement(container, y) {
+  const draggableElements = [...container.querySelectorAll(".note:not(.dragging)")];
+
+  return draggableElements.reduce((closest, child) => {
+    const box = child.getBoundingClientRect();
+    const offset = y - box.top - box.height / 2;
+
+    if (offset < 0 && offset > closest.offset) {
+      return { offset: offset, element: child };
+    } else {
+      return closest;
+    }
+  }, { offset: Number.NEGATIVE_INFINITY }).element;
+}

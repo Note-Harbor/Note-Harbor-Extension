@@ -92,7 +92,7 @@ function saveSettings() {
 function insertTag() {
   const tag = document.createElement("div");
   tag.className = "new-tag";
-  tag.contentEditable = true;
+  tag.contentEditable = "plaintext-only";
   tag.textContent = "New Tag";
 
   // If user press enter, create new tag
@@ -331,7 +331,7 @@ function addNoteHTML(title, text, tags, id, insertAfter = null) {
   });
 
   const noteTitle = document.createElement("div");
-  noteTitle.contentEditable = true;
+  noteTitle.contentEditable = "plaintext-only";
   noteTitle.className = "note-title";
   noteTitle.innerText = title;
   const noteContent = document.createElement("textarea");
@@ -390,7 +390,22 @@ function createFormatBar() {
   bold.style.fontWeight = "bold";
   bold.addEventListener("pointerdown", evt => {
     evt.preventDefault();
-    document.execCommand("bold");
+    // only run if the current active element is either note-title or note-content
+    const classWhitelist = ["note-title", "note-content"];
+    const element = document.activeElement;
+    const classesOfSelectedElement = element.classList.value;
+    if (classWhitelist.some(v => classesOfSelectedElement.indexOf(v) !== -1)) {
+      const selectedText = element.value.substring(element.selectionStart, element.selectionEnd);
+
+      if (element.nodeName === "TEXTAREA") {
+        // if the entire selection is bold... 
+        if (selectedText.match(/^\*\*.+\*\*$/)) {
+          element.setRangeText(selectedText.substring(2, selectedText.length-2));
+        } else {
+          element.setRangeText(`**${selectedText}**`);
+        }
+      }
+    }
   });
 
   const italic = document.createElement("button");
@@ -550,4 +565,3 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   // make that new message if it's non-empty
   if (content) addNote(content);
 });
-

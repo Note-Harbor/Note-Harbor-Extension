@@ -19,7 +19,7 @@ let sortChoice = "date";
 
 // notes are stored as an object
 // key: Date.now()
-// value: note contents
+// value: {content: string, tags: string[], title: string}
 // this lets us sort the notes by date, and delete by some ID
 let notes = {};
 const defaultSettings = {
@@ -92,7 +92,7 @@ function saveSettings() {
 function insertTag() {
   const tag = document.createElement("div");
   tag.className = "new-tag";
-  tag.contentEditable = true;
+  tag.contentEditable = "plaintext-only";
   tag.textContent = "New Tag";
 
   // If user press enter, create new tag
@@ -208,7 +208,7 @@ function addNote(text, insertAfter) {
   titleInput.value = "";
 
   // stop if no text is provided
-  if (content === "") return;
+  if (title === "" && content === "") return;
 
   const id = Date.now();
   const tags = Array.from(document.getElementsByClassName("tag")).map(
@@ -293,15 +293,36 @@ function addNoteHTML(title, text, tags, id, insertAfter = null) {
   });
 
   note.addEventListener("click", function (event) {
+    // if the user clicks on a link inside the note, don't change into edit mode
+    if (event.target.nodeName === "A") return;
+
     if (!this.classList.contains("overlay-created")) {
       const overlay = document.createElement("div");
       overlay.className = "overlay";
       document.body.appendChild(overlay);
 
+      // show only noteContent
+      const noteTitle = note.getElementsByClassName("note-title")[0];
+      const noteContent = note.getElementsByClassName("note-content")[0];
+      const noteDisplay = note.getElementsByClassName("note-display")[0];
+      noteContent.classList.remove("displayNone");
+      noteDisplay.classList.add("displayNone");
+
       overlay.addEventListener("click", function () {
+        // remove overlay
         document.body.removeChild(overlay);
         note.classList.remove("overlay-created");
         note.style.zIndex = null;
+
+        // update noteDisplay, persist to notes
+        notes[note.id].title = noteTitle.innerText;
+        notes[note.id].content = noteContent.value;
+        //TODO: persist tags as well
+        noteDisplay.innerHTML = DOMPurify.sanitize(marked.parse(noteContent.value));
+
+        // only show noteDisplay
+        noteContent.classList.add("displayNone");
+        noteDisplay.classList.remove("displayNone");
       });
 
       this.classList.add("overlay-created");
@@ -310,17 +331,19 @@ function addNoteHTML(title, text, tags, id, insertAfter = null) {
   });
 
   const noteTitle = document.createElement("div");
-  noteTitle.contentEditable = true;
+  noteTitle.contentEditable = "plaintext-only";
   noteTitle.className = "note-title";
-  noteTitle.innerText = title
+  noteTitle.innerText = title;
+  const noteContent = document.createElement("textarea");
+  noteContent.className = "note-content displayNone";
+  noteContent.value = text;
+  const noteDisplay = document.createElement("div");
+  noteDisplay.className = "note-display";
+  noteDisplay.innerHTML = DOMPurify.sanitize(marked.parse(text));
 
-  const noteContent = document.createElement("div");
-  noteContent.contentEditable = true;
-  noteContent.className = "note-content";
-  noteContent.innerText = text;
-
-  note.append(noteTitle);
+  note.appendChild(noteTitle);
   note.appendChild(noteContent);
+  note.appendChild(noteDisplay);
 
   const tagBar = document.createElement("div");
   tagBar.className = "tag-bar";
@@ -362,12 +385,28 @@ function createFormatBar() {
   const bottomBar = document.createElement("div");
   bottomBar.className = "bottom-bar";
 
+  // only run if the current active element is note-content (add info box?)
+  const classWhitelist = ["note-content"];
+
   const bold = document.createElement("button");
   bold.textContent = "B";
   bold.style.fontWeight = "bold";
   bold.addEventListener("pointerdown", evt => {
     evt.preventDefault();
-    document.execCommand("bold");
+    const element = document.activeElement;
+    const classesOfSelectedElement = element.classList.value;
+    if (classWhitelist.some(v => classesOfSelectedElement.indexOf(v) !== -1)) {
+      const selectedText = element.value.substring(element.selectionStart, element.selectionEnd);
+
+      if (element.nodeName === "TEXTAREA") {
+        // if the entire selection is bold... 
+        if (selectedText.match(/^\*\*.+\*\*$/)) {
+          element.setRangeText(selectedText.substring(2, selectedText.length-2));
+        } else {
+          element.setRangeText(`**${selectedText}**`);
+        }
+      }
+    }
   });
 
   const italic = document.createElement("button");
@@ -375,7 +414,22 @@ function createFormatBar() {
   italic.style.fontStyle = "italic";
   italic.addEventListener("pointerdown", evt => {
     evt.preventDefault();
-    document.execCommand("italic");
+    const element = document.activeElement;
+    const classesOfSelectedElement = element.classList.value;
+    if (classWhitelist.some(v => classesOfSelectedElement.indexOf(v) !== -1)) {
+      const selectedText = element.value.substring(element.selectionStart, element.selectionEnd);
+
+      if (element.nodeName === "TEXTAREA") {
+        // if the entire selection is italics...
+        // SUBTLE: AVOID MATCHING BOLD!!!!
+        // TODO: fix this, this is still not totally functional when you have a weird amount of asterisks
+        if (selectedText.match(/^(?:\*\*)*\*[^\*].+|.+[^\*]\*(?:\*\*)*$/)) {
+          element.setRangeText(selectedText.substring(1, selectedText.length-1));
+        } else {
+          element.setRangeText(`*${selectedText}*`);
+        }
+      }
+    }
   });
 
   const underline = document.createElement("button");
@@ -383,7 +437,20 @@ function createFormatBar() {
   underline.style.textDecoration = "underline";
   underline.addEventListener("pointerdown", evt => {
     evt.preventDefault();
-    document.execCommand("underline");
+    const element = document.activeElement;
+    const classesOfSelectedElement = element.classList.value;
+    if (classWhitelist.some(v => classesOfSelectedElement.indexOf(v) !== -1)) {
+      const selectedText = element.value.substring(element.selectionStart, element.selectionEnd);
+
+      if (element.nodeName === "TEXTAREA") {
+        // if the entire selection is underlined... 
+        if (selectedText.match(/^<ins>.+<\/ins>$/)) {
+          element.setRangeText(selectedText.substring(5, selectedText.length-6));
+        } else {
+          element.setRangeText(`<ins>${selectedText}</ins>`);
+        }
+      }
+    }
   });
 
   bottomBar.appendChild(bold);
@@ -527,4 +594,3 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   // make that new message if it's non-empty
   if (content) addNote(content);
 });
-

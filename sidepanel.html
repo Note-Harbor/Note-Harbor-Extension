@@ -21,7 +21,7 @@
     </div>
     
     <div class="flex" style="gap: 10px">
-      <!-- <div id="formatBar"></div> -->
+      <div id="formatBar"></div>
       <div id="tagRow"></div>
     </div>
 
@@ -33,14 +33,14 @@
         <h1>Settings</h1>
         <h2>General Settings</h2>
         <label><a href="https://www.w3schools.com/cssref/css_colors.php">Background Color</a>: </label>
-        <input type="text" id="SI-color" />
+        <input type="text" id="customBackgroundColor" />
         <br><br>
         <label>Sort By: </label>
-        <select id="sortBy">
+        <select id="sortDropdown">
           <option value="date">Date</option>
           <option value="tag">Tag</option>
         </select>
-        <button id="sort">Sort By Date</button>
+        <button id="sortButton">Sort By Date</button>
         <br><br>
 
         <h2>Destructive Settings</h2>
@@ -57,5 +57,12 @@
     </dialog>
   </body>
 
-  <script src="sidepanel.js"></script>
+  <!-- Script call order matters -->
+  <script src="js/formatBar.js"></script>
+  <script src="js/notes.js"></script>
+  <script src="js/search.js"></script>
+  <script src="js/settings.js"></script>
+  <script src="js/tags.js"></script>
+
+  <script src="js/sidepanel.js"></script>
 </html>

@@ -93,6 +93,8 @@ function addNoteHTML(title, text, tags, id, insertAfter = null) {
     });
     note.appendChild(deleteButton);
 
+    addDraggingEvents(note);
+
     note.addEventListener("mouseover", function () {
         deleteButton.style.display = "block";
     });

@@ -1,41 +1,28 @@
 function searchNotesByTag(tag) {
-    const noteElements = Array.from(container.getElementsByClassName('note'));
+    const noteElements = Array.from(container.getElementsByClassName("note"));
 
-    for (let i = 0; i < noteElements.length; i++) {
-        const noteElement = noteElements[i];
-        const tagElements = noteElement.getElementsByClassName('note-tag');
-        let tags = [];
-        tags.push('');
-
-        for (let j = 0; j < tagElements.length; j++) {
-            tags.push(tagElements[j].textContent);
-        }
-
-        let matchFound = false;
-
-        for (let k = 0; k < tags.length; k++) {
-            if (tags[k].includes(tag)) {
-                matchFound = true;
-                break;
-            }
-        }
-
-        if (matchFound) {
+    noteElements.map(noteElement => {
+        const tagElements = Array.from(noteElement.getElementsByClassName('note-tag')).map(tagElement => tagElement.textContent);
+        console.log(tagElements);
+    
+        if (tagElements.join("\n").includes(tag)) {
             noteElement.style.display = 'block'; // Show the note
         } else {
             noteElement.style.display = 'none'; // Hide the note
         }
-    }
+    });
 }
 
 function handleInput(input) {
-    const tagPrefix = 'tag:';
+    const tagPrefix = "tag:";
     
-    if (input.startsWith(tagPrefix)) {
+    if (input === "") { // no search, default to all notes
+        showAllNotes();
+    } else if (input.startsWith(tagPrefix)) {
         const tag = input.slice(tagPrefix.length).trim();
         searchNotesByTag(tag);
     } else {
-        showAllNotes();
+        
     }
 }
 

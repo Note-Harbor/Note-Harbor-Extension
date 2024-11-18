@@ -204,3 +204,10 @@ function saveNotesOrder() {
     notes = newNotesOrder;
     saveNotes();
 }
+
+infoInput.addEventListener("keydown", evt => {
+    if (evt.ctrlKey && evt.key === "Enter") {
+        evt.preventDefault();
+        addNote(""); // that was easy
+    }
+  });

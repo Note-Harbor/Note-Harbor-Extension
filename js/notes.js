@@ -93,6 +93,8 @@ function addNoteHTML(title, text, tags, id, insertAfter = null) {
     });
     note.appendChild(deleteButton);
 
+    addDraggingEvents(note);
+
     note.addEventListener("mouseover", function () {
         deleteButton.style.display = "block";
     });
@@ -202,3 +204,10 @@ function saveNotesOrder() {
     notes = newNotesOrder;
     saveNotes();
 }
+
+infoInput.addEventListener("keydown", evt => {
+    if (evt.ctrlKey && evt.key === "Enter") {
+        evt.preventDefault();
+        addNote(""); // that was easy
+    }
+  });

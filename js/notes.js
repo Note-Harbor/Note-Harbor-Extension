@@ -61,6 +61,12 @@ function addNote(text, insertAfter) {
     for (let i = 0; i < currentTags.length; i++) {
             currentTags[i].remove();
     }
+
+    const newTags = Array.from(document.getElementsByClassName("new-tag"));
+    for (let i = 0; i < newTags.length; i++) {
+            newTags[i].remove();
+    }
+
     console.log(tags);
 
     // create the actual HTML element

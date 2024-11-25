@@ -194,6 +194,7 @@ pre {
   height: 99px;
 }
 
+
 .shadow {
   box-shadow: 0px 3px 2px 1px rgba(0, 0, 0, 0.3);
 }
@@ -202,13 +203,22 @@ pre {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: 2px;
+  gap: 4px;
   padding-top: 2px;
 }
 
+#addTagButton {
+  width: 30px;
+  align-items: center;
+}
+
+.new-tag::before {
+  content: "Add a folder...";
+}
+
 .new-tag {
-  background-color: #006884;
-  color: white;
+  background-color: lightblue;
+  color: black;
   padding: 2px 8px;
   border-radius: 9999px;
   align-items: center;

@@ -38,7 +38,11 @@ function deleteAllNotes() {
 
 
 
-// this function only creates the note in the notes[] array, then calls addNoteHTML
+/**
+ * this function only creates the note in the notes[] array, then calls addNoteHTML
+ * @param {string} text - textual/body content of note
+ * @param {object} insertAfter - the note that precedes the new note you're trying to add
+ */
 function addNote(text, insertAfter) {
     const title = titleInput.value || "";
     const content = text === "" ? infoInput.value : text;
@@ -67,7 +71,15 @@ function addNote(text, insertAfter) {
     addNoteHTML(title, content, tags, id, insertAfter);
 }
 
-// don't call directly unless you're reloading
+/**
+ * Generates the actual HTML element in the DOM
+ * don't call directly unless you're reloading
+ * @param {string} title - title of a note
+ * @param {string} text - textual/body content of a note
+ * @param {string[]} tags - list containing all tags of a given note
+ * parameter id = id 
+ * @param {object} insertAfter - the note that precedes the new note you're trying to add
+ */
 function addNoteHTML(title, text, tags, id, insertAfter = null) {
     if (!id) {
         console.log("no ID provided!!!");

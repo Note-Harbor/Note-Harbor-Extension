@@ -1,3 +1,7 @@
+/**
+ * Generates "bottom bar" below note boxes to hold text formating buttons
+ * @returns {object} bottomBar
+ */
 function createFormatBar() {
     const bottomBar = document.createElement("div");
     bottomBar.className = "bottom-bar";

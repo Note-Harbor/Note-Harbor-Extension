@@ -1,3 +1,7 @@
+/**
+ * Displays only the notes possessing a given tag
+ * @param {string} tag 
+ */
 function searchNotesByTag(tag) {
     const noteElements = Array.from(document.getElementsByClassName("note"));
     const filteredNoteIDs = Object.entries(notes)
@@ -14,6 +18,10 @@ function searchNotesByTag(tag) {
     });
 }
 
+/**
+ * Displays only the notes whose title contains a given search term
+ * @param {string} title 
+ */
 function searchNotesByTitle(title) {
     const noteElements = Array.from(document.getElementsByClassName("note"));
     const filteredNoteIDs = Object.entries(notes)
@@ -29,6 +37,10 @@ function searchNotesByTitle(title) {
     });
 }
 
+/**
+ * Displays only the notes whose text contains a given search term
+ * @param {string} searchTerm 
+ */
 function searchNotesByText(searchTerm) {
     const noteElements = Array.from(document.getElementsByClassName("note"));
     const filteredNoteIDs = Object.entries(notes)
@@ -49,6 +61,11 @@ function searchNotesByText(searchTerm) {
     });
 }
 
+
+/**
+ * Decides which search mode to use for a given search term
+ * @param {string} input 
+ */
 function handleInput(input) {
     const tagPrefix = "tag:";
     const titlePrefix = "title:"

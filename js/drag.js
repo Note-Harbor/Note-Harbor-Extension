@@ -1,3 +1,7 @@
+/**
+ * Creates dragging events for note objects
+ * @param {object} note
+ */
 function addDraggingEvents(note) {
     let startY = 0;
 

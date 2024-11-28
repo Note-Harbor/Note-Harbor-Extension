@@ -1,6 +1,8 @@
 const tagContainer = document.getElementById("tagRow");
 
-// Insert empty tag to tagContainer
+/**
+ * Insert empty tag to tagContainer
+ */
 function insertTag() {
     const tag = document.createElement("div");
     tag.className = "new-tag";

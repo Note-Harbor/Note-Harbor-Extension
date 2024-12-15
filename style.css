@@ -212,16 +212,14 @@ pre {
   align-items: center;
 }
 
-.new-tag::before {
-  content: "Add a folder...";
-}
-
+/* Wrapper for new tag */
 .new-tag {
   background-color: lightblue;
-  color: black;
+  color: grey;
   padding: 2px 8px;
   border-radius: 9999px;
   align-items: center;
+  display: flex;
 }
 
 .tag {
@@ -230,6 +228,33 @@ pre {
   padding: 2px 8px;
   border-radius: 9999px;
   position: relative;
+  display: flex;
+}
+
+.tag-input {
+  background-color: transparent;
+  color: black;
+  border: none;
+  outline: none;
+  padding: 0; 
+  margin: 0;
+  flex-grow: 1;
+  margin-right: 7px;
+}
+
+.tag-input:empty:before {
+  content: "Add a folder...";
+  color: grey;
+}
+
+.del-tag {
+  border: none;
+  border-radius: 50%;
+  width: 17px;
+  height: 17px;
+  cursor: pointer;
+  font-size: 12px;
+  display: flex;
 }
 
 .tag-bar {

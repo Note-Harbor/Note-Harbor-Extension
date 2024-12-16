@@ -45,6 +45,31 @@ function insertTag() {
         }
     });
 
+    tag.addEventListener('drop', function(event) {
+        event.preventDefault();
+        
+        const draggedNoteId = event.dataTransfer.getData('text/plain');
+        const draggedNote = document.getElementById(draggedNoteId);
+
+        if (draggedNote) {
+            const tagText = tag.querySelector('.tag-input').textContent.trim();
+            if (tagText) {
+                const tagBar = draggedNote.querySelector('.tag-bar');
+                const existingTags = Array.from(tagBar.getElementsByClassName('note-tag')).map(tag => tag.textContent.trim());
+
+                if (!existingTags.includes(tagText)) {
+                    const tagElement = document.createElement("div");
+                    tagElement.className = "note-tag";
+                    tagElement.textContent = tagText;
+                    tagBar.appendChild(tagElement);
+                    notes[draggedNoteId].tags.push(tagText);
+                    saveNotes();
+                }
+            }
+
+        }
+    });
+
     const deleteButton = document.createElement("button");
     deleteButton.className = "del-tag";
     deleteButton.textContent = "x";
@@ -61,6 +86,8 @@ function insertTag() {
     tag.appendChild(deleteButton);
 
     tagContainer.appendChild(tag);
+
+    
 
     // automatically focus on new tag input
     tagInput.focus();

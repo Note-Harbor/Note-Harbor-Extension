@@ -6,7 +6,13 @@
   </head>
   <body>
     <div class="topContainer">
-      <input id="search" class="topInput" type="text" placeholder="Search">
+      <input id="search" class="topInput" type="text" list="prefixes" autocomplete="off" placeholder="Search">
+      <datalist id="prefixes">
+        <option value="tag:">tag:TagName</option>
+        <option value="title:">title:NoteTitle</option>
+        
+      </datalist>
+
       <button id="openSettings" class="topButton">Settings</button>
     </div>
     

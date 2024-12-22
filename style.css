@@ -1,5 +1,16 @@
+:root {
+  --theme-text: #000000;
+  --theme-placeholder: #747474; /* for use in placeholder text */
+  --theme-background: #97BCC7;
+  --theme-foreground: #F2F1EF;
+  --theme-codeblocks: #CFCFCF;
+  --theme-border: #053D57;
+  --theme-accent: #006884; /* for use in certain buttons */
+  --theme-accentText: #F2F1EF;
+}
+
 body {
-  background-color: #97BCC7;
+  background-color: var(--theme-background);
   overflow: hidden;
   margin: 10px;
   overflow-y: scroll;
@@ -16,10 +27,10 @@ h1, h2, h3, h4, h5, h6, p {
 }
 /* Codeblocks */
 pre {
-  background-color: rgb(207 207 207);
+  background-color: var(--theme-codeblocks);
   margin: 0px;
   padding: 5px;
-  border: solid 1px black;
+  border: solid 1px var(--theme-border);
 }
 
 .flex {
@@ -49,10 +60,6 @@ pre {
   padding-top: 10px;
 }
 
-.highlight {
-  border: 2px solid rgba(6, 209, 255, 0.967);
-}
-
 #dAdd {
   margin-top: 10px;
   padding: 10px;
@@ -76,11 +83,11 @@ pre {
 .note {
   width: 340px;
   padding: 0px;
-  background-color: #F2F1EF;
+  background-color: var(--theme-foreground);
   position: relative;
   border-radius: 10px;
   height: 100%;
-  border: 1px solid black;
+  border: 1px solid var(--theme-border);
 }
 
 .note-title {
@@ -88,7 +95,8 @@ pre {
   padding: 5px;
   font-weight: bold;
   border-radius: 10px 10px 0px 0px;
-  background-color: #e1e1e1
+  color: var(--theme-text);
+  /* background-color: #e1e1e1 */ 
 }
 
 .note.dragging {
@@ -99,7 +107,7 @@ pre {
 .note-content {
   height: 100px;
   width: 100%;
-  background-color: #F2F1EF;
+  background-color: var(--theme-foreground);
   border: none;
   padding: 5px;
   min-height: 88px;
@@ -114,7 +122,8 @@ pre {
 .note-display {
   height: 100px;
   max-width: 100%;
-  background-color: #F2F1EF;
+  background-color: var(--theme-foreground);
+  color: var(--theme-text);
   border: none;
   padding: 5px;
   min-height: 88px;
@@ -123,6 +132,7 @@ pre {
 }
 
 .time-text {
+  color: var(--theme-text);
   text-align: end;
   width: 100%;
   margin-right: 10px;
@@ -143,8 +153,12 @@ pre {
   min-width: 100px;
   border-radius: 5px;
   padding: 5px;
-  background-color: #F2F1EF;
-  color: #747474;
+  background-color: var(--theme-foreground);
+  color: var(--theme-text);
+  border: 1px solid var(--theme-border);
+}
+.topInput::placeholder {
+  color: var(--theme-placeholder);
 }
 
 .inputContainer {
@@ -155,35 +169,31 @@ pre {
 
 #search {
   flex: 1;
-  border: 1px solid #747474;
   height: 34px;
   margin: 5px;
+  border: none;
 }
 
 #title {
   font-weight: bold;
   border-radius: 5px 5px 0px 0px;
   margin: 5px 5px 0px 5px;
-  border: 1px solid black;
-  color: black;
 }
 
 #info {
   border-radius: 0px 0px 5px 5px;
   margin: 0px 5px 5px 5px;
-  border: 1px solid black;
   border-top: 0px;
-  color: black;
   min-height: 74px;
   resize: none;
 }
 
 .topButton {
   width: 5em;
-  border: 1px solid black;
   border-radius: 5px;
-  background-color: #006884;
-  color: #F2F1EF;
+  background-color: var(--theme-accent);
+  color: var(--theme-accentText);
+  border: 1px solid var(--theme-border);
 }
 
 #openSettings {
@@ -206,12 +216,12 @@ pre {
   padding-top: 2px;
 }
 
-.new-tag {
-  background-color: #006884;
-  color: white;
+.note-tag {
+  background-color: var(--theme-accent);
+  color: var(--theme-accentText);
   padding: 2px 8px;
   border-radius: 9999px;
-  align-items: center;
+  position: relative;
 }
 
 .tag {
@@ -231,18 +241,12 @@ pre {
   gap: 5px;
 }
 
+
 .bottom-bar {
   display: flex;
   padding-left: 5px;
 }
 
-.note-tag {
-  background-color: #006884;
-  color: white;
-  padding: 2px 8px;
-  border-radius: 9999px;
-  position: relative;
-}
 
 .settings-modal {
   padding-left: 20%;

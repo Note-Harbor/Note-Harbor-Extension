@@ -5,7 +5,7 @@ const tagContainer = document.getElementById("tagRow");
  */
 function insertTag() {
     const tag = document.createElement("div");
-    tag.className = "new-tag";
+    tag.className = "note-tag";
     tag.contentEditable = "plaintext-only";
     tag.textContent = "New Tag";
 

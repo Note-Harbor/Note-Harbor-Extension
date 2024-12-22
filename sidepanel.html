@@ -32,8 +32,13 @@
       <div class="modal-content">
         <h1>Settings</h1>
         <h2>General Settings</h2>
-        <label><a href="https://www.w3schools.com/cssref/css_colors.php">Background Color</a>: </label>
-        <input type="text" id="customBackgroundColor" />
+        <label>Theme: </label>
+        <select id="themeDropdown">
+          <option value="light">Light</option>
+          <option value="dark">Dark</option>
+          <option value="matcha">Matcha</option>
+          <option value="halloween">Halloween</option>
+        </select>
         <br><br>
         <label>Sort By: </label>
         <select id="sortDropdown">
@@ -63,6 +68,7 @@
   <script src="js/notes.js"></script>
   <script src="js/search.js"></script>
   <script src="js/settings.js"></script>
+  <script src="js/themes.js"></script>
   <script src="js/tags.js"></script>
 
   <script src="js/sidepanel.js"></script>

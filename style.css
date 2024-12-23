@@ -262,6 +262,7 @@ pre {
   cursor: pointer;
   font-size: 12px;
   display: flex;
+  user-select: none;
 }
 
 .tag-bar {

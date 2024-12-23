@@ -7,29 +7,96 @@ function insertTag() {
     // tag as wrapper, tag-input for inputs, del-tag for delete button to avoid any editable issues
     const tag = document.createElement("div");
     tag.className = "new-tag";
+    tag.setAttribute("tabindex", "0"); // make tag focusable
+    let disableInput = true;
+
+    tag.addEventListener("dblclick", function(event) {
+        event.preventDefault(); // prevent default of highlighting selected text
+        if (tagInput.textContent.trim() === "") {
+            tagInput.textContent = "";
+        }
+        else {
+            tag.className = "tag";
+        }
+
+        disableInput = false;
+        tagInput.style.marginRight = "7px";
+        deleteButton.style.display = "block";
+        tagInput.contentEditable = true;
+        tagInput.focus();
+        disableInput = true;
+    });
 
     const tagInput = document.createElement("div");
     tagInput.className = "tag-input";
     tagInput.contentEditable = true;
     tagInput.textContent = "";
 
-    tagInput.addEventListener("focus", function() {
-        if (tagInput.textContent.trim() === "") {
-            tagInput.textContent = "";
-        }
-        tag.className = "tag";
-        tagInput.style.marginRight = "7px";
-        deleteButton.style.display = "block";
+    tag.addEventListener("focus", function(event) { 
+        update();
+        tagInput.focus();
     });
 
-    tagInput.addEventListener("blur", function() {
-        if (tagInput.textContent.trim() === "") {
-            tagInput.textContent = ""; 
-            tag.className = "new-tag"; // reset to new-tag if text is empty
+    function update() { // selects the notes that contain selected folder
+        if(tag.className == "new-tag") {
+            return;
         }
+
+        const currentNotes = Array.from(document.getElementsByClassName("note"));
+        for (let i = 0; i < currentNotes.length; i++) {
+            let currentNote = currentNotes[i];
+            const tagBar = currentNote.querySelector(".tag-bar").children;
+
+            if (tagBar) {
+                let tagExists = false;
+                for (const tag of tagBar) {
+                    if (tag.textContent.trim() === tagInput.textContent.trim()) {
+                        tagExists = true;
+                        break;
+                    }
+                }
+
+                if(!tagExists) {
+                    currentNote.style.display = "none";
+                }
+                else {
+                    currentNote.style.display = "block";
+                }
+            }
+            else {
+                currentNote.style.display = "none";
+            }
+        }
+    }
+
+    tag.addEventListener("blur", function(event) {
+        blurTag();
+    });
+
+    tagInput.addEventListener("blur", function(event) {
+        blurTag();
+    });
+
+    function blurTag() {
+        if (tagInput.textContent.trim() === "") {
+            tagInput.textContent = "";
+            tag.className = "new-tag"; // Reset to new-tag if text is empty
+        }
+        if(!disableInput) {
+            return;
+        }
+
         tagInput.style.marginRight = "0px";
         deleteButton.style.display = "none";
-    });
+    
+        const currentNotes = Array.from(document.getElementsByClassName("note"));
+        for (let i = 0; i < currentNotes.length; i++) {
+            let currentNote = currentNotes[i];
+            currentNote.style.display = "block";
+        }
+
+        tagInput.contentEditable = false;
+    }
 
     tagInput.addEventListener("keydown", function(event) {
         if (event.key === "Enter") {
@@ -37,14 +104,22 @@ function insertTag() {
         }
     });
 
-    tagInput.addEventListener("input", function() {
+    tagInput.addEventListener("keyup", function(event) {
+        update();
         if (tagInput.textContent.trim() !== "") {
             tag.className = "tag";
         } else {
             tag.className = "new-tag";
+
+            const currentNotes = Array.from(document.getElementsByClassName("note"));
+            for (let i = 0; i < currentNotes.length; i++) {
+                let currentNote = currentNotes[i];
+                currentNote.style.display = "block";
+            }
         }
     });
 
+    // for dropping a note on top of a folder
     tag.addEventListener('drop', function(event) {
         event.preventDefault();
         
@@ -75,6 +150,7 @@ function insertTag() {
     deleteButton.textContent = "x";
     deleteButton.addEventListener("click", function(event) {
         event.stopPropagation();
+        blurTag();
         tag.remove();
     });
 
@@ -86,9 +162,7 @@ function insertTag() {
     tag.appendChild(deleteButton);
 
     tagContainer.appendChild(tag);
-
     
-
     // automatically focus on new tag input
     tagInput.focus();
 }

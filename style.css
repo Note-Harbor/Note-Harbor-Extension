@@ -215,7 +215,7 @@ pre {
 /* Wrapper for new tag */
 .new-tag {
   background-color: lightblue;
-  color: grey;
+  color: #006884;
   padding: 2px 8px;
   border-radius: 9999px;
   align-items: center;
@@ -247,7 +247,7 @@ pre {
 
 .tag-input:empty:before {
   content: "Add Folder Name...";
-  color: grey;
+  color: #006884;
 }
 
 .del-tag {

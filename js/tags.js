@@ -10,6 +10,15 @@ function insertTag() {
     tag.setAttribute("tabindex", "0"); // make tag focusable
     let disableInput = true;
 
+    tag.addEventListener('dragover', function(event) {
+        event.preventDefault(); // Prevent the default to allow drop
+        tag.classList.add('drag-over');
+    });
+    
+    tag.addEventListener('dragleave', function(event) {
+        tag.classList.remove('drag-over'); 
+    });
+
     tag.addEventListener("dblclick", function(event) {
         event.preventDefault(); // prevent default of highlighting selected text
         if (tagInput.textContent.trim() === "") {

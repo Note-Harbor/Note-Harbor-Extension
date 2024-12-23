@@ -245,10 +245,6 @@ pre {
   margin-right: 7px;
 }
 
-.tag-input:focus {
-  border: 1px solid white;
-}
-
 .tag-input:empty:before {
   content: "Add Folder Name...";
   color: grey;

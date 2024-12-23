@@ -2,6 +2,8 @@
 
 Note Harbor is a note-taking Chrome extension that lets you compose stickies wherever you are on the browser. 
 
+![Note Harbor Demo](https://github.com/Note-Harbor/Note-Harbor-Extension/blob/main/img/note-harbor-demo-sceenshot.png)
+
 ## Installation
 
 To get Note Harbor on your browser, visit us at the Chrome Web Store [future link].

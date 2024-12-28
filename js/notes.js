@@ -92,7 +92,7 @@ function addNoteHTML(title, text, tags, id, insertAfter = null) {
 
     const deleteButton = document.createElement("button");
     deleteButton.className = "del";
-    deleteButton.textContent = "x";
+    deleteButton.textContent = "X";
     deleteButton.style.display = "none";
     deleteButton.addEventListener("click", function (event) {
         event.stopPropagation();
@@ -155,13 +155,13 @@ function addNoteHTML(title, text, tags, id, insertAfter = null) {
 
     const noteTitle = document.createElement("div");
     noteTitle.contentEditable = "plaintext-only";
-    noteTitle.className = "note-title";
+    noteTitle.className = "note-title title";
     noteTitle.innerText = title;
     const noteContent = document.createElement("textarea");
-    noteContent.className = "note-content displayNone";
+    noteContent.className = "note-content displayNone body";
     noteContent.value = text;
     const noteDisplay = document.createElement("div");
-    noteDisplay.className = "note-display";
+    noteDisplay.className = "note-display body";
     noteDisplay.innerHTML = DOMPurify.sanitize(marked.parse(text));
 
     note.appendChild(noteTitle);
@@ -189,13 +189,15 @@ function addNoteHTML(title, text, tags, id, insertAfter = null) {
     timeText.className = "time-text";
     timeText.style = "justify-content: right";
     const noteCreatedTime = new Date(+id);
-    timeText.textContent = `Created: ${noteCreatedTime.toLocaleString([], {
-        dateStyle: "short",
+    timeText.textContent = `${noteCreatedTime.toLocaleString([], {
         timeStyle: "short",
+        dateStyle: "short"
     })}`;
-
-    note.appendChild(timeText);
-    note.appendChild(bottomBar);
+    const bottomDiv = document.createElement("div");
+    bottomDiv.className = "bottomDiv";
+    bottomDiv.appendChild(bottomBar);
+    bottomDiv.appendChild(timeText);
+    note.appendChild(bottomDiv);
 
     if (insertAfter && insertAfter.nextElementSibling) {
         container.insertBefore(note, insertAfter.nextElementSibling);

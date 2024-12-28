@@ -194,7 +194,7 @@ function addNoteHTML(title, text, tags, id, insertAfter = null) {
         timeStyle: "short",
     })}`;
 
-    bottomBar.appendChild(timeText);
+    note.appendChild(timeText);
     note.appendChild(bottomBar);
 
     if (insertAfter && insertAfter.nextElementSibling) {

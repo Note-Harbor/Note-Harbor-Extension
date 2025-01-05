@@ -30,3 +30,4 @@ function addDraggingEvents(note) {
         }
     });
 }
+

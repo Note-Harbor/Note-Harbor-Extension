@@ -1,9 +1,52 @@
 const tagContainer = document.getElementById("tagRow");
 const addTag = document.getElementById("addTagButton");
 
-addTag.addEventListener("click", insertTag);
+addTag.addEventListener("click", () => insertTag(""));
 
-function insertTag() {
+function loadFolders() {
+    const notesText = localStorage.getItem("folders");
+    let allFolders = JSON.parse(notesText);
+
+    for (const folderName of allFolders) {
+        insertTag(folderName);
+    }
+}
+
+function saveFolders() {
+    const tagInputs = document.querySelectorAll('.tag-input');
+    const uniqueFolders = [];
+    const seenFolders = new Set();
+
+    tagInputs.forEach((input) => {
+        const content = input.textContent.trim();
+        if (content !== "" && !seenFolders.has(content)) {
+            uniqueFolders.push(content);
+            seenFolders.add(content); // track what has been added and preserve order
+        }
+    });
+
+    const allFoldersArray = Array.from(uniqueFolders);
+    localStorage.setItem("folders", JSON.stringify(allFoldersArray));
+}
+
+function reloadFolders() {
+    // delete all folders
+    const currentNotes = Array.from(document.getElementsByClassName("tag"));
+    for (let i = 0; i < currentNotes.length; i++) {
+        currentNotes[i].remove();
+    }
+
+    // add them all back from notes[]
+    // Object.entries(notes).map(([id, {title, content, tags}]) => addNoteHTML(title, content, tags, id));
+}
+
+function deleteFolders(name) {
+    delete folders[name];
+    saveFolders();
+}
+
+function insertTag(folderName) {
+    saveFolders();
     // tag as wrapper, tag-input for inputs, del-tag for delete button to avoid any editable issues
     const tag = document.createElement("div");
     tag.className = "new-tag";
@@ -133,19 +176,25 @@ function insertTag() {
         event.preventDefault();
         
         const draggedNoteId = event.dataTransfer.getData('text/plain');
-        const draggedNote = document.getElementById(draggedNoteId);
+        let draggedNote = document.getElementById(draggedNoteId);
 
         if (draggedNote) {
-            const tagText = tag.querySelector('.tag-input').textContent.trim();
+            let tagText = tag.querySelector('.tag-input').textContent.trim();
             if (tagText) {
-                const tagBar = draggedNote.querySelector('.tag-bar');
-                const existingTags = Array.from(tagBar.getElementsByClassName('note-tag')).map(tag => tag.textContent.trim());
+                let tagBar = draggedNote.querySelector('.tag-bar');
+                let existingTags = Array.from(tagBar.getElementsByClassName('note-tag')).map(tag => tag.textContent.trim());
 
                 if (!existingTags.includes(tagText)) {
                     const tagElement = document.createElement("div");
                     tagElement.className = "note-tag";
                     tagElement.textContent = tagText;
+
+                    while (tagBar.firstChild) {
+                        tagBar.removeChild(tagBar.firstChild);
+                    }
                     tagBar.appendChild(tagElement);
+
+                    notes[draggedNoteId].tags = [];
                     notes[draggedNoteId].tags.push(tagText);
                     saveNotes();
                 }
@@ -166,6 +215,13 @@ function insertTag() {
     deleteButton.addEventListener("mousedown", function(event) {
         event.preventDefault(); // prevent blur on click
     });
+
+    if (folderName && folderName !== "") {
+        tag.className = "tag";
+        tagInput.textContent = folderName;
+        tagInput.style.marginRight = "0px";
+        deleteButton.style.display = "none";
+    }
 
     tag.appendChild(tagInput);
     tag.appendChild(deleteButton);

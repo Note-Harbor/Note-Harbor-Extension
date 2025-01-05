@@ -36,8 +36,6 @@ function deleteAllNotes() {
     saveNotes();
 }
 
-
-
 // this function only creates the note in the notes[] array, then calls addNoteHTML
 function addNote(text, insertAfter) {
     const title = titleInput.value || "";
@@ -49,23 +47,21 @@ function addNote(text, insertAfter) {
     if (title === "" && content === "") return;
 
     const id = Date.now();
-    const tags = Array.from(document.getElementsByClassName("tag")).map(
-            (tag) => tag.textContent.slice(0, -1)
-    );
+    const tags = [];
 
     notes[id] = { title, content, tags };
     saveNotes();
 
     // Delete all tags in tagContainer
-    const currentTags = Array.from(document.getElementsByClassName("tag"));
-    for (let i = 0; i < currentTags.length; i++) {
-            currentTags[i].remove();
-    }
+    // const currentTags = Array.from(document.getElementsByClassName("tag"));
+    // for (let i = 0; i < currentTags.length; i++) {
+    //         currentTags[i].remove();
+    // }
 
-    const newTags = Array.from(document.getElementsByClassName("new-tag"));
-    for (let i = 0; i < newTags.length; i++) {
-            newTags[i].remove();
-    }
+    // const newTags = Array.from(document.getElementsByClassName("new-tag"));
+    // for (let i = 0; i < newTags.length; i++) {
+    //         newTags[i].remove();
+    // }
 
     console.log(tags);
 
@@ -92,6 +88,7 @@ function addNoteHTML(title, text, tags, id, insertAfter = null) {
         event.stopPropagation();
         deleteNote(id);
         note.remove();
+        customMenu.style.display = "none";
 
         // remove overlay
         let ove = document.getElementsByClassName("overlay");
@@ -100,6 +97,7 @@ function addNoteHTML(title, text, tags, id, insertAfter = null) {
     note.appendChild(deleteButton);
 
     addDraggingEvents(note);
+    addContextMenuToNote(note);
 
     note.addEventListener("mouseover", function () {
         deleteButton.style.display = "block";
@@ -216,4 +214,39 @@ infoInput.addEventListener("keydown", evt => {
         evt.preventDefault();
         addNote(""); // that was easy
     }
-  });
+});
+
+function addContextMenuToNote(note) {
+    note.addEventListener("contextmenu", function(event) {
+        event.preventDefault(); 
+
+        customMenu.style.display = "block";
+        customMenu.style.left = `${event.clientX}px`;
+        customMenu.style.top = `${event.clientY}px`;
+
+        document.getElementById("rem").addEventListener("click", function() {
+
+            let tagBar = note.querySelector('.tag-bar');
+            while (tagBar.firstChild) {
+                tagBar.removeChild(tagBar.firstChild);
+            }
+            notes[draggedNoteId].tags = [];
+            saveNotes();
+
+            customMenu.style.display = "none"; 
+        });
+    });
+}
+
+const customMenu = document.createElement("div");
+customMenu.className = "custom-context-menu";
+
+customMenu.innerHTML = `
+<div class="menu-item" id="AddtoFolder">Add to Folder...</div>
+<div class="menu-item" id="rem">Remove from Folder</div>
+`;
+
+document.body.appendChild(customMenu);
+document.addEventListener("click", function () {
+customMenu.style.display = "none";
+});

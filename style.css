@@ -217,7 +217,7 @@ pre {
   background-color: lightblue;
   color: #006884;
   padding: 2px 8px;
-  border-radius: 9999px;
+  border-radius: 5px;
   align-items: center;
   display: flex;
 }
@@ -225,7 +225,7 @@ pre {
 .tag {
   background-color: #006884;
   padding: 2px 8px;
-  border-radius: 9999px;
+  border-radius: 5px;
   position: relative;
   display: flex;
 }
@@ -279,8 +279,33 @@ pre {
   background-color: #006884;
   color: white;
   padding: 2px 8px;
-  border-radius: 9999px;
+  border-radius: 5px;
   position: relative;
+}
+
+.custom-context-menu {
+  position: absolute;
+  display: none;
+  z-index: 1000;
+  background-color: #ffffff; 
+  color: #000000;
+  border: 1px solid rgba(0, 0, 0, 0.2); 
+  border-radius: 4px; 
+  padding: 4px 0; 
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  font-family: Arial, sans-serif; 
+  font-size: 12px; 
+}
+
+.custom-context-menu .menu-item {
+  padding: 8px 16px;
+  cursor: pointer;
+  line-height: 1.5;
+  border-radius: 2px;
+}
+
+.custom-context-menu .menu-item:hover {
+  background-color: #f5f5f5;
 }
 
 .settings-modal {

@@ -225,7 +225,6 @@ function addContextMenuToNote(note) {
         customMenu.style.top = `${event.clientY}px`;
 
         document.getElementById("rem").addEventListener("click", function() {
-
             let tagBar = note.querySelector('.tag-bar');
             while (tagBar.firstChild) {
                 tagBar.removeChild(tagBar.firstChild);
@@ -235,6 +234,30 @@ function addContextMenuToNote(note) {
 
             customMenu.style.display = "none"; 
         });
+        
+        document.getElementById("addtofolder").addEventListener("mouseover", function(event) {
+            const tagInputs = document.querySelectorAll('.tag-input');
+        
+            tagMenu.innerHTML = '';
+        
+            tagInputs.forEach(input => {
+                const menuItem = document.createElement('div');
+                menuItem.className = "menu-item";
+                menuItem.textContent = input.textContent; 
+                tagMenu.appendChild(menuItem);
+            });
+    
+            const customMenuRect = customMenu.getBoundingClientRect();
+            tagMenu.style.left = `${customMenuRect.right + 10}px`; 
+            tagMenu.style.top = `${customMenuRect.top}px`;
+            tagMenu.style.display = "block"; 
+        });
+        
+
+        document.getElementById("addtofolder").addEventListener("mouseout", function() {
+            tagMenu.style.display = "none"; 
+        });
+
     });
 }
 
@@ -242,11 +265,19 @@ const customMenu = document.createElement("div");
 customMenu.className = "custom-context-menu";
 
 customMenu.innerHTML = `
-<div class="menu-item" id="AddtoFolder">Add to Folder...</div>
+<div class="menu-item" id="addtofolder">Add to Folder...</div>
 <div class="menu-item" id="rem">Remove from Folder</div>
 `;
 
 document.body.appendChild(customMenu);
 document.addEventListener("click", function () {
-customMenu.style.display = "none";
+    customMenu.style.display = "none";
+});
+
+const tagMenu = document.createElement('div');
+tagMenu.className = "custom-context-menu";
+tagMenu.style.display = "none";
+document.body.appendChild(tagMenu);
+document.addEventListener("click", function () {
+    tagMenu.style.display = "none";
 });

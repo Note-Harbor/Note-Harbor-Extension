@@ -224,4 +224,4 @@ infoInput.addEventListener("keydown", evt => {
         evt.preventDefault();
         addNote(""); // that was easy
     }
-  });
+});

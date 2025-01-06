@@ -1,6 +1,6 @@
 let settings = {};
 const defaultSettings = {
-    customColor: "#97BCC7",
+    theme: "light",
     sortChoice: "date"
 }
 Object.assign(settings, defaultSettings);
@@ -16,15 +16,12 @@ function loadSettings() {
         settings[keys[i]] = settingsObject[keys[i]];
     }
 
+    // set dropdown values for the first time
+    themeDropdown.value = settings.theme;
+    sortDropdown.value = settings.sortChoice;
+
     console.log("Current Settings: ", settingsObject);
     saveSettings();
-
-    applySettings();
-}
-
-function applySettings() {
-    // assume that all settings have valid values
-    document.body.style.backgroundColor = settings.customColor;
 }
 
 function saveSettings() {
@@ -34,6 +31,39 @@ function saveSettings() {
     }
 
     localStorage.setItem("settings", JSON.stringify(settings));
+
+    // Apply the new settings
+    // SETTING: Tag Sort
+    switch (settings.sortChoice) {
+        case "date": {
+            sortButton.textContent = "Sort By Date";
+            break;
+        }
+        case "tag": {
+            sortButton.textContent = "Sort By Tag";
+            break;
+        }
+        default: {
+            console.log("UNIMPLEMENTED SORT FEATURE");
+            break;
+        }
+    }
+
+    // SETTING: Theme
+    const selectedTheme = settings.theme;
+    if (themes[selectedTheme] === undefined) {
+        console.log(`Invalid theme selected; themes["${selectedTheme}"] not found`);
+    } else {
+        const des = document.body.style;
+        des.setProperty("--theme-text",         themes[selectedTheme].text        || unimplementedColor)
+        des.setProperty("--theme-placeholder",  themes[selectedTheme].placeholder || unimplementedColor);
+        des.setProperty("--theme-background",   themes[selectedTheme].background  || unimplementedColor);
+        des.setProperty("--theme-foreground",   themes[selectedTheme].foreground  || unimplementedColor);
+        des.setProperty("--theme-codeblocks",   themes[selectedTheme].codeblocks  || unimplementedColor);
+        des.setProperty("--theme-border",       themes[selectedTheme].border      || unimplementedColor);
+        des.setProperty("--theme-accent",       themes[selectedTheme].accent      || unimplementedColor);
+        des.setProperty("--theme-accentText",   themes[selectedTheme].accentText      || unimplementedColor);
+    }
 }
 
 function sortNotesByTag() {
@@ -100,36 +130,17 @@ settingsModal.addEventListener("click", function(event) {
 });
 resetSettings.addEventListener("click", function() {
     Object.assign(settings, defaultSettings);
-    applySettings();
     saveSettings();
 });
-customBackgroundColor.addEventListener("input", function (event) {
-    const customColor = event.target.value;
-    if (customColor !== "" && CSS.supports("color", customColor)) {
-        settings.customColor = customColor;
-        document.body.style.backgroundColor = settings.customColor;
-        saveSettings();
-    }
+themeDropdown.addEventListener("change", evt => {
+    const selectedTheme = evt.target.value;
+    settings.theme = selectedTheme
+    saveSettings();
 });
-delall.addEventListener("click", _ =>{ deleteAllNotes(); });
+delall.addEventListener("click", _ => { deleteAllNotes(); });
 sortDropdown.addEventListener("change", _ => {
     settings.sortChoice = sortDropdown.value;
     saveSettings();
-
-    switch (settings.sortChoice) {
-        case "date": {
-            sortButton.textContent = "Sort By Date";
-            break;
-        }
-        case "tag": {
-            sortButton.textContent = "Sort By Tag";
-            break;
-        }
-        default: {
-            console.log("UNIMPLEMENTED SORT FEATURE");
-            break;
-        }
-    }
 });
 sortButton.addEventListener("click", function(event) {
     event.stopPropagation();

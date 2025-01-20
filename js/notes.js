@@ -301,3 +301,7 @@ document.addEventListener("click", function () {
     customMenu.style.display = "none";
     tagMenu.style.display = "none"; 
 });
+
+document.addEventListener("contextmenu", () => {
+    tagMenu.style.display = "none";
+});

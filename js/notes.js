@@ -217,6 +217,7 @@ infoInput.addEventListener("keydown", evt => {
 });
 
 function addContextMenuToNote(note) {
+    console.log(note);
     note.addEventListener("contextmenu", function(event) {
         event.preventDefault(); 
 
@@ -229,10 +230,14 @@ function addContextMenuToNote(note) {
             while (tagBar.firstChild) {
                 tagBar.removeChild(tagBar.firstChild);
             }
-            notes[draggedNoteId].tags = [];
+            notes[note.id].tags = [];
             saveNotes();
 
             customMenu.style.display = "none"; 
+        });
+
+        document.getElementById("rem").addEventListener("mouseover", function() {
+            tagMenu.style.display = "none"; 
         });
         
         document.getElementById("addtofolder").addEventListener("mouseover", function(event) {
@@ -244,6 +249,23 @@ function addContextMenuToNote(note) {
                 const menuItem = document.createElement('div');
                 menuItem.className = "menu-item";
                 menuItem.textContent = input.textContent; 
+
+                menuItem.addEventListener("click", () => {
+                    let tagBar = note.querySelector('.tag-bar');
+                    const tagElement = document.createElement("div");
+                    tagElement.className = "note-tag";
+                    tagElement.textContent = menuItem.textContent;
+
+                    while (tagBar.firstChild) {
+                        tagBar.removeChild(tagBar.firstChild);
+                    }
+                    tagBar.appendChild(tagElement);
+
+                    notes[note.id].tags = [];
+                    notes[note.id].tags.push(menuItem.textContent);
+                    saveNotes();
+                });
+
                 tagMenu.appendChild(menuItem);
             });
     
@@ -252,12 +274,6 @@ function addContextMenuToNote(note) {
             tagMenu.style.top = `${customMenuRect.top}px`;
             tagMenu.style.display = "block"; 
         });
-        
-
-        document.getElementById("addtofolder").addEventListener("mouseout", function() {
-            tagMenu.style.display = "none"; 
-        });
-
     });
 }
 
@@ -270,14 +286,18 @@ customMenu.innerHTML = `
 `;
 
 document.body.appendChild(customMenu);
-document.addEventListener("click", function () {
-    customMenu.style.display = "none";
-});
 
 const tagMenu = document.createElement('div');
 tagMenu.className = "custom-context-menu";
 tagMenu.style.display = "none";
-document.body.appendChild(tagMenu);
-document.addEventListener("click", function () {
+
+tagMenu.addEventListener("mouseleave", () => {
     tagMenu.style.display = "none";
+});
+
+document.body.appendChild(tagMenu);
+
+document.addEventListener("click", function () {
+    customMenu.style.display = "none";
+    tagMenu.style.display = "none"; 
 });

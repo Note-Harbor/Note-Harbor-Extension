@@ -40,14 +40,21 @@ function deleteAllNotes() {
 
 /**
  * this function only creates the note in the notes[] array, then calls addNoteHTML
+ * @param {string} title - the title of the note
  * @param {string} text - textual/body content of note
- * @param {object} insertAfter - the note that precedes the new note you're trying to add
  */
-function addNote(text, insertAfter) {
-    const title = titleInput.value || "";
-    const content = text === "" ? infoInput.value : text;
-    infoInput.value = ""; // empty out the textbox
-    titleInput.value = "";
+function addNote(title, content) {
+    if (title===undefined && content===undefined) { // if we're calling addNote(), take values from textbox
+        title = titleInput.value;
+        content = infoInput.value;
+
+        titleInput.value = ""; // empty out the textbox
+        infoInput.value = "";
+    }
+
+    title = title || "";
+    content = content || "";
+    
 
     // stop if no text is provided
     if (title === "" && content === "") return;
@@ -68,7 +75,7 @@ function addNote(text, insertAfter) {
     console.log(tags);
 
     // create the actual HTML element
-    addNoteHTML(title, content, tags, id, insertAfter);
+    addNoteHTML(title, content, tags, id);
 }
 
 /**
@@ -78,9 +85,8 @@ function addNote(text, insertAfter) {
  * @param {string} text - textual/body content of a note
  * @param {string[]} tags - list containing all tags of a given note
  * parameter id = id 
- * @param {object} insertAfter - the note that precedes the new note you're trying to add
  */
-function addNoteHTML(title, text, tags, id, insertAfter = null) {
+function addNoteHTML(title, text, tags, id) {
     if (!id) {
         console.log("no ID provided!!!");
     }
@@ -199,11 +205,7 @@ function addNoteHTML(title, text, tags, id, insertAfter = null) {
     bottomDiv.appendChild(timeText);
     note.appendChild(bottomDiv);
 
-    if (insertAfter && insertAfter.nextElementSibling) {
-        container.insertBefore(note, insertAfter.nextElementSibling);
-    } else {
-        container.appendChild(note);
-    }
+    container.appendChild(note);
 }
 
 function saveNotesOrder() {
@@ -222,6 +224,6 @@ function saveNotesOrder() {
 infoInput.addEventListener("keydown", evt => {
     if (evt.ctrlKey && evt.key === "Enter") {
         evt.preventDefault();
-        addNote(""); // that was easy
+        addNote(); // that was easy
     }
 });

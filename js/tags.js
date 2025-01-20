@@ -209,6 +209,18 @@ function insertTag(folderName) {
     deleteButton.addEventListener("click", function(event) {
         event.stopPropagation();
         blurTag();
+
+        for (let [id, note] of Object.entries(notes)) {
+            console.log(note.tags, tag.textContent);
+            if (note.tags.includes(tagInput.textContent)) {
+                let tagBar = document.getElementById(id).querySelector('.tag-bar');
+                while (tagBar.firstChild) {
+                    tagBar.removeChild(tagBar.firstChild);
+                }
+                note.tags = []; 
+            }
+        }
+
         tag.remove();
     });
 

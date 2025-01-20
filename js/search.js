@@ -5,7 +5,7 @@
 function searchNotesByTag(tag) {
     const noteElements = Array.from(document.getElementsByClassName("note"));
     const filteredNoteIDs = Object.entries(notes)
-                                .filter(([_, note]) => note.tags.join("\n").includes(tag)) // better than exact matching tag strings
+                                .filter(([_, note]) => note.tags.join("\n").toLowerCase().includes(tag)) // better than exact matching tag strings
                               //.filter(([_, note]) => note.tags.includes(tag)) // alternative for exact tag matching
                                 .map(([id, _]) => id); // only give us the IDs
     
@@ -25,7 +25,7 @@ function searchNotesByTag(tag) {
 function searchNotesByTitle(title) {
     const noteElements = Array.from(document.getElementsByClassName("note"));
     const filteredNoteIDs = Object.entries(notes)
-                                .filter(([_, note]) => note.title.includes(title))
+                                .filter(([_, note]) => note.title.toLowerCase().includes(title))
                                 .map(([id, _]) => id); // only give us the IDs
     
     noteElements.forEach(noteElement => {

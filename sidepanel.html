@@ -6,14 +6,21 @@
   </head>
   <body>
     <div class="topContainer">
-      <input id="search" class="topInput" type="text" placeholder="Search">
+      <input id="search" class="topInput" type="text" list="prefixes" autocomplete="off" placeholder="Search Notes">
+      <datalist id="prefixes">
+        <option value="tag:">tag:TagName</option>
+        <option value="title:">title:NoteTitle</option>
+        
+      </datalist>
+
       <button id="openSettings" class="topButton">Settings</button>
     </div>
     
     <div class="topContainer">
-      <div class="inputContainer">
-        <input id="title" class="topInput shadow" type="text" placeholder="Title">
-        <textarea id="info" class="topInput shadow" placeholder="Write Here!"></textarea>
+      <div class="inputContainer shaodw">
+        <input id="title" class="topInput title" type="text" placeholder="Title">
+        <textarea id="info" class="topInput body" autofocus="autofocus" placeholder="Write Here!"></textarea>
+        <div id="formatBar"></div>
       </div>
 
       <button id="add" class="topButton shadow">Add<br>Note</button>
@@ -33,8 +40,13 @@
       <div class="modal-content">
         <h1>Settings</h1>
         <h2>General Settings</h2>
-        <label><a href="https://www.w3schools.com/cssref/css_colors.php">Background Color</a>: </label>
-        <input type="text" id="customBackgroundColor" />
+        <label>Theme: </label>
+        <select id="themeDropdown">
+          <option value="light">Light</option>
+          <option value="dark">Dark</option>
+          <option value="matcha">Matcha</option>
+          <option value="halloween">Halloween</option>
+        </select>
         <br><br>
         <label>Sort By: </label>
         <select id="sortDropdown">
@@ -64,6 +76,7 @@
   <script src="js/notes.js"></script>
   <script src="js/search.js"></script>
   <script src="js/settings.js"></script>
+  <script src="js/themes.js"></script>
   <script src="js/tags.js"></script>
 
   <script src="js/sidepanel.js"></script>

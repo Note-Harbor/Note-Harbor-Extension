@@ -36,7 +36,12 @@ function deleteAllNotes() {
     saveNotes();
 }
 
-// this function only creates the note in the notes[] array, then calls addNoteHTML
+/**
+ * this function only creates the note in the notes[] array, then calls addNoteHTML
+ * @param {string} text - textual/body content of note
+ * @param {object} insertAfter - the note that precedes the new note you're trying to add
+ */
+
 function addNote(text, insertAfter) {
     const title = titleInput.value || "";
     const content = text === "" ? infoInput.value : text;
@@ -69,7 +74,15 @@ function addNote(text, insertAfter) {
     addNoteHTML(title, content, tags, id, insertAfter);
 }
 
-// don't call directly unless you're reloading
+/**
+ * Generates the actual HTML element in the DOM
+ * don't call directly unless you're reloading
+ * @param {string} title - title of a note
+ * @param {string} text - textual/body content of a note
+ * @param {string[]} tags - list containing all tags of a given note
+ * parameter id = id 
+ * @param {object} insertAfter - the note that precedes the new note you're trying to add
+ */
 function addNoteHTML(title, text, tags, id, insertAfter = null) {
     if (!id) {
         console.log("no ID provided!!!");
@@ -82,7 +95,7 @@ function addNoteHTML(title, text, tags, id, insertAfter = null) {
 
     const deleteButton = document.createElement("button");
     deleteButton.className = "del";
-    deleteButton.textContent = "x";
+    deleteButton.textContent = "X";
     deleteButton.style.display = "none";
     deleteButton.addEventListener("click", function (event) {
         event.stopPropagation();
@@ -147,13 +160,13 @@ function addNoteHTML(title, text, tags, id, insertAfter = null) {
 
     const noteTitle = document.createElement("div");
     noteTitle.contentEditable = "plaintext-only";
-    noteTitle.className = "note-title";
+    noteTitle.className = "note-title title";
     noteTitle.innerText = title;
     const noteContent = document.createElement("textarea");
-    noteContent.className = "note-content displayNone";
+    noteContent.className = "note-content displayNone body";
     noteContent.value = text;
     const noteDisplay = document.createElement("div");
-    noteDisplay.className = "note-display";
+    noteDisplay.className = "note-display body";
     noteDisplay.innerHTML = DOMPurify.sanitize(marked.parse(text));
 
     note.appendChild(noteTitle);
@@ -181,13 +194,15 @@ function addNoteHTML(title, text, tags, id, insertAfter = null) {
     timeText.className = "time-text";
     timeText.style = "justify-content: right";
     const noteCreatedTime = new Date(+id);
-    timeText.textContent = `Created: ${noteCreatedTime.toLocaleString([], {
-        dateStyle: "short",
+    timeText.textContent = `${noteCreatedTime.toLocaleString([], {
         timeStyle: "short",
+        dateStyle: "short"
     })}`;
-
-    bottomBar.appendChild(timeText);
-    note.appendChild(bottomBar);
+    const bottomDiv = document.createElement("div");
+    bottomDiv.className = "bottomDiv";
+    bottomDiv.appendChild(bottomBar);
+    bottomDiv.appendChild(timeText);
+    note.appendChild(bottomDiv);
 
     if (insertAfter && insertAfter.nextElementSibling) {
         container.insertBefore(note, insertAfter.nextElementSibling);

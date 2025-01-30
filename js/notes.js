@@ -36,13 +36,12 @@ function deleteAllNotes() {
     saveNotes();
 }
 
-
-
 /**
  * this function only creates the note in the notes[] array, then calls addNoteHTML
  * @param {string} text - textual/body content of note
  * @param {object} insertAfter - the note that precedes the new note you're trying to add
  */
+
 function addNote(text, insertAfter) {
     const title = titleInput.value || "";
     const content = text === "" ? infoInput.value : text;
@@ -53,18 +52,22 @@ function addNote(text, insertAfter) {
     if (title === "" && content === "") return;
 
     const id = Date.now();
-    const tags = Array.from(document.getElementsByClassName("tag")).map(
-            (tag) => tag.textContent.slice(0, -1)
-    );
+    const tags = [];
 
     notes[id] = { title, content, tags };
     saveNotes();
 
     // Delete all tags in tagContainer
-    const currentTags = Array.from(document.getElementsByClassName("tag"));
-    for (let i = 0; i < currentTags.length; i++) {
-            currentTags[i].remove();
-    }
+    // const currentTags = Array.from(document.getElementsByClassName("tag"));
+    // for (let i = 0; i < currentTags.length; i++) {
+    //         currentTags[i].remove();
+    // }
+
+    // const newTags = Array.from(document.getElementsByClassName("new-tag"));
+    // for (let i = 0; i < newTags.length; i++) {
+    //         newTags[i].remove();
+    // }
+
     console.log(tags);
 
     // create the actual HTML element
@@ -98,6 +101,7 @@ function addNoteHTML(title, text, tags, id, insertAfter = null) {
         event.stopPropagation();
         deleteNote(id);
         note.remove();
+        customMenu.style.display = "none";
 
         // remove overlay
         let ove = document.getElementsByClassName("overlay");
@@ -106,6 +110,7 @@ function addNoteHTML(title, text, tags, id, insertAfter = null) {
     note.appendChild(deleteButton);
 
     addDraggingEvents(note);
+    addContextMenuToNote(note);
 
     note.addEventListener("mouseover", function () {
         deleteButton.style.display = "block";
@@ -224,4 +229,94 @@ infoInput.addEventListener("keydown", evt => {
         evt.preventDefault();
         addNote(""); // that was easy
     }
+});
+
+function addContextMenuToNote(note) {
+    console.log(note);
+    note.addEventListener("contextmenu", function(event) {
+        event.preventDefault(); 
+
+        customMenu.style.display = "block";
+        customMenu.style.left = `${event.clientX}px`;
+        customMenu.style.top = `${event.clientY}px`;
+
+        document.getElementById("rem").addEventListener("click", function() {
+            let tagBar = note.querySelector('.tag-bar');
+            while (tagBar.firstChild) {
+                tagBar.removeChild(tagBar.firstChild);
+            }
+            notes[note.id].tags = [];
+            saveNotes();
+
+            customMenu.style.display = "none"; 
+        });
+
+        document.getElementById("rem").addEventListener("mouseover", function() {
+            tagMenu.style.display = "none"; 
+        });
+        
+        document.getElementById("addtofolder").addEventListener("mouseover", function(event) {
+            const tagInputs = document.querySelectorAll('.tag-input');
+        
+            tagMenu.innerHTML = '';
+        
+            tagInputs.forEach(input => {
+                const menuItem = document.createElement('div');
+                menuItem.className = "menu-item";
+                menuItem.textContent = input.textContent; 
+
+                menuItem.addEventListener("click", () => {
+                    let tagBar = note.querySelector('.tag-bar');
+                    const tagElement = document.createElement("div");
+                    tagElement.className = "note-tag";
+                    tagElement.textContent = menuItem.textContent;
+
+                    while (tagBar.firstChild) {
+                        tagBar.removeChild(tagBar.firstChild);
+                    }
+                    tagBar.appendChild(tagElement);
+
+                    notes[note.id].tags = [];
+                    notes[note.id].tags.push(menuItem.textContent);
+                    saveNotes();
+                });
+
+                tagMenu.appendChild(menuItem);
+            });
+    
+            const customMenuRect = customMenu.getBoundingClientRect();
+            tagMenu.style.left = `${customMenuRect.right + 10}px`; 
+            tagMenu.style.top = `${customMenuRect.top}px`;
+            tagMenu.style.display = "block"; 
+        });
+    });
+}
+
+const customMenu = document.createElement("div");
+customMenu.className = "custom-context-menu";
+
+customMenu.innerHTML = `
+<div class="menu-item" id="addtofolder">Add to Folder...</div>
+<div class="menu-item" id="rem">Remove from Folder</div>
+`;
+
+document.body.appendChild(customMenu);
+
+const tagMenu = document.createElement('div');
+tagMenu.className = "custom-context-menu";
+tagMenu.style.display = "none";
+
+tagMenu.addEventListener("mouseleave", () => {
+    tagMenu.style.display = "none";
+});
+
+document.body.appendChild(tagMenu);
+
+document.addEventListener("click", function () {
+    customMenu.style.display = "none";
+    tagMenu.style.display = "none"; 
+});
+
+document.addEventListener("contextmenu", () => {
+    tagMenu.style.display = "none";
 });

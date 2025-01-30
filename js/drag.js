@@ -34,3 +34,4 @@ function addDraggingEvents(note) {
         }
     });
 }
+

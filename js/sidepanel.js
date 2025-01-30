@@ -1,11 +1,11 @@
 loadSettings();
 loadNotes();
-insertTag();
+//insertTag();
 formatBar.append(createFormatBar());
 
 add.addEventListener("click", _ => { addNote(""); });
-document.addEventListener("DOMContentLoaded", _ => { reloadNoteHTML(); });
-document.addEventListener("visibilitychange", _ => { saveNotesOrder(); });
+document.addEventListener("DOMContentLoaded", _ => { reloadNoteHTML(); loadFolders(); });
+document.addEventListener("visibilitychange", _ => { saveNotesOrder(); saveFolders(); });
 
 // context menu --> add new note
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {

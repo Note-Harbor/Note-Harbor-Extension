@@ -13,7 +13,7 @@ const themes = {
     dark: {
         text: "#FFFFFF",
         placeholder: "#D7DADC",
-        background: "#0A0A0A",
+        background: "#1e1e1e",
         foreground: "#3E3939",
         codeblocks: "#524E4E",
         border: "#3E3939", /* no border, same as foreground */

@@ -97,8 +97,8 @@ pre {
   text-align: center;
   width: 25px;
   height: 25px;
-  background-color: #006884;
-  color: #F2F1EF;
+  background-color: var(--theme-accent);
+  color: var(--theme-accent-text);
   box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.3);
 }
 
@@ -111,6 +111,7 @@ pre {
   height: 100%;
   outline: 2px solid var(--theme-border);
   box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.3);
+  color: white
 }
 
 .note-title {
@@ -122,6 +123,7 @@ pre {
 
 .note-title:focus {
   outline: none;
+  color: var(--theme-text)
 }
 
 .note.dragging {
@@ -138,11 +140,13 @@ pre {
   min-height: 88px;
   overflow-x: scroll;
   white-space: pre-wrap;
+  color: var(--theme-text);
 }
 .note-content:focus {
   outline: none;
+  color: var(--theme-text);
+  
 }
-
 
 .note-display {
   height: 100px;
@@ -154,6 +158,9 @@ pre {
   min-height: 88px;
   overflow-x: scroll;
   white-space: pre-wrap;
+}
+.deleteButton{
+  color: var(--accent-text)
 }
 
 .time-text {
@@ -201,8 +208,10 @@ pre {
   flex: 1;
   flex-direction: column;
   border-radius: 10px;
-  border: 2px solid #053D57;
-  background-color: #F2F1EF;
+  border: 2px solid;
+  border-color: var(--theme-border);
+  background-color: var(--theme-foreground);
+  color: var(--theme-text)
 }
 
 .bottomDiv {
@@ -243,7 +252,7 @@ pre {
 #info {
   border-radius: 0px 0px 10px 10px;
   border: 0px;
-  color: black;
+  color: var(--theme-text);
   min-height: 74px;
   resize: none;
 }
@@ -296,8 +305,8 @@ pre {
 
 /* Wrapper for new tag */
 .new-tag {
-  background-color: lightblue;
-  color: #006884;
+  background-color: var(--theme-accent);
+  color: var(--theme-accent-text);
   padding: 2px 8px;
   border-radius: 5px;
   align-items: center;
@@ -305,7 +314,8 @@ pre {
 }
 
 .tag {
-  background-color: #006884;
+  background-color: var(--theme-accent);
+  color: var(--theme-accent-text);
   padding: 2px 8px;
   border-radius: 5px;
   position: relative;
@@ -314,6 +324,8 @@ pre {
 
 .tag:focus {
   border: 1px solid white;
+  background-color: var(--theme-accent);
+  color: var(--theme-accent-text);
 }
 
 .tag-input {
@@ -329,7 +341,8 @@ pre {
 
 .tag-input:empty:before {
   content: "Add Folder Name...";
-  color: #006884;
+  background-color: var(--theme-accent);
+  color: var(--theme-accent-text);
 }
 
 .del-tag {
@@ -341,6 +354,7 @@ pre {
   font-size: 12px;
   display: flex;
   user-select: none;
+  color: var(--theme-accent-text);
 }
 
 .tag-bar {
@@ -359,8 +373,8 @@ pre {
 }
 
 .note-tag {
-  background-color: #006884;
-  color: white;
+  background-color: var(--theme-accent);
+  color: var(--theme-accent-text);
   padding: 2px 8px;
   border-radius: 5px;
   position: relative;

@@ -7,7 +7,7 @@
 Sticky Notes for Chrome, 
 Whenever You Need Them
 
-  [![Devices Mockup](https://github.com/Note-Harbor/Note-Harbor-Extension/blob/main/img/note-harbor-demo-sceenshot.png)][demo]
+  <img src="https://github.com/Note-Harbor/Note-Harbor-Extension/blob/main/img/note-harbor-demo-sceenshot.png" alt="Note Harbor Demo" width="36%" height = "45%"/>
 
 </div>
 

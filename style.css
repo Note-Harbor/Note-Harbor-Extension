@@ -270,11 +270,11 @@ pre {
 }
 
 .topButton:hover {
-  background-color: rgb(0, 80, 103);
+  background-color: var(--theme-border);
 }
 
 .topButton:active {
-  background-color: rgb(0, 66, 84);
+  background-color: var(--theme-accent);
 }
 
 #openSettings {

@@ -34,6 +34,7 @@ function deleteAllNotes() {
     notes = {};
     reloadNoteHTML();
     saveNotes();
+    reloadFolders();
 }
 
 /**

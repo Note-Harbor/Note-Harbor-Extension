@@ -58,7 +58,7 @@ pre {
 .topContainer {
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   gap: 10px;
   margin-bottom: 10px;
@@ -282,7 +282,7 @@ pre {
 }
 
 #add {
-  height: 134px;
+  height: 84px;
 }
 
 
@@ -295,11 +295,17 @@ pre {
   flex-direction: row;
   flex-wrap: wrap;
   gap: 4px;
-  padding-top: 2px;
 }
 
 #addTagButton {
-  width: 30px;
+  width: 60px;
+  height: 20px;
+  align-items: center;
+}
+
+#tagDropdown {
+  width: 80px;
+  height: 20px;
   align-items: center;
 }
 
@@ -320,6 +326,7 @@ pre {
   border-radius: 5px;
   position: relative;
   display: flex;
+  align-items: center;
 }
 
 .tag:focus {

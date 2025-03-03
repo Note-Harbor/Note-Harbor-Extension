@@ -207,7 +207,7 @@ function addNoteHTML(title, text, tags, id, insertAfter = null) {
     if (insertAfter && insertAfter.nextElementSibling) {
         container.insertBefore(note, insertAfter.nextElementSibling);
     } else {
-        container.appendChild(note);
+        container.prepend(note);
     }
 }
 

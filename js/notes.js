@@ -136,12 +136,15 @@ function addNoteHTML(title, text, tags, id, insertAfter = null) {
             const noteDisplay = note.getElementsByClassName("note-display")[0];
             noteContent.classList.remove("displayNone");
             noteDisplay.classList.add("displayNone");
-
+            
+            // Disable dragging if note in focused mode
+            note.draggable = false;
             overlay.addEventListener("click", function () {
                 // remove overlay
                 document.body.removeChild(overlay);
                 note.classList.remove("overlay-created");
                 note.style.zIndex = null;
+                note.draggable = true;
 
                 // update noteDisplay, persist to notes
                 notes[note.id].title = noteTitle.innerText;

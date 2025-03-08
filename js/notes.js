@@ -56,23 +56,23 @@ function addNote(text, insertAfter) {
     const tags = [];
 
     notes[id] = { title, content, tags };
+
+    //Move new note to top
+    const notesArray = Object.entries(notes);
+    if (notesArray.length > 0) {
+        newNote = notesArray.pop()
+        notesArray.unshift(newNote);  
+  
+        const sortedNotes = {};
+        notesArray.forEach(([id, note]) => {
+            sortedNotes[id] = note;
+        });
+        notes = sortedNotes;
+    }  
+    
     saveNotes();
-
-    // Delete all tags in tagContainer
-    // const currentTags = Array.from(document.getElementsByClassName("tag"));
-    // for (let i = 0; i < currentTags.length; i++) {
-    //         currentTags[i].remove();
-    // }
-
-    // const newTags = Array.from(document.getElementsByClassName("new-tag"));
-    // for (let i = 0; i < newTags.length; i++) {
-    //         newTags[i].remove();
-    // }
-
+    reloadNoteHTML();
     console.log(tags);
-
-    // create the actual HTML element
-    addNoteHTML(title, content, tags, id, insertAfter);
 }
 
 /**

@@ -13,6 +13,18 @@
   --theme-formatText: #000000;
 }
 
+a:link {
+  color: var(--theme-accent-text);
+}
+
+a:hover {
+  color: var(--theme-hover);
+}
+
+a:active {
+  color: var(--theme-click);
+}
+
 body {
   background-color: var(--theme-background);
   overflow: hidden;
@@ -106,6 +118,14 @@ pre {
   box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.3);
 }
 
+.del:hover {
+  background-color: var(--theme-hover);
+}
+
+.del:active {
+  background-color: var(--theme-click);
+}
+
 .note {
   width: 100%;
   padding: 0px;
@@ -117,7 +137,6 @@ pre {
   box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.3);
   color: white
 }
-
 .note-title {
   padding: 5px;
   border-radius: 10px 10px 0px 0px;
@@ -146,10 +165,15 @@ pre {
   white-space: pre-wrap;
   color: var(--theme-text);
 }
+
 .note-content:focus {
   outline: none;
   color: var(--theme-text);
   
+}
+
+.note-content:link {
+  color: var(--accent-text);
 }
 
 .note-display {
@@ -249,6 +273,18 @@ pre {
   border: 0px;
 }
 
+.bottom-bar button:hover {
+  background-color: var(--theme-hover);
+  color: var(--theme-formatText);
+  border: 0px;
+}
+
+.bottom-bar button:active {
+  background-color: var(--theme-click);
+  color: var(--theme-formatText);
+  border: 0px;
+}
+
 #title {
   font-weight: bold;
   border-radius: 5px 5px 0px 0px;
@@ -338,6 +374,13 @@ pre {
   position: relative;
   display: flex;
   font-size: 12px;
+}
+
+.tag:hover {
+  background-color: var(--theme-hover);
+}
+.tag:active {
+  background-color: var(--theme-click);
 }
 
 .tag:focus {

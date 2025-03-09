@@ -60,9 +60,11 @@ function saveSettings() {
         des.setProperty("--theme-background",   themes[selectedTheme].background  || unimplementedColor);
         des.setProperty("--theme-foreground",   themes[selectedTheme].foreground  || unimplementedColor);
         des.setProperty("--theme-codeblocks",   themes[selectedTheme].codeblocks  || unimplementedColor);
+        des.setProperty("--theme-hover",        themes[selectedTheme].hover       || unimplementedColor);
+        des.setProperty("--theme-click",        themes[selectedTheme].click       || unimplementedColor);
         des.setProperty("--theme-border",       themes[selectedTheme].border      || unimplementedColor);
         des.setProperty("--theme-accent",       themes[selectedTheme].accent      || unimplementedColor);
-        des.setProperty("--theme-accentText",   themes[selectedTheme].accentText      || unimplementedColor);
+        des.setProperty("--theme-accentText",   themes[selectedTheme].accentText  || unimplementedColor);
     }
 }
 

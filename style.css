@@ -4,6 +4,8 @@
   --theme-background: #97BCC7;
   --theme-foreground: #F2F1EF;
   --theme-codeblocks: #CFCFCF;
+  --theme-hover: #135473;
+  --theme-click: #053D57;
   --theme-border: #053D57;
   --theme-accent: #006884; /* for use in certain buttons */
   --theme-accentText: #F2F1EF;
@@ -270,11 +272,11 @@ pre {
 }
 
 .topButton:hover {
-  background-color: var(--theme-border);
+  background-color: var(--theme-hover);
 }
 
 .topButton:active {
-  background-color: var(--theme-accent);
+  background-color: var(--theme-click);
 }
 
 #openSettings {
@@ -300,6 +302,7 @@ pre {
 
 #addTagButton {
   width: 30px;
+  height: 30px;
   align-items: center;
 }
 

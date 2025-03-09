@@ -12,7 +12,8 @@ const themes = {
         accent: "#006884",
         accentText: "#F2F1EF",
         format: "#D9D9D9",
-        formatText: "#000000"
+        formatText: "#000000",
+        submenuHover: "#D9D9D9"
     },
     dark: {
         text: "#E6E6E6",
@@ -26,7 +27,9 @@ const themes = {
         accent: "#505050",
         accentText: "#E0E0E0",
         format: "#505050",
-        formatText: "#E0E0E0"
+        formatText: "#E0E0E0",
+        submenuHover: "#404040"
+
     },
     matcha: {
         text: "#5A4632",
@@ -40,7 +43,9 @@ const themes = {
         accent: "#A0B762",
         accentText: "#FFF8E5",
         format: "#A0B762",
-        formatText: "#FFF8E5"
+        formatText: "#FFF8E5",
+        submenuHover: "#EDE3C9"
+
     },
     nebula: {
         text: "#e2dbf0",
@@ -54,6 +59,8 @@ const themes = {
         accent: "#99002b",       
         accentText: "#DDD1E3",
         format: "#99002b",
-        formatText: "#DDD1E3"
+        formatText: "#DDD1E3",
+        submenuHover: "#5B4B8A"
+
     }
 }

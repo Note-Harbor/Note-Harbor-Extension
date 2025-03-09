@@ -67,6 +67,7 @@ function saveSettings() {
         des.setProperty("--theme-accentText",   themes[selectedTheme].accentText  || unimplementedColor);
         des.setProperty("--theme-format",       themes[selectedTheme].format      || unimplementedColor);
         des.setProperty("--theme-formatText",   themes[selectedTheme].formatText  || unimplementedColor);
+        des.setProperty("--theme-submenuHover",   themes[selectedTheme].submenuHover  || unimplementedColor);
     }
 }
 
@@ -123,36 +124,115 @@ function sortNotesByDate() {
     saveNotes();
 }
 
+// Get references to elements
+const settingsButton = document.getElementById("openSettings");
+const settingsMenu = document.getElementById("settingsMenu");
+const sortMenu = document.getElementById("sortMenu");
+
+// Get menu items
+const settingsOption = document.getElementById("settingsOption");
+const sortOption = document.getElementById("sortOption");
+const websiteOption = document.getElementById("websiteOption");
+const sortByDate = document.getElementById("sortByDate");
+const sortByTag = document.getElementById("sortByTag");
+
+// Toggle settings menu on button click
+settingsButton.addEventListener("click", function() {
+    event.preventDefault();
+    showMenu(settingsMenu, settingsButton);
+});
+
+// Open full settings modal
+settingsOption.addEventListener("click", function() {
+    settingsMenu.style.display = "none";
+    settingsModal.showModal();
+});
+
+// Toggle sort menu when "Sort By" is clicked
+sortOption.addEventListener("mouseover", function(event) {
+    showSubMenu(sortMenu, settingsMenu);
+});
+
+// Apply sorting when clicking an option
+sortByDate.addEventListener("click", function() {
+    settings.sortChoice = "date";
+    saveSettings();
+    sortNotesByDate();
+    sortMenu.style.display = "none";
+});
+
+sortByTag.addEventListener("click", function() {
+    settings.sortChoice = "tag";
+    saveSettings();
+    sortNotesByTag();
+    sortMenu.style.display = "none";
+});
+
+// Open GitHub when "Website" is clicked
+websiteOption.addEventListener("click", function() {
+    window.open("https://github.com/Note-Harbor/Note-Harbor-Extension", "_blank");
+});
+
+
+document.addEventListener("click", function(event) {
+    if (!settingsMenu.contains(event.target) && event.target !== settingsButton) {
+        settingsMenu.style.display = "none";
+    }
+    if (!sortMenu.contains(event.target) && event.target !== sortOption) {
+        sortMenu.style.display = "none";
+    }
+});
+
+// Helper function to show main menu
+function showMenu(menu, trigger) {
+    const rect = trigger.getBoundingClientRect();
+    const menuWidth = menu.offsetWidth;
+    menu.style.left = `${rect.right - 160}px`;
+    menu.style.top = `${rect.bottom + 5}px`;
+    menu.style.display = "block";
+}
+
+// Helper function to show submenu next to main menu
+function showSubMenu(subMenu, parentMenu) {
+    const parentRect = parentMenu.getBoundingClientRect();
+    subMenu.style.left = `${parentRect.left - 168}px`;
+    subMenu.style.top = `${parentRect.top}px`;
+    subMenu.style.display = "block";
+}
+
+
+
 // event listeners
-openSettings.addEventListener("click", _ => { settingsModal.showModal(); });
+//openSettings.addEventListener("click", _ => { settingsModal.showModal(); });
 closeSettings.addEventListener("click", _ => { settingsModal.close(); });
-settingsModal.addEventListener("click", function(event) {
-    const modalContent = document.querySelector(".modal-content");
-    if (!modalContent.contains(event.target)) {
-        settingsModal.close();
-    }
-});
-resetSettings.addEventListener("click", function() {
-    Object.assign(settings, defaultSettings);
-    saveSettings();
-});
-themeDropdown.addEventListener("change", evt => {
-    const selectedTheme = evt.target.value;
-    settings.theme = selectedTheme
-    saveSettings();
-});
-delall.addEventListener("click", _ => { deleteAllNotes(); });
-sortDropdown.addEventListener("change", _ => {
-    settings.sortChoice = sortDropdown.value;
-    saveSettings();
-});
-sortButton.addEventListener("click", function(event) {
-    event.stopPropagation();
-    if (settings.sortChoice === "date") {
-        sortNotesByDate();
-    } else if (settings.sortChoice === "tag") {
-        sortNotesByTag();
-    } else {
-        console.log("UNIMPLEMENTED SORT FEATURE");
-    }
-});
+
+    settingsModal.addEventListener("click", function(event) {
+        const modalContent = document.querySelector(".modal-content");
+        if (!modalContent.contains(event.target)) {
+            settingsModal.close();
+        }
+    });
+    resetSettings.addEventListener("click", function() {
+        Object.assign(settings, defaultSettings);
+        saveSettings();
+    });
+    themeDropdown.addEventListener("change", evt => {
+        const selectedTheme = evt.target.value;
+        settings.theme = selectedTheme
+        saveSettings();
+    });
+    delall.addEventListener("click", _ => { deleteAllNotes(); });
+    sortDropdown.addEventListener("change", _ => {
+        settings.sortChoice = sortDropdown.value;
+        saveSettings();
+    });
+    sortButton.addEventListener("click", function(event) {
+        event.stopPropagation();
+        if (settings.sortChoice === "date") {
+            sortNotesByDate();
+        } else if (settings.sortChoice === "tag") {
+            sortNotesByTag();
+        } else {
+            console.log("UNIMPLEMENTED SORT FEATURE");
+        }
+    });

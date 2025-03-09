@@ -9,6 +9,8 @@
   --theme-border: #053D57;
   --theme-accent: #006884; /* for use in certain buttons */
   --theme-accentText: #F2F1EF;
+  --theme-format: #D9D9D9;
+  --theme-formatText: #000000;
 }
 
 body {
@@ -75,7 +77,7 @@ pre {
   position: relative;
   width: 100%;
   gap: 10px;
-  padding-top: 10px;
+  padding-top: 12px;
 }
 
 #dAdd {
@@ -198,11 +200,15 @@ pre {
   flex: 1;
   border-radius: 10px;
   height: 34px;
-  margin: 5px;
   border: none;
 }
 #search:focus {
-  outline: 2px solid var(--theme-border);
+  border: 2px solid var(--theme-border);
+  outline: 0px;
+}
+
+#search::-webkit-calendar-picker-indicator {
+  display: none !important;
 }
 
 .inputContainer {
@@ -213,7 +219,8 @@ pre {
   border: 2px solid;
   border-color: var(--theme-border);
   background-color: var(--theme-foreground);
-  color: var(--theme-text)
+  color: var(--theme-text);
+  height: 130px;
 }
 
 .bottomDiv {
@@ -227,7 +234,7 @@ pre {
 .bottom-bar {
   margin: 5px;
   padding: 5px;
-  background-color: #D9D9D9;
+  background-color: var(--theme-format);
   border-radius: 5px;
   height: 10px;
   width: 55px;
@@ -237,7 +244,8 @@ pre {
 }
 
 .bottom-bar button {
-  background-color: #D9D9D9;
+  background-color: var(--theme-format);
+  color: var(--theme-formatText);
   border: 0px;
 }
 
@@ -309,25 +317,32 @@ pre {
 /* Wrapper for new tag */
 .new-tag {
   background-color: var(--theme-accent);
-  color: var(--theme-accent-text);
+  color: var(--theme-placeholder);
   padding: 2px 8px;
   border-radius: 5px;
   align-items: center;
   display: flex;
+  font-size: 12px;
+}
+
+.new-tag:focus {
+  border: none;
 }
 
 .tag {
   background-color: var(--theme-accent);
-  color: var(--theme-accent-text);
+  color: var(--theme-accentText);
   padding: 2px 8px;
   border-radius: 5px;
+  align-items: center;
   position: relative;
   display: flex;
+  font-size: 12px;
 }
 
 .tag:focus {
-  border: 1px solid white;
-  background-color: var(--theme-accent);
+  border: none;
+  background-color: var(--theme-hover);
   color: var(--theme-accent-text);
 }
 

@@ -65,6 +65,8 @@ function saveSettings() {
         des.setProperty("--theme-border",       themes[selectedTheme].border      || unimplementedColor);
         des.setProperty("--theme-accent",       themes[selectedTheme].accent      || unimplementedColor);
         des.setProperty("--theme-accentText",   themes[selectedTheme].accentText  || unimplementedColor);
+        des.setProperty("--theme-format",       themes[selectedTheme].format      || unimplementedColor);
+        des.setProperty("--theme-formatText",   themes[selectedTheme].formatText  || unimplementedColor);
     }
 }
 

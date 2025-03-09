@@ -22,12 +22,5 @@
       "suggested_key": "Ctrl+Shift+L",
       "description": "Opens our glorious sidebar!"
     }
-  },
-  "web_accessible_resources": [
-    {
-        "resources": ["img/close.png"],
-        "matches": ["<all_urls>"]
-    }
-]
-
+  }
 }

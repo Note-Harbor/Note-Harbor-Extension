@@ -420,13 +420,13 @@ pre {
 .tag:focus {
   border: none;
   background-color: var(--theme-hover);
-  color: var(--theme-accent-text);
+  color: var(--theme-accentText);
   cursor: text;
 }
 
 .tag-input {
   background-color: transparent;
-  color: white;
+  color: var(--theme-accentText);
   border: none;
   outline: none;
   padding: 0; 
@@ -450,6 +450,7 @@ pre {
   font-size: 12px;
   display: flex;
   user-select: none;
+  background-color: var(--theme-accent);
   color: var(--theme-accent-text);
 }
 
@@ -532,7 +533,7 @@ pre {
   width: 70%;
   min-width: 300px;
   border-radius: 10px;
-  border: 0px;
+  border: 2px solid var(--theme-border);
   background-color: var(--theme-foreground);
 }
 

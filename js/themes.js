@@ -1,6 +1,6 @@
 const unimplementedColor = "#F00BA7";
 const themes = {
-    light: {
+    default: {
         text: "#000000",
         placeholder: "#747474",
         background: "#97BCC7",
@@ -15,6 +15,21 @@ const themes = {
         formatText: "#000000",
         submenuHover: "#D9D9D9"
     },
+    light: {
+        text: "#1A1A1A",         
+        placeholder: "#6C6C6C",  
+        background: "#FFFFFF",   
+        foreground: "#F2F2F2",   
+        codeblocks: "#E0E0E0",   
+        hover: "#333333",        
+        click: "#4d4d4d",        
+        border: "#C4C4C4",       
+        accent: "#262626",       
+        accentText: "#FFFFFF",   
+        format: "#E6E6E6",       
+        formatText: "#1A1A1A",   
+        submenuHover: "#D9D9D9"  
+    },
     dark: {
         text: "#E6E6E6",
         placeholder: "#A0A0A0",
@@ -23,7 +38,7 @@ const themes = {
         codeblocks: "#3A3A3A",
         hover: "#444444",
         click: "#333333",
-        border: "#383838", /* no border, same as foreground */
+        border: "#383838", 
         accent: "#505050",
         accentText: "#E0E0E0",
         format: "#505050",

@@ -147,7 +147,7 @@ pre {
 
 .note {
   width: 100%;
-  padding: 0px;
+  padding: 5px;
   background-color: var(--theme-foreground);
   position: relative;
   border-radius: 10px;

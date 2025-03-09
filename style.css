@@ -57,6 +57,24 @@ h1, h2, h3, h4, h5, h6, p {
   margin: 0px;
   overflow-wrap: break-word;
 }
+
+.icon {
+  width: 24px;
+  height: 24px;
+  
+  /* Set up the PNG as a mask */
+  -webkit-mask-image: url('chrome-extension://__MSG_@@extension_id__/img/close.png');
+  mask-image: url('chrome-extension://__MSG_@@extension_id__/img/close.png');
+  
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  
+  -webkit-mask-size: cover;
+  mask-size: cover;
+
+  background-color: var(--theme-text); /* Color changes with theme */
+}
+
 /* Codeblocks */
 pre {
   background-color: var(--theme-codeblocks);
@@ -318,6 +336,7 @@ pre {
 
 .topButton:hover {
   background-color: var(--theme-hover);
+  cursor: pointer;
 }
 
 .topButton:active {
@@ -326,6 +345,19 @@ pre {
 
 #openSettings {
   height: 34px;
+}
+
+#closeSettings {
+  background-color: var(--theme-foreground);
+  border: none;
+  color: var(--theme-text);
+  width: 30px;
+  height: 30px;
+  border-radius: 20px;
+}
+
+#closeSettings:hover {
+  cursor: pointer;
 }
 
 #add {
@@ -379,6 +411,7 @@ pre {
 
 .tag:hover {
   background-color: var(--theme-hover);
+  cursor: pointer;
 }
 .tag:active {
   background-color: var(--theme-click);
@@ -388,6 +421,7 @@ pre {
   border: none;
   background-color: var(--theme-hover);
   color: var(--theme-accent-text);
+  cursor: text;
 }
 
 .tag-input {
@@ -499,8 +533,51 @@ pre {
   min-width: 300px;
   border-radius: 10px;
   border: 0px;
+  background-color: var(--theme-foreground);
 }
 
+#settingsTitle {
+  font-size: 20px;
+  color: var(--theme-text);
+}
+
+.settingsHeader {
+  font-size: 17px;
+  font-weight: bold;
+  color: var(--theme-text);
+}
+
+.settingsText {
+  font-size: 14px;
+  color: var(--theme-text);
+}
+
+.settingsButton {
+  width: 140px;
+  height: 35px;
+  margin-top: 5px;
+}
+
+#themeDropdown {
+  width: 140px;
+  height: 35px;
+  border-radius: 10px; 
+  margin-top: 5px;
+  background-color: var(--theme-submenuHover);
+  border: none;
+  color: var(--theme-text);
+  padding-left: 5px;
+  outline: none;
+}
+
+.settingsTop {
+  display: flex;
+  justify-content: space-between;
+}
+
+.settingsDiv {
+  margin-top: 10px;
+}
 /* width */
 ::-webkit-scrollbar {
   width: 2px;

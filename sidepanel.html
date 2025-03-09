@@ -3,6 +3,7 @@
     <link rel="stylesheet" href="style.css" />
     <script src="lib/purify.min.js"></script>
     <script src="lib/marked.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   </head>
   <body>
     <div class="topContainer">
@@ -50,34 +51,30 @@
 
     <dialog id="settingsModal" class="settings-modal">
       <div class="modal-content">
-        <h1>Settings</h1>
-        <h2>General Settings</h2>
-        <label>Theme: </label>
-        <select id="themeDropdown">
-          <option value="light">Light</option>
-          <option value="dark">Dark</option>
-          <option value="matcha">Matcha</option>
-          <option value="nebula">Nebula</option>
-        </select>
-        <br><br>
-        <label>Sort By: </label>
-        <select id="sortDropdown">
-          <option value="date">Date</option>
-          <option value="tag">Tag</option>
-        </select>
-        <button id="sortButton">Sort By Date</button>
-        <br><br>
-
-        <h2>Destructive Settings</h2>
-        <label>Delete All: </label>
-        <button id="delall">NUKE!!!</button>
-        <br>
-
-        <label>Reset to Default Settings: </label>
-        <button id="resetSettings">Reset</button>
-        
-        <br><br>
-        <button id="closeSettings">Close</button>
+        <div class="settingsTop">
+          <p id="settingsTitle">Settings</p>
+          <button id="closeSettings">X</button>
+        </div>
+        <div class="settingsDiv">
+          <label class="settingsHeader">Select Theme</label>
+          <p class="settingsText">Choose a color palette for Note Harbor!</p>
+          <select id="themeDropdown">
+            <option value="light">Light</option>
+            <option value="dark">Dark</option>
+            <option value="matcha">Matcha</option>
+            <option value="nebula">Nebula</option>
+          </select>
+        </div>
+        <div class="settingsDiv">
+          <label class="settingsHeader">Delete All Notes</label>
+          <p class="settingsText">Permanently delete all your notes. This action cannot be undone.</p>
+          <button id="delall" class="topButton settingsButton">Delete All Notes</button>
+        </div>
+        <div class="settingsDiv">
+          <label class="settingsHeader">Reset All Settings</label>
+          <p class="settingsText">Restore all settings to default. Your notes will not be deleted.</p>
+          <button id="resetSettings" class="topButton settingsButton">Reset All Settings</button>
+        </div>
       </div>
     </dialog>
   </body>

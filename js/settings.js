@@ -18,7 +18,7 @@ function loadSettings() {
 
     // set dropdown values for the first time
     themeDropdown.value = settings.theme;
-    sortDropdown.value = settings.sortChoice;
+    //sortDropdown.value = settings.sortChoice;
 
     console.log("Current Settings: ", settingsObject);
     saveSettings();
@@ -34,6 +34,7 @@ function saveSettings() {
 
     // Apply the new settings
     // SETTING: Tag Sort
+    /*
     switch (settings.sortChoice) {
         case "date": {
             sortButton.textContent = "Sort By Date";
@@ -48,7 +49,7 @@ function saveSettings() {
             break;
         }
     }
-
+    */
     // SETTING: Theme
     const selectedTheme = settings.theme;
     if (themes[selectedTheme] === undefined) {
@@ -200,39 +201,39 @@ function showSubMenu(subMenu, parentMenu) {
     subMenu.style.display = "block";
 }
 
-
-
 // event listeners
-//openSettings.addEventListener("click", _ => { settingsModal.showModal(); });
 closeSettings.addEventListener("click", _ => { settingsModal.close(); });
 
-    settingsModal.addEventListener("click", function(event) {
-        const modalContent = document.querySelector(".modal-content");
-        if (!modalContent.contains(event.target)) {
-            settingsModal.close();
-        }
-    });
-    resetSettings.addEventListener("click", function() {
-        Object.assign(settings, defaultSettings);
-        saveSettings();
-    });
-    themeDropdown.addEventListener("change", evt => {
-        const selectedTheme = evt.target.value;
-        settings.theme = selectedTheme
-        saveSettings();
-    });
-    delall.addEventListener("click", _ => { deleteAllNotes(); });
-    sortDropdown.addEventListener("change", _ => {
-        settings.sortChoice = sortDropdown.value;
-        saveSettings();
-    });
-    sortButton.addEventListener("click", function(event) {
-        event.stopPropagation();
-        if (settings.sortChoice === "date") {
-            sortNotesByDate();
-        } else if (settings.sortChoice === "tag") {
-            sortNotesByTag();
-        } else {
-            console.log("UNIMPLEMENTED SORT FEATURE");
-        }
-    });
+settingsModal.addEventListener("click", function(event) {
+    const modalContent = document.querySelector(".modal-content");
+    if (!modalContent.contains(event.target)) {
+        settingsModal.close();
+    }
+});
+resetSettings.addEventListener("click", function() {
+    Object.assign(settings, defaultSettings);
+    saveSettings();
+});
+themeDropdown.addEventListener("change", evt => {
+    const selectedTheme = evt.target.value;
+    settings.theme = selectedTheme
+    saveSettings();
+});
+delall.addEventListener("click", _ => { deleteAllNotes(); });
+/*
+sortDropdown.addEventListener("change", _ => {
+    settings.sortChoice = sortDropdown.value;
+    saveSettings();
+});
+
+sortButton.addEventListener("click", function(event) {
+    event.stopPropagation();
+    if (settings.sortChoice === "date") {
+        sortNotesByDate();
+    } else if (settings.sortChoice === "tag") {
+        sortNotesByTag();
+    } else {
+        console.log("UNIMPLEMENTED SORT FEATURE");
+    }
+});
+*/

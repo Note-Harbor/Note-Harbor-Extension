@@ -405,6 +405,9 @@ pre {
   border: none;
 }
 
+.new-tag:hover {
+  background-color: var(--theme-hover);
+}
 .new-tag:active {
   background-color: var(--theme-click);
 }

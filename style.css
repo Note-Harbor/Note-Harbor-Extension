@@ -11,7 +11,10 @@
   --theme-accentText: #F2F1EF;
   --theme-format: #D9D9D9;
   --theme-formatText: #000000;
+  --theme-formatHover: #C4C4C4;
+  --theme-formatClick: #B0B0B0;
   --theme-submenuHover: #D9D9D9;
+  --theme-submenuClick: #C4C4C4;
 }
 
 a:link {
@@ -295,13 +298,13 @@ pre {
 }
 
 .bottom-bar button:hover {
-  background-color: var(--theme-hover);
+  background-color: var(--theme-formatHover);;
   color: var(--theme-formatText);
   border: 0px;
 }
 
 .bottom-bar button:active {
-  background-color: var(--theme-click);
+  background-color: var(--theme-formatClick);
   color: var(--theme-formatText);
   border: 0px;
 }
@@ -395,10 +398,15 @@ pre {
   align-items: center;
   display: flex;
   font-size: 12px;
+  box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.3);
 }
 
 .new-tag:focus {
   border: none;
+}
+
+.new-tag:active {
+  background-color: var(--theme-click);
 }
 
 .tag {
@@ -531,6 +539,12 @@ pre {
 .menu-item:hover {
   background: var(--theme-submenuHover);
 }
+
+/* Click effect for dropdown */
+.menu-item:active {
+  background: var(--theme-submenuClick);
+}
+
 
 .settings-modal {
   width: 70%;

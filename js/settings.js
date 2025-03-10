@@ -68,7 +68,10 @@ function saveSettings() {
         des.setProperty("--theme-accentText",   themes[selectedTheme].accentText  || unimplementedColor);
         des.setProperty("--theme-format",       themes[selectedTheme].format      || unimplementedColor);
         des.setProperty("--theme-formatText",   themes[selectedTheme].formatText  || unimplementedColor);
-        des.setProperty("--theme-submenuHover",   themes[selectedTheme].submenuHover  || unimplementedColor);
+        des.setProperty("--theme-formatHover", themes[selectedTheme].formatHover  || unimplementedColor);
+        des.setProperty("--theme-formatClick", themes[selectedTheme].formatClick  || unimplementedColor);
+        des.setProperty("--theme-submenuHover", themes[selectedTheme].submenuHover || unimplementedColor);
+        des.setProperty("--theme-submenuClick", themes[selectedTheme].submenuClick  || unimplementedColor);
     }
 }
 

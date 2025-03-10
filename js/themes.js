@@ -13,7 +13,10 @@ const themes = {
         accentText: "#F2F1EF",
         format: "#D9D9D9",
         formatText: "#000000",
-        submenuHover: "#D9D9D9"
+        formatHover: "#C4C4C4",
+        formatClick: "#B0B0B0",
+        submenuHover: "#D9D9D9",
+        submenuClick: "#C4C4C4"
     },
     light: {
         text: "#1A1A1A",         
@@ -27,8 +30,11 @@ const themes = {
         accent: "#262626",       
         accentText: "#FFFFFF",   
         format: "#E6E6E6",       
-        formatText: "#1A1A1A",   
-        submenuHover: "#D9D9D9"  
+        formatText: "#1A1A1A", 
+        formatHover: "#C4C4C4",
+        formatClick: "#B0B0B0",  
+        submenuHover: "#D9D9D9",
+        submenuClick: "#C4C4C4" 
     },
     dark: {
         text: "#E6E6E6",
@@ -43,8 +49,10 @@ const themes = {
         accentText: "#E0E0E0",
         format: "#505050",
         formatText: "#E0E0E0",
-        submenuHover: "#404040"
-
+        formatHover: "#464646",
+        formatClick: "#3C3C3C",
+        submenuHover: "#404040",
+        submenuClick: "#363636"
     },
     matcha: {
         text: "#5A4632",
@@ -59,8 +67,10 @@ const themes = {
         accentText: "#FFF8E5",
         format: "#A0B762",
         formatText: "#FFF8E5",
-        submenuHover: "#EDE3C9"
-
+        formatHover: "#8FA456",
+        formatClick: "#7F934D",
+        submenuHover: "#EDE3C9",
+        submenuClick: "#D6CBAF"
     },
     nebula: {
         text: "#e2dbf0",
@@ -75,7 +85,9 @@ const themes = {
         accentText: "#DDD1E3",
         format: "#99002b",
         formatText: "#DDD1E3",
-        submenuHover: "#5B4B8A"
-
+        formatHover: "#870026",
+        formatClick: "#7A001F",
+        submenuHover: "#5B4B8A",
+        submenuClick: "#4F4178"
     }
 }

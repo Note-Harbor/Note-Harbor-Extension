@@ -275,6 +275,11 @@ pre {
   background-color: var(--theme-foreground);
   color: var(--theme-text);
   height: 130px;
+  transition: transform .2s ease-in-out;
+}
+
+.inputContainer:hover {
+  transform: scale(1.01);
 }
 
 .bottomDiv {
@@ -427,6 +432,7 @@ pre {
   position: relative;
   display: flex;
   font-size: 12px;
+  box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.3);
 }
 
 .tag:hover {

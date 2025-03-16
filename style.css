@@ -55,15 +55,6 @@ pre {
   display: none;
 }
 
-.topContainerSearch {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  margin-bottom: 10px;
-}
-
 .topContainer {
   display: flex;
   flex-direction: row;
@@ -489,6 +480,7 @@ pre {
 .dropdown-item {
   padding: 10px;
   cursor: pointer;
+  color: black;
 }
 
 .dropdown-item:hover, .dropdown-item.active {

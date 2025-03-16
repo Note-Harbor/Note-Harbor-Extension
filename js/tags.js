@@ -84,10 +84,13 @@ function insertTag(folderName) {
     tagInput.contentEditable = true;
     tagInput.textContent = "";
 
-    tag.addEventListener("focus", function(event) { 
+    tag.handleTagFocus = function () {
         update();
-        tagInput.focus();
-    });
+        this.tagInput.focus();
+        console.log("focused");
+    };
+
+    tag.addEventListener("focus", tag.handleTagFocus);
 
     function update() { // selects the notes that contain selected folder
         if(tag.className == "new-tag") {
@@ -122,14 +125,14 @@ function insertTag(folderName) {
     }
 
     tag.addEventListener("blur", function(event) {
-        blurTag();
+        tag.blurTag();
     });
 
     tagInput.addEventListener("blur", function(event) {
-        blurTag();
+        tag.blurTag();
     });
 
-    function blurTag() {
+    tag.blurTag = function() {
         if (tagInput.textContent.trim() === "") {
             tagInput.textContent = "";
             tag.className = "new-tag"; // Reset to new-tag if text is empty
@@ -236,6 +239,8 @@ function insertTag(folderName) {
     }
 
     tag.appendChild(tagInput);
+    tag.tagInput = tagInput;
+
     tag.appendChild(deleteButton);
 
     tagContainer.appendChild(tag);
@@ -243,3 +248,47 @@ function insertTag(folderName) {
     // automatically focus on new tag input
     tagInput.focus();
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+    const dropdown = document.getElementById("dropdown");
+    const menu = document.getElementById("dropdown-menu");
+
+    dropdown.addEventListener("click", () => {
+        const tags = document.querySelectorAll('.tag');
+        menu.innerHTML = '';
+
+        const allNotes = document.createElement('div');
+        allNotes.className = "dropdown-item";
+        allNotes.textContent = "All Notes";
+
+        allNotes.addEventListener("click", () => {
+            tags.forEach(tag => {
+                tag.blurTag();
+            });
+        });
+
+        menu.appendChild(allNotes);
+    
+        tags.forEach(tag => {
+            const menuItem = document.createElement('div');
+            menuItem.className = "dropdown-item";
+            menuItem.textContent = tag.tagInput.textContent;
+
+            menuItem.addEventListener("click", () => {
+                if (typeof tag.handleTagFocus === "function") {
+                    tag.handleTagFocus();
+                }
+            });
+            
+            menu.appendChild(menuItem);
+        });
+
+        menu.classList.toggle("hidden");
+    });
+
+    document.addEventListener("click", (e) => {
+        if (!dropdown.contains(e.target)) {
+            menu.classList.add("hidden");
+        }
+    });
+});

@@ -5,7 +5,7 @@
     <script src="lib/marked.min.js"></script>
   </head>
   <body>
-    <div class="topContainer">
+    <div class="topContainerSearch">
       <input id="search" class="topInput" type="text" list="prefixes" autocomplete="off" placeholder="Search Notes">
       <datalist id="prefixes">
         <option value="tag:">tag:TagName</option>
@@ -26,12 +26,17 @@
       <button id="add" class="topButton shadow">Add<br>Note</button>
     </div>
     
+    
     <div class="flex" style="gap: 10px">
-      <div id="formatBar"></div>
       <div id="tagRow">
-        <select id="tagDropdown" class="topButton shadow">
-          <option id="addTagButton" value="deselect">Deselect</option>
-        </select>
+
+        <div id="dropdown" class="dropdown topButton shadow">
+          <div class="dropdown-content">
+            <span id="dropdown-arrow">&#9660;</span>
+          </div>
+          <div id="dropdown-menu" class="dropdown-menu hidden"></div>
+        </div>
+
         <button id="addTagButton" class="topButton shadow" title="Add Folder">+</button>
       </div>
     </div>

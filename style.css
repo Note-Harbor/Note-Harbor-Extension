@@ -55,6 +55,15 @@ pre {
   display: none;
 }
 
+.topContainerSearch {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
 .topContainer {
   display: flex;
   flex-direction: row;
@@ -282,7 +291,7 @@ pre {
 }
 
 #add {
-  height: 84px;
+  height: 104px;
 }
 
 
@@ -298,16 +307,18 @@ pre {
 }
 
 #addTagButton {
-  width: 60px;
+  width: 50px;
   height: 20px;
   align-items: center;
 }
 
 #tagDropdown {
-  width: 80px;
+  width: 50px;
   height: 20px;
   align-items: center;
 }
+
+
 
 /* Wrapper for new tag */
 .new-tag {
@@ -444,4 +455,46 @@ pre {
 ::backdrop {
   background: gray;
   opacity: 0.50;
+}
+
+.dropdown {
+  position: relative;
+  width: 30px;
+  height: 20px;
+}
+
+.dropdown-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding-top: 4px;
+}
+
+#dropdown-arrow {
+  font-size: 10px;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: max-content;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  z-index: 10;
+}
+
+.dropdown-item {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.dropdown-item:hover, .dropdown-item.active {
+  background: #f0f0f0;
+}
+
+.hidden {
+  display: none;
 }

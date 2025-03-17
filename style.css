@@ -256,6 +256,15 @@ pre {
   border-color: var(--theme-border);
   /*box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.3);*/
 }
+
+#search:hover {
+  background-color: var(--theme-submenuHover);
+}
+
+#search:active {
+  background-color: var(--theme-submenuClick);
+}
+
 #search:focus {
   border: 2px solid var(--theme-border);
   outline: 0px;

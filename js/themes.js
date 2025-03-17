@@ -31,10 +31,10 @@ const themes = {
         accentText: "#FFFFFF",   
         format: "#E6E6E6",       
         formatText: "#1A1A1A", 
-        formatHover: "#C4C4C4",
-        formatClick: "#B0B0B0",  
-        submenuHover: "#D9D9D9",
-        submenuClick: "#C4C4C4" 
+        formatHover: "#D9D9D9",
+        formatClick: "#C4C4C4",  
+        submenuHover: "#DFDFDF",
+        submenuClick: "#CCCCCC" 
     },
     dark: {
         text: "#E6E6E6",

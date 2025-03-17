@@ -87,7 +87,6 @@ function insertTag(folderName) {
     tag.handleTagFocus = function () {
         update();
         this.tagInput.focus();
-        console.log("focused");
     };
 
     tag.addEventListener("focus", tag.handleTagFocus);
@@ -124,14 +123,6 @@ function insertTag(folderName) {
         }
     }
 
-    tag.addEventListener("blur", function(event) {
-        tag.blurTag();
-    });
-
-    tagInput.addEventListener("blur", function(event) {
-        tag.blurTag();
-    });
-
     tag.blurTag = function() {
         if (tagInput.textContent.trim() === "") {
             tagInput.textContent = "";
@@ -152,6 +143,14 @@ function insertTag(folderName) {
 
         tagInput.contentEditable = false;
     }
+
+    tag.addEventListener("blur", function(event) {
+        tag.blurTag();
+    });
+
+    tagInput.addEventListener("blur", function(event) {
+        tag.blurTag();
+    });
 
     tagInput.addEventListener("keydown", function(event) {
         if (event.key === "Enter") {
@@ -211,7 +210,7 @@ function insertTag(folderName) {
     deleteButton.textContent = "x";
     deleteButton.addEventListener("click", function(event) {
         event.stopPropagation();
-        blurTag();
+        tag.blurTag();
 
         for (let [id, note] of Object.entries(notes)) {
             console.log(note.tags, tag.textContent);

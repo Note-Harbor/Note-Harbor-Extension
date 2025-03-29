@@ -14,6 +14,4 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
     // make that new message if it's non-empty
     if (content) addNote(content, title);
-    
-    sendResponse({ status: "Received" });
 });

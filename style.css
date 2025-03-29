@@ -157,8 +157,14 @@ pre {
   height: 100%;
   outline: 2px solid var(--theme-border);
   box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.3);
-  color: white
+  color: white;
+  transition: transform .2s ease-in-out;
 }
+
+.note:hover {
+  transform: scale(1.01);
+}
+
 .note-title {
   padding: 5px;
   border-radius: 10px 10px 0px 0px;
@@ -250,6 +256,15 @@ pre {
   border-color: var(--theme-border);
   /*box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.3);*/
 }
+
+#search:hover {
+  background-color: var(--theme-submenuHover);
+}
+
+#search:active {
+  background-color: var(--theme-submenuClick);
+}
+
 #search:focus {
   border: 2px solid var(--theme-border);
   outline: 0px;
@@ -269,6 +284,11 @@ pre {
   background-color: var(--theme-foreground);
   color: var(--theme-text);
   height: 130px;
+  transition: transform .2s ease-in-out;
+}
+
+.inputContainer:hover {
+  transform: scale(1.01);
 }
 
 .bottomDiv {
@@ -421,6 +441,7 @@ pre {
   position: relative;
   display: flex;
   font-size: 12px;
+  box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.3);
 }
 
 .tag:hover {

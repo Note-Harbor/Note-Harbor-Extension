@@ -123,7 +123,10 @@ function addNoteHTML(title, text, tags, id, insertAfter = null) {
 
     note.addEventListener("click", function (event) {
         // if the user clicks on a link inside the note, don't change into edit mode
-        if (event.target.nodeName === "A") return;
+        if (event.target.nodeName === "A") {
+            window.open(event.target.href, "_blank");
+            return;   
+        }       
 
         if (!this.classList.contains("overlay-created")) {
             const overlay = document.createElement("div");

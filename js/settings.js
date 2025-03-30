@@ -140,6 +140,15 @@ const websiteOption = document.getElementById("websiteOption");
 const sortByDate = document.getElementById("sortByDate");
 const sortByTag = document.getElementById("sortByTag");
 
+// Comfirm menu items
+const deleteConfirmModal = document.getElementById("deleteConfirmModal");
+const confirmDeleteNotes = document.getElementById("confirmDeleteNotes");
+const cancelDeleteNotes = document.getElementById("cancelDeleteNotes");
+
+const resetConfirmModal = document.getElementById("resetConfirmModal");
+const confirmResetNotes = document.getElementById("confirmResetNotes");
+const cancelResetNotes = document.getElementById("cancelResetNotes");
+
 // Toggle settings menu on button click
 settingsButton.addEventListener("click", function() {
     event.preventDefault();
@@ -213,16 +222,45 @@ settingsModal.addEventListener("click", function(event) {
         settingsModal.close();
     }
 });
-resetSettings.addEventListener("click", function() {
+
+//delete confirm  stuff
+const delall = document.getElementById("delall");
+delall.addEventListener("click", () => {
+    deleteConfirmModal.showModal();
+});
+
+confirmDeleteNotes.addEventListener("click", () => {
+    deleteAllNotes();
+    deleteConfirmModal.close();
+});
+
+cancelDeleteNotes.addEventListener("click", () => {
+    deleteConfirmModal.close();
+});
+
+//reset confirm stuff
+const resetSettings = document.getElementById("resetSettings");
+resetSettings.addEventListener("click", () => {
+    resetConfirmModal.showModal();
+});
+
+confirmResetNotes.addEventListener("click", function() {
     Object.assign(settings, defaultSettings);
     saveSettings();
+    resetConfirmModal.close();
 });
+
+cancelResetNotes.addEventListener("click", () => {
+    resetConfirmModal.close();
+});
+
 themeDropdown.addEventListener("change", evt => {
     const selectedTheme = evt.target.value;
     settings.theme = selectedTheme
     saveSettings();
 });
-delall.addEventListener("click", _ => { deleteAllNotes(); });
+
+
 /*
 sortDropdown.addEventListener("change", _ => {
     settings.sortChoice = sortDropdown.value;

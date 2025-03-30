@@ -53,7 +53,7 @@
       <div class="modal-content">
         <div class="settingsTop">
           <p id="settingsTitle">Settings</p>
-          <button id="closeSettings">X</button>
+          <button id="closeSettings" class="closeButton">X</button>
         </div>
         <div class="settingsDiv">
           <label class="settingsHeader">Select Theme</label>
@@ -78,7 +78,33 @@
         </div>
       </div>
     </dialog>
+    <dialog id="deleteConfirmModal" class="settings-modal confirmModal">
+      <div class="modal-content">
+        <div class="settingsTop">
+          <p class="settingsHeader">Are you sure?</p>
+          <button id="cancelDeleteNotes" class="closeButton">X</button>
+        </div>
+        <div class="settingsDiv">
+          <p class="settingsText">This will permanently delete all your notes. This action cannot be undone.</p>
+          <button id="confirmDeleteNotes" class="topButton settingsButton">Delete All Notes</button>
+        </div>
+      </div>
+    </dialog>
+    <dialog id="resetConfirmModal" class="settings-modal confirmModal">
+      <div class="modal-content">
+        <div class="settingsTop">
+          <p class="settingsHeader">Are you sure?</p>
+          <button id="cancelResetNotes" class="closeButton">X</button>
+        </div>
+        <div class="settingsDiv">
+          <p class="settingsText">This will permanently reset your settings. This action cannot be undone.</p>
+          <button id="confirmResetNotes" class="topButton settingsButton">Reset All Settings</button>
+        </div>
+      </div>
+    </dialog>
   </body>
+
+  
 
   <!-- Script call order matters -->
   <script src="js/drag.js"></script>

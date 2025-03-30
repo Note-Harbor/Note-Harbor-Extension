@@ -373,7 +373,7 @@ pre {
   height: 34px;
 }
 
-#closeSettings {
+.closeButton {
   background-color: var(--theme-foreground);
   border: none;
   color: var(--theme-text);
@@ -382,7 +382,7 @@ pre {
   border-radius: 20px;
 }
 
-#closeSettings:hover {
+.closeButton:hover {
   cursor: pointer;
 }
 
@@ -547,7 +547,7 @@ pre {
   width: 150px;
   display: none;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-  z-index: 1000;
+  z-index: 500;
 }
 
 /* Style for dropdown items */
@@ -576,6 +576,11 @@ pre {
   border-radius: 10px;
   border: 2px solid var(--theme-border);
   background-color: var(--theme-foreground);
+}
+
+.confirmModal {
+  width: 50%;
+  min-width: 200px;
 }
 
 #settingsTitle {

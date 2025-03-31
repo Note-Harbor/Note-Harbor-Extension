@@ -3,31 +3,30 @@
     <link rel="stylesheet" href="style.css" />
     <script src="lib/purify.min.js"></script>
     <script src="lib/marked.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   </head>
   <body>
     <div class="topContainerSearch">
       <input id="search" class="topInput" type="text" list="prefixes" autocomplete="off" placeholder="Search Notes">
       <datalist id="prefixes">
-        <option value="tag:">tag:TagName</option>
-        <option value="title:">title:NoteTitle</option>
-        
+        <option value="tag:">Tag Name</option>
+        <option value="title:">Note Title</option>
       </datalist>
 
       <button id="openSettings" class="topButton">Settings</button>
     </div>
     
     <div class="topContainer">
-      <div class="inputContainer shadow">
+      <div class="inputContainer">
         <input id="title" class="topInput title" type="text" placeholder="Title">
-        <textarea id="info" class="topInput body" autofocus="autofocus" placeholder="Write Here!"></textarea>
+        <textarea id="info" class="topInput body" autofocus="autofocus" style="margin-left:5px; margin-right:5px;" placeholder="Write Here!"></textarea>
         <div id="formatBar"></div>
       </div>
 
       <button id="add" class="topButton shadow">Add<br>Note</button>
     </div>
     
-    
-    <div class="flex" style="gap: 10px">
+    <div class="flex">
       <div id="tagRow">
 
         <button id="addTagButton" class="topButton shadow" title="Add Folder">+</button>
@@ -46,39 +45,75 @@
     <!-- Holds all the notes -->
     <div id="container"></div>
 
+    <!-- Floating Settings Menu -->
+    <div id="settingsMenu" class="settings-menu">
+      <div class="menu-item" id="settingsOption">Settings</div>
+      <div class="menu-item" id="sortOption">Sort By</div>
+      <div class="menu-item" id="websiteOption">Website</div>
+    </div>
+
+    <!-- Floating Sort Menu (Appears When Clicking "Sort By") -->
+    <div id="sortMenu" class="settings-menu">
+      <div class="menu-item" id="sortByDate">Sort by Date</div>
+      <div class="menu-item" id="sortByTag">Sort by Tag</div>
+    </div>
+
     <dialog id="settingsModal" class="settings-modal">
       <div class="modal-content">
-        <h1>Settings</h1>
-        <h2>General Settings</h2>
-        <label>Theme: </label>
-        <select id="themeDropdown">
-          <option value="light">Light</option>
-          <option value="dark">Dark</option>
-          <option value="matcha">Matcha</option>
-          <option value="halloween">Halloween</option>
-        </select>
-        <br><br>
-        <label>Sort By: </label>
-        <select id="sortDropdown">
-          <option value="date">Date</option>
-          <option value="tag">Tag</option>
-        </select>
-        <button id="sortButton">Sort By Date</button>
-        <br><br>
-
-        <h2>Destructive Settings</h2>
-        <label>Delete All: </label>
-        <button id="delall">NUKE!!!</button>
-        <br>
-
-        <label>Reset to Default Settings: </label>
-        <button id="resetSettings">Reset</button>
-        
-        <br><br>
-        <button id="closeSettings">Close</button>
+        <div class="settingsTop">
+          <p id="settingsTitle">Settings</p>
+          <button id="closeSettings" class="closeButton">X</button>
+        </div>
+        <div class="settingsDiv">
+          <label class="settingsHeader">Select Theme</label>
+          <p class="settingsText">Choose a color palette for Note Harbor!</p>
+          <select id="themeDropdown">
+            <option value="default">Default</option>
+            <option value="light">Light</option>
+            <option value="dark">Dark</option>
+            <option value="matcha">Matcha</option>
+            <option value="nebula">Nebula</option>
+          </select>
+        </div>
+        <div class="settingsDiv">
+          <label class="settingsHeader">Delete All Notes</label>
+          <p class="settingsText">Permanently delete all your notes. This action cannot be undone.</p>
+          <button id="delall" class="topButton settingsButton">Delete All Notes</button>
+        </div>
+        <div class="settingsDiv">
+          <label class="settingsHeader">Reset All Settings</label>
+          <p class="settingsText">Restore all settings to default. Your notes will not be deleted.</p>
+          <button id="resetSettings" class="topButton settingsButton">Reset All Settings</button>
+        </div>
+      </div>
+    </dialog>
+    <dialog id="deleteConfirmModal" class="settings-modal confirmModal">
+      <div class="modal-content">
+        <div class="settingsTop">
+          <p class="settingsHeader">Are you sure?</p>
+          <button id="cancelDeleteNotes" class="closeButton">X</button>
+        </div>
+        <div class="settingsDiv">
+          <p class="settingsText">This will permanently delete all your notes. This action cannot be undone.</p>
+          <button id="confirmDeleteNotes" class="topButton settingsButton">Delete All Notes</button>
+        </div>
+      </div>
+    </dialog>
+    <dialog id="resetConfirmModal" class="settings-modal confirmModal">
+      <div class="modal-content">
+        <div class="settingsTop">
+          <p class="settingsHeader">Are you sure?</p>
+          <button id="cancelResetNotes" class="closeButton">X</button>
+        </div>
+        <div class="settingsDiv">
+          <p class="settingsText">This will permanently reset your settings. This action cannot be undone.</p>
+          <button id="confirmResetNotes" class="topButton settingsButton">Reset All Settings</button>
+        </div>
       </div>
     </dialog>
   </body>
+
+  
 
   <!-- Script call order matters -->
   <script src="js/drag.js"></script>
@@ -88,6 +123,5 @@
   <script src="js/settings.js"></script>
   <script src="js/themes.js"></script>
   <script src="js/tags.js"></script>
-
   <script src="js/sidepanel.js"></script>
 </html>

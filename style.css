@@ -4,9 +4,29 @@
   --theme-background: #97BCC7;
   --theme-foreground: #F2F1EF;
   --theme-codeblocks: #CFCFCF;
+  --theme-hover: #135473;
+  --theme-click: #053D57;
   --theme-border: #053D57;
   --theme-accent: #006884; /* for use in certain buttons */
   --theme-accentText: #F2F1EF;
+  --theme-format: #D9D9D9;
+  --theme-formatText: #000000;
+  --theme-formatHover: #C4C4C4;
+  --theme-formatClick: #B0B0B0;
+  --theme-submenuHover: #D9D9D9;
+  --theme-submenuClick: #C4C4C4;
+}
+
+a:link {
+  color: var(--theme-accent-text);
+}
+
+a:hover {
+  color: var(--theme-hover);
+}
+
+a:active {
+  color: var(--theme-click);
 }
 
 body {
@@ -40,6 +60,24 @@ h1, h2, h3, h4, h5, h6, p {
   margin: 0px;
   overflow-wrap: break-word;
 }
+
+.icon {
+  width: 24px;
+  height: 24px;
+  
+  /* Set up the PNG as a mask */
+  -webkit-mask-image: url('chrome-extension://__MSG_@@extension_id__/img/close.png');
+  mask-image: url('chrome-extension://__MSG_@@extension_id__/img/close.png');
+  
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  
+  -webkit-mask-size: cover;
+  mask-size: cover;
+
+  background-color: var(--theme-text); /* Color changes with theme */
+}
+
 /* Codeblocks */
 pre {
   background-color: var(--theme-codeblocks);
@@ -82,7 +120,7 @@ pre {
   position: relative;
   width: 100%;
   gap: 10px;
-  padding-top: 10px;
+  padding-top: 12px;
 }
 
 #dAdd {
@@ -111,16 +149,29 @@ pre {
   box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.3);
 }
 
+.del:hover {
+  background-color: var(--theme-hover);
+}
+
+.del:active {
+  background-color: var(--theme-click);
+}
+
 .note {
   width: 100%;
-  padding: 0px;
+  padding: 5px;
   background-color: var(--theme-foreground);
   position: relative;
   border-radius: 10px;
   height: 100%;
   outline: 2px solid var(--theme-border);
   box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.3);
-  color: white
+  color: white;
+  transition: transform .2s ease-in-out;
+}
+
+.note:hover {
+  transform: scale(1.01);
 }
 
 .note-title {
@@ -151,10 +202,15 @@ pre {
   white-space: pre-wrap;
   color: var(--theme-text);
 }
+
 .note-content:focus {
   outline: none;
   color: var(--theme-text);
   
+}
+
+.note-content:link {
+  color: var(--accent-text);
 }
 
 .note-display {
@@ -205,11 +261,26 @@ pre {
   flex: 1;
   border-radius: 10px;
   height: 34px;
-  margin: 5px;
-  border: none;
+  border: 2px solid;
+  border-color: var(--theme-border);
+  /*box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.3);*/
 }
+
+#search:hover {
+  background-color: var(--theme-submenuHover);
+}
+
+#search:active {
+  background-color: var(--theme-submenuClick);
+}
+
 #search:focus {
-  outline: 2px solid var(--theme-border);
+  border: 2px solid var(--theme-border);
+  outline: 0px;
+}
+
+#search::-webkit-calendar-picker-indicator {
+  display: none !important;
 }
 
 .inputContainer {
@@ -220,7 +291,13 @@ pre {
   border: 2px solid;
   border-color: var(--theme-border);
   background-color: var(--theme-foreground);
-  color: var(--theme-text)
+  color: var(--theme-text);
+  height: 130px;
+  transition: transform .2s ease-in-out;
+}
+
+.inputContainer:hover {
+  transform: scale(1.01);
 }
 
 .bottomDiv {
@@ -234,7 +311,7 @@ pre {
 .bottom-bar {
   margin: 5px;
   padding: 5px;
-  background-color: #D9D9D9;
+  background-color: var(--theme-format);
   border-radius: 5px;
   height: 10px;
   width: 55px;
@@ -244,7 +321,20 @@ pre {
 }
 
 .bottom-bar button {
-  background-color: #D9D9D9;
+  background-color: var(--theme-format);
+  color: var(--theme-formatText);
+  border: 0px;
+}
+
+.bottom-bar button:hover {
+  background-color: var(--theme-formatHover);;
+  color: var(--theme-formatText);
+  border: 0px;
+}
+
+.bottom-bar button:active {
+  background-color: var(--theme-formatClick);
+  color: var(--theme-formatText);
   border: 0px;
 }
 
@@ -275,19 +365,34 @@ pre {
   background-color: var(--theme-accent);
   color: var(--theme-accentText);
   border: 0px;
+  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.3);
   /* border: 1px solid var(--theme-border); */
 }
 
 .topButton:hover {
-  background-color: rgb(0, 80, 103);
+  background-color: var(--theme-hover);
+  cursor: pointer;
 }
 
 .topButton:active {
-  background-color: rgb(0, 66, 84);
+  background-color: var(--theme-click);
 }
 
 #openSettings {
   height: 34px;
+}
+
+.closeButton {
+  background-color: var(--theme-foreground);
+  border: none;
+  color: var(--theme-text);
+  width: 30px;
+  height: 30px;
+  border-radius: 20px;
+}
+
+.closeButton:hover {
+  cursor: pointer;
 }
 
 #add {
@@ -314,48 +419,71 @@ pre {
 }
 
 #addTagButton {
-  width: 50px;
-  height: 20px;
+  width: 30px;
+  height: 30px;
   align-items: center;
 }
 
 #tagDropdown {
   width: 50px;
-  height: 20px;
+  height: 30px;
   align-items: center;
 }
-
-
 
 /* Wrapper for new tag */
 .new-tag {
   background-color: var(--theme-accent);
-  color: var(--theme-accent-text);
+  color: var(--theme-placeholder);
   padding: 2px 8px;
   border-radius: 5px;
   align-items: center;
   display: flex;
+  font-size: 12px;
+  box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.3);
+}
+
+.new-tag:focus {
+  border: none;
+}
+
+.new-tag:hover {
+  background-color: var(--theme-hover);
+}
+.new-tag:active {
+  background-color: var(--theme-click);
 }
 
 .tag {
   background-color: var(--theme-accent);
-  color: var(--theme-accent-text);
+  color: var(--theme-accentText);
   padding: 2px 8px;
   border-radius: 5px;
+  align-items: center;
   position: relative;
   display: flex;
   align-items: center;
+  font-size: 12px;
+  box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.3);
+}
+
+.tag:hover {
+  background-color: var(--theme-hover);
+  cursor: pointer;
+}
+.tag:active {
+  background-color: var(--theme-click);
 }
 
 .tag:focus {
-  border: 1px solid white;
-  background-color: var(--theme-accent);
-  color: var(--theme-accent-text);
+  border: none;
+  background-color: var(--theme-hover);
+  color: var(--theme-accentText);
+  cursor: text;
 }
 
 .tag-input {
   background-color: transparent;
-  color: white;
+  color: var(--theme-accentText);
   border: none;
   outline: none;
   padding: 0; 
@@ -379,6 +507,7 @@ pre {
   font-size: 12px;
   display: flex;
   user-select: none;
+  background-color: var(--theme-accent);
   color: var(--theme-accent-text);
 }
 
@@ -430,13 +559,95 @@ pre {
   background-color: #f5f5f5;
 }
 
+/* Hide menus by default */
+.settings-menu {
+  position: absolute;
+  background: var(--theme-foreground);
+  border: 2px solid var(--theme-border);
+  border-radius: 8px;
+  padding: 5px;
+  width: 150px;
+  display: none;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 500;
+}
+
+/* Style for dropdown items */
+.menu-item {
+  padding: 8px;
+  color: var(--theme-text);
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+/* Hover effect for dropdown */
+.menu-item:hover {
+  background: var(--theme-submenuHover);
+}
+
+/* Click effect for dropdown */
+.menu-item:active {
+  background: var(--theme-submenuClick);
+}
+
+
 .settings-modal {
   width: 70%;
   min-width: 300px;
   border-radius: 10px;
-  border: 0px;
+  border: 2px solid var(--theme-border);
+  background-color: var(--theme-foreground);
 }
 
+.confirmModal {
+  width: 50%;
+  min-width: 200px;
+}
+
+#settingsTitle {
+  font-size: 20px;
+  color: var(--theme-text);
+}
+
+.settingsHeader {
+  font-size: 17px;
+  font-weight: bold;
+  color: var(--theme-text);
+}
+
+.settingsText {
+  font-size: 14px;
+  color: var(--theme-text);
+}
+
+.settingsButton {
+  width: 140px;
+  height: 35px;
+  margin-top: 5px;
+  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.3);
+}
+
+#themeDropdown {
+  width: 140px;
+  height: 35px;
+  border-radius: 10px; 
+  margin-top: 5px;
+  background-color: var(--theme-submenuHover);
+  border: none;
+  color: var(--theme-text);
+  padding-left: 5px;
+  outline: none;
+}
+
+.settingsTop {
+  display: flex;
+  justify-content: space-between;
+}
+
+.settingsDiv {
+  margin-top: 10px;
+}
 /* width */
 ::-webkit-scrollbar {
   width: 2px;

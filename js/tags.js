@@ -1,4 +1,4 @@
-const tagContainer = document.getElementById("tagRow");
+const tagContainer = document.getElementById("folderRow");
 const addTag = document.getElementById("addTagButton");
 
 addTag.addEventListener("click", () => insertTag(""));
@@ -7,7 +7,7 @@ function loadFolders() {
     const notesText = localStorage.getItem("folders");
     let allFolders = JSON.parse(notesText);
 
-    for (const folderName of allFolders) {
+    for (const folderName of allFolders.reverse()) {
         insertTag(folderName);
     }
 }
@@ -45,7 +45,18 @@ function deleteFolders(name) {
     saveFolders();
 }
 
+function updateVisible() {
+    const visibleTags = Array.from(tagContainer.children);
+    visibleTags.forEach((tag, index) => {
+        tag.style.display = index < 4 ? "flex" : "none";
+    });
+}
+
 function insertTag(folderName) {
+    if (tagContainer.querySelector('.new-tag')) {
+        return; 
+    }
+
     saveFolders();
     // tag as wrapper, tag-input for inputs, del-tag for delete button to avoid any editable issues
     const tag = document.createElement("div");
@@ -224,6 +235,7 @@ function insertTag(folderName) {
         }
 
         tag.remove();
+        updateVisible();
     });
 
     deleteButton.addEventListener("mousedown", function(event) {
@@ -242,10 +254,11 @@ function insertTag(folderName) {
 
     tag.appendChild(deleteButton);
 
-    tagContainer.appendChild(tag);
+    tagContainer.prepend(tag);
     
     // automatically focus on new tag input
     tagInput.focus();
+    updateVisible();
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -276,6 +289,8 @@ document.addEventListener("DOMContentLoaded", () => {
             menuItem.addEventListener("click", () => {
                 if (typeof tag.handleTagFocus === "function") {
                     tag.handleTagFocus();
+                    tagContainer.prepend(tag);
+                    updateVisible();
                 }
             });
             
@@ -283,6 +298,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         menu.classList.toggle("hidden");
+        
     });
 
     document.addEventListener("click", (e) => {

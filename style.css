@@ -306,6 +306,13 @@ pre {
   gap: 4px;
 }
 
+#folderRow {
+  display: flex;     
+  flex-direction: row;  
+  flex-wrap: wrap;
+  gap: 4px;         
+}
+
 #addTagButton {
   width: 50px;
   height: 20px;

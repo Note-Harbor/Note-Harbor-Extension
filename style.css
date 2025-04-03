@@ -327,7 +327,7 @@ pre {
 }
 
 .bottom-bar button:hover {
-  background-color: var(--theme-formatHover);;
+  background-color: var(--theme-formatHover);
   color: var(--theme-formatText);
   border: 0px;
 }
@@ -396,7 +396,7 @@ pre {
 }
 
 #add {
-  height: 104px;
+  height: 133px;
 }
 
 
@@ -449,6 +449,7 @@ pre {
 .new-tag:hover {
   background-color: var(--theme-hover);
 }
+
 .new-tag:active {
   background-color: var(--theme-click);
 }
@@ -576,7 +577,8 @@ pre {
 .menu-item {
   padding: 8px;
   color: var(--theme-text);
-  font-size: 14px;
+  font-family: Arial, sans-serif; 
+  font-size: 16px; 
   cursor: pointer;
   border-radius: 5px;
 }
@@ -678,40 +680,53 @@ pre {
 .dropdown {
   position: relative;
   width: 30px;
-  height: 20px;
+  height: 30px;
+  align-items: center;
+  font-family: Arial, sans-serif; 
+  font-size: 12px; 
 }
 
 .dropdown-content {
   display: flex;
-  align-items: center;
   justify-content: center;
   width: 100%;
   padding-top: 4px;
+  align-items: center;
 }
 
 #dropdown-arrow {
-  font-size: 10px;
+  font-size: 12px;
+  align-items: center;
+  margin-top: 4px;
 }
 
 .dropdown-menu {
   position: absolute;
   top: 100%;
-  left: 0;
+  left: -43px;
   min-width: max-content;
-  background: white;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  background: var(--theme-foreground);
+  border-radius: 10px;
   z-index: 10;
+  border: 2px solid var(--theme-border);
+  padding: 5px;
+  font-family: Arial, sans-serif; 
+  font-size: 12px; 
 }
 
 .dropdown-item {
   padding: 10px;
   cursor: pointer;
-  color: black;
+  color: var(--theme-text);
+  border-radius: 6px;
 }
 
-.dropdown-item:hover, .dropdown-item.active {
-  background: #f0f0f0;
+.dropdown-item:hover {
+  background: var(--theme-submenuHover);
+}
+
+.dropdown-item:active {
+  background: var(--theme-submenuClick);
 }
 
 .hidden {

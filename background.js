@@ -19,7 +19,6 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
 	}
 })
 
-
 // open panel onclick
 chrome.sidePanel
 	.setPanelBehavior({ openPanelOnActionClick: true })

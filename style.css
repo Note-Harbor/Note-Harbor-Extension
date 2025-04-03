@@ -213,6 +213,7 @@ pre {
   padding: 5px;
   min-height: 88px;
   overflow-x: scroll;
+  overflow-y: clip;
   white-space: pre-wrap;
 }
 .deleteButton{

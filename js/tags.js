@@ -1,4 +1,4 @@
-const tagContainer = document.getElementById("tagRow");
+const tagContainer = document.getElementById("folderRow");
 const addTag = document.getElementById("addTagButton");
 
 addTag.addEventListener("click", () => insertTag(""));
@@ -7,7 +7,7 @@ function loadFolders() {
     const notesText = localStorage.getItem("folders");
     let allFolders = JSON.parse(notesText);
 
-    for (const folderName of allFolders) {
+    for (const folderName of allFolders.reverse()) {
         insertTag(folderName);
     }
 }
@@ -45,7 +45,18 @@ function deleteFolders(name) {
     saveFolders();
 }
 
+function updateVisible() {
+    const visibleTags = Array.from(tagContainer.children);
+    visibleTags.forEach((tag, index) => {
+        tag.style.display = index < 4 ? "flex" : "none";
+    });
+}
+
 function insertTag(folderName) {
+    if (tagContainer.querySelector('.new-tag')) {
+        return; 
+    }
+
     saveFolders();
     // tag as wrapper, tag-input for inputs, del-tag for delete button to avoid any editable issues
     const tag = document.createElement("div");
@@ -84,10 +95,12 @@ function insertTag(folderName) {
     tagInput.contentEditable = true;
     tagInput.textContent = "";
 
-    tag.addEventListener("focus", function(event) { 
+    tag.handleTagFocus = function () {
         update();
-        tagInput.focus();
-    });
+        this.tagInput.focus();
+    };
+
+    tag.addEventListener("focus", tag.handleTagFocus);
 
     function update() { // selects the notes that contain selected folder
         if(tag.className == "new-tag") {
@@ -121,15 +134,7 @@ function insertTag(folderName) {
         }
     }
 
-    tag.addEventListener("blur", function(event) {
-        blurTag();
-    });
-
-    tagInput.addEventListener("blur", function(event) {
-        blurTag();
-    });
-
-    function blurTag() {
+    tag.blurTag = function() {
         if (tagInput.textContent.trim() === "") {
             tagInput.textContent = "";
             tag.className = "new-tag"; // Reset to new-tag if text is empty
@@ -149,6 +154,14 @@ function insertTag(folderName) {
 
         tagInput.contentEditable = false;
     }
+
+    tag.addEventListener("blur", function(event) {
+        tag.blurTag();
+    });
+
+    tagInput.addEventListener("blur", function(event) {
+        tag.blurTag();
+    });
 
     tagInput.addEventListener("keydown", function(event) {
         if (event.key === "Enter") {
@@ -208,7 +221,7 @@ function insertTag(folderName) {
     deleteButton.textContent = "x";
     deleteButton.addEventListener("click", function(event) {
         event.stopPropagation();
-        blurTag();
+        tag.blurTag();
 
         for (let [id, note] of Object.entries(notes)) {
             console.log(note.tags, tag.textContent);
@@ -222,6 +235,7 @@ function insertTag(folderName) {
         }
 
         tag.remove();
+        updateVisible();
     });
 
     deleteButton.addEventListener("mousedown", function(event) {
@@ -236,10 +250,60 @@ function insertTag(folderName) {
     }
 
     tag.appendChild(tagInput);
+    tag.tagInput = tagInput;
+
     tag.appendChild(deleteButton);
 
-    tagContainer.appendChild(tag);
+    tagContainer.prepend(tag);
     
     // automatically focus on new tag input
     tagInput.focus();
+    updateVisible();
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+    const dropdown = document.getElementById("dropdown");
+    const menu = document.getElementById("dropdown-menu");
+
+    dropdown.addEventListener("click", () => {
+        const tags = document.querySelectorAll('.tag');
+        menu.innerHTML = '';
+
+        const allNotes = document.createElement('div');
+        allNotes.className = "dropdown-item";
+        allNotes.textContent = "All Notes";
+
+        allNotes.addEventListener("click", () => {
+            tags.forEach(tag => {
+                tag.blurTag();
+            });
+        });
+
+        menu.appendChild(allNotes);
+    
+        tags.forEach(tag => {
+            const menuItem = document.createElement('div');
+            menuItem.className = "dropdown-item";
+            menuItem.textContent = tag.tagInput.textContent;
+
+            menuItem.addEventListener("click", () => {
+                if (typeof tag.handleTagFocus === "function") {
+                    tag.handleTagFocus();
+                    tagContainer.prepend(tag);
+                    updateVisible();
+                }
+            });
+            
+            menu.appendChild(menuItem);
+        });
+
+        menu.classList.toggle("hidden");
+        
+    });
+
+    document.addEventListener("click", (e) => {
+        if (!dropdown.contains(e.target)) {
+            menu.classList.add("hidden");
+        }
+    });
+});

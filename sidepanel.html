@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   </head>
   <body>
-    <div class="topContainer">
+    <div class="topContainerSearch">
       <input id="search" class="topInput" type="text" list="prefixes" autocomplete="off" placeholder="Search Notes">
       <datalist id="prefixes">
         <option value="tag:">Tag Name</option>
@@ -27,9 +27,18 @@
     </div>
     
     <div class="flex">
-      <div id="formatBar"></div>
       <div id="tagRow">
-        <button id="addTagButton" class="topButton shadow" title="Create New Folder">+</button>
+
+        <button id="addTagButton" class="topButton shadow" title="Add Folder">+</button>
+
+        <div id="folderRow"></div>
+
+        <div id="dropdown" class="dropdown topButton shadow">
+          <div class="dropdown-content">
+            <span id="dropdown-arrow">&#9660;</span>
+          </div>
+          <div id="dropdown-menu" class="dropdown-menu hidden"></div>
+        </div>
       </div>
     </div>
 

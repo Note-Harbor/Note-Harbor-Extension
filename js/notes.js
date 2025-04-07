@@ -24,7 +24,9 @@ function reloadNoteHTML() {
     }
 
     // add them all back from notes[]
-    Object.entries(notes).map(([id, {title, content, tags}]) => addNoteHTML(title, content, tags, id));
+    Object.entries(notes).reverse().forEach(([id, {title, content, tags}]) => {
+        addNoteHTML(title, content, tags, id);
+    });
 }
 function deleteNote(id) {
     delete notes[id];

@@ -221,21 +221,35 @@ function insertTag(folderName) {
     deleteButton.textContent = "x";
     deleteButton.addEventListener("click", function(event) {
         event.stopPropagation();
-        tag.blurTag();
 
-        for (let [id, note] of Object.entries(notes)) {
-            console.log(note.tags, tag.textContent);
-            if (note.tags.includes(tagInput.textContent)) {
-                let tagBar = document.getElementById(id).querySelector('.tag-bar');
-                while (tagBar.firstChild) {
-                    tagBar.removeChild(tagBar.firstChild);
+        const modal = document.getElementById("deleteTagModal");
+        const confirmBtn = document.getElementById("confirmDeleteTag");
+        const cancelBtn = document.getElementById("cancelDeleteTag");
+
+        modal.showModal();
+
+        const newConfirmBtn = confirmBtn.cloneNode(true);
+        confirmBtn.parentNode.replaceChild(newConfirmBtn, confirmBtn);
+        cancelBtn.onclick = () => modal.close();
+
+        newConfirmBtn.onclick = () => {
+            tag.blurTag();
+
+            for (let [id, note] of Object.entries(notes)) {
+                console.log(note.tags, tag.textContent);
+                if (note.tags.includes(tagInput.textContent)) {
+                    let tagBar = document.getElementById(id).querySelector('.tag-bar');
+                    while (tagBar.firstChild) {
+                        tagBar.removeChild(tagBar.firstChild);
+                    }
+                    note.tags = []; 
                 }
-                note.tags = []; 
             }
-        }
 
-        tag.remove();
-        updateVisible();
+            tag.remove();
+            updateVisible();
+            modal.close();
+        }
     });
 
     deleteButton.addEventListener("mousedown", function(event) {

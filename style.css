@@ -226,7 +226,7 @@ pre {
   white-space: pre-wrap;
 }
 .deleteButton{
-  color: var(--accent-text)
+  color: var(--theme-accentText)
 }
 
 .time-text {
@@ -384,9 +384,9 @@ pre {
 }
 
 .closeButton {
-  background-color: var(--theme-foreground);
+  background-color: var(--theme-accent);
+  color: var(--theme-accentText);
   border: none;
-  color: var(--theme-text);
   width: 30px;
   height: 30px;
   border-radius: 20px;
@@ -394,12 +394,16 @@ pre {
 
 .closeButton:hover {
   cursor: pointer;
+  background-color: var(--theme-hover);
+}
+
+.closeButton:active {
+  background-color: var(--theme-click);
 }
 
 #add {
   height: 133px;
 }
-
 
 .shadow {
   box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.3);
@@ -621,11 +625,15 @@ pre {
   font-size: 17px;
   font-weight: bold;
   color: var(--theme-text);
+  margin-bottom: 3px;
 }
 
 .settingsText {
   font-size: 14px;
   color: var(--theme-text);
+  margin-bottom: 3px;
+  display: flex;
+  width: 85%;
 }
 
 .settingsButton {

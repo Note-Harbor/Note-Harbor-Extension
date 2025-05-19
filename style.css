@@ -225,8 +225,9 @@ pre {
   overflow-y: clip;
   white-space: pre-wrap;
 }
+
 .deleteButton{
-  color: var(--accent-text)
+  color: var(--theme-accentText)
 }
 
 .time-text {
@@ -384,9 +385,9 @@ pre {
 }
 
 .closeButton {
-  background-color: var(--theme-foreground);
+  background-color: var(--theme-accent);
+  color: var(--theme-accentText);
   border: none;
-  color: var(--theme-text);
   width: 30px;
   height: 30px;
   border-radius: 20px;
@@ -394,12 +395,16 @@ pre {
 
 .closeButton:hover {
   cursor: pointer;
+  background-color: var(--theme-hover);
+}
+
+.closeButton:active {
+  background-color: var(--theme-click);
 }
 
 #add {
   height: 133px;
 }
-
 
 .shadow {
   box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.3);
@@ -422,6 +427,7 @@ pre {
 #addTagButton {
   width: 30px;
   height: 30px;
+  font-size: 20px;
   align-items: center;
 }
 
@@ -510,7 +516,8 @@ pre {
   display: flex;
   user-select: none;
   background-color: var(--theme-accent);
-  color: var(--theme-accent-text);
+  color: var(--theme-accentText);
+  align-items: center;
 }
 
 .tag-bar {
@@ -530,10 +537,14 @@ pre {
 
 .note-tag {
   background-color: var(--theme-accent);
-  color: var(--theme-accent-text);
+  color: var(--theme-accentText);
   padding: 2px 8px;
   border-radius: 5px;
+  align-items: center;
   position: relative;
+  display: flex;
+  align-items: center;
+  font-size: 12px;
 }
 
 .custom-context-menu {
@@ -594,7 +605,6 @@ pre {
   background: var(--theme-submenuClick);
 }
 
-
 .settings-modal {
   width: 70%;
   min-width: 300px;
@@ -617,11 +627,15 @@ pre {
   font-size: 17px;
   font-weight: bold;
   color: var(--theme-text);
+  margin-bottom: 3px;
 }
 
 .settingsText {
   font-size: 14px;
   color: var(--theme-text);
+  margin-bottom: 3px;
+  display: flex;
+  width: 85%;
 }
 
 .settingsButton {
@@ -704,7 +718,6 @@ pre {
 .dropdown-menu {
   position: absolute;
   top: 100%;
-  left: -43px;
   min-width: max-content;
   background: var(--theme-foreground);
   border-radius: 10px;

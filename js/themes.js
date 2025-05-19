@@ -1,6 +1,6 @@
 const unimplementedColor = "#F00BA7";
 const themes = {
-    default: {
+    legacy: {
         text: "#000000",
         placeholder: "#747474",
         background: "#97BCC7",

@@ -28,17 +28,14 @@
     
     <div class="flex">
       <div id="tagRow">
-
-        <button id="addTagButton" class="topButton shadow" title="Add Folder">+</button>
-
-        <div id="folderRow"></div>
-
         <div id="dropdown" class="dropdown topButton shadow">
           <div class="dropdown-content">
             <span id="dropdown-arrow">&#9660;</span>
           </div>
           <div id="dropdown-menu" class="dropdown-menu hidden"></div>
         </div>
+        <button id="addTagButton" class="topButton shadow" title="Add Folder">+</button>
+        <div id="folderRow"></div>
       </div>
     </div>
 
@@ -68,7 +65,7 @@
           <label class="settingsHeader">Select Theme</label>
           <p class="settingsText">Choose a color palette for Note Harbor!</p>
           <select id="themeDropdown">
-            <option value="default">Default</option>
+            <option value="legacy">Legacy</option>
             <option value="light">Light</option>
             <option value="dark">Dark</option>
             <option value="matcha">Matcha</option>
@@ -108,6 +105,18 @@
         <div class="settingsDiv">
           <p class="settingsText">This will permanently reset your settings. This action cannot be undone.</p>
           <button id="confirmResetNotes" class="topButton settingsButton">Reset All Settings</button>
+        </div>
+      </div>
+    </dialog>
+    <dialog id="deleteFolderModal" class="settings-modal confirmModal">
+      <div class="modal-content">
+        <div class="settingsTop">
+          <p class="settingsHeader">Delete Tag?</p>
+          <button id="cancelDeleteFolder" class="closeButton">X</button>
+        </div>
+        <div class="settingsDiv">
+          <p class="settingsText">This will remove the tag from all notes.</p>
+          <button id="confirmDeleteFolder" class="topButton settingsButton">Delete Tag</button>
         </div>
       </div>
     </dialog>

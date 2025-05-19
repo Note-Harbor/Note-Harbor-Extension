@@ -82,6 +82,11 @@ function insertTag(folderName) {
             tag.className = "tag";
         }
 
+        const currentNotes = Array.from(document.getElementsByClassName("note"));
+        for (let i = 0; i < currentNotes.length; i++) {
+            currentNotes[i].style.display = "block";
+        }
+
         disableInput = false;
         tagInput.style.marginRight = "7px";
         deleteButton.style.display = "block";
@@ -106,6 +111,14 @@ function insertTag(folderName) {
         if(tag.className == "new-tag") {
             return;
         }
+    }
+
+    tag.addEventListener("click", function(event) {
+        if (document.activeElement === tagInput) {
+            return;
+        }
+
+        update();
 
         const currentNotes = Array.from(document.getElementsByClassName("note"));
         for (let i = 0; i < currentNotes.length; i++) {
@@ -132,7 +145,7 @@ function insertTag(folderName) {
                 currentNote.style.display = "none";
             }
         }
-    }
+    });
 
     tag.blurTag = function() {
         if (tagInput.textContent.trim() === "") {
@@ -163,23 +176,46 @@ function insertTag(folderName) {
         tag.blurTag();
     });
 
+    let oldTagName = tag.textContent.trim();
+
     tagInput.addEventListener("keydown", function(event) {
         if (event.key === "Enter") {
-            event.preventDefault(); //prevent new-line
+            event.preventDefault();
         }
     });
 
     tagInput.addEventListener("keyup", function(event) {
         update();
-        if (tagInput.textContent.trim() !== "") {
+
+        const newTagName = tagInput.textContent.trim();
+
+        if (newTagName !== "") {
             tag.className = "tag";
+
+            if (newTagName !== oldTagName) {
+                for (let [id, note] of Object.entries(notes)) {
+                    if (note.tags.includes(oldTagName)) {
+                        note.tags = note.tags.map(t => t === oldTagName ? newTagName : t);
+
+                        const tagBar = document.getElementById(id).querySelector('.tag-bar');
+                        tagBar.innerHTML = "";
+                        note.tags.forEach(tagText => {
+                            const newTag = document.createElement("span");
+                            newTag.className = "tag";
+                            newTag.textContent = tagText;
+                            tagBar.appendChild(newTag);
+                        });
+                    }
+                }
+                oldTagName = newTagName;
+            }
+
         } else {
             tag.className = "new-tag";
 
             const currentNotes = Array.from(document.getElementsByClassName("note"));
             for (let i = 0; i < currentNotes.length; i++) {
-                let currentNote = currentNotes[i];
-                currentNote.style.display = "block";
+                currentNotes[i].style.display = "block";
             }
         }
     });
@@ -222,9 +258,9 @@ function insertTag(folderName) {
     deleteButton.addEventListener("click", function(event) {
         event.stopPropagation();
 
-        const modal = document.getElementById("deleteTagModal");
-        const confirmBtn = document.getElementById("confirmDeleteTag");
-        const cancelBtn = document.getElementById("cancelDeleteTag");
+        const modal = document.getElementById("deleteFolderModal");
+        const confirmBtn = document.getElementById("confirmDeleteFolder");
+        const cancelBtn = document.getElementById("cancelDeleteFolder");
 
         modal.showModal();
 

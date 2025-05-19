@@ -716,7 +716,6 @@ pre {
 .dropdown-menu {
   position: absolute;
   top: 100%;
-  left: -43px;
   min-width: max-content;
   background: var(--theme-foreground);
   border-radius: 10px;

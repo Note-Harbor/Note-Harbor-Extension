@@ -3,6 +3,7 @@ const defaultSettings = {
     theme: "light",
     sortChoice: "date"
 }
+
 Object.assign(settings, defaultSettings);
 
 function loadSettings() {
@@ -68,10 +69,10 @@ function saveSettings() {
         des.setProperty("--theme-accentText",   themes[selectedTheme].accentText  || unimplementedColor);
         des.setProperty("--theme-format",       themes[selectedTheme].format      || unimplementedColor);
         des.setProperty("--theme-formatText",   themes[selectedTheme].formatText  || unimplementedColor);
-        des.setProperty("--theme-formatHover", themes[selectedTheme].formatHover  || unimplementedColor);
-        des.setProperty("--theme-formatClick", themes[selectedTheme].formatClick  || unimplementedColor);
+        des.setProperty("--theme-formatHover",  themes[selectedTheme].formatHover || unimplementedColor);
+        des.setProperty("--theme-formatClick",  themes[selectedTheme].formatClick || unimplementedColor);
         des.setProperty("--theme-submenuHover", themes[selectedTheme].submenuHover || unimplementedColor);
-        des.setProperty("--theme-submenuClick", themes[selectedTheme].submenuClick  || unimplementedColor);
+        des.setProperty("--theme-submenuClick", themes[selectedTheme].submenuClick || unimplementedColor);
     }
 }
 
@@ -223,7 +224,7 @@ settingsModal.addEventListener("click", function(event) {
     }
 });
 
-//delete confirm  stuff
+//delete confirm stuff
 const delall = document.getElementById("delall");
 delall.addEventListener("click", () => {
     deleteConfirmModal.showModal();
@@ -247,6 +248,7 @@ resetSettings.addEventListener("click", () => {
 confirmResetNotes.addEventListener("click", function() {
     Object.assign(settings, defaultSettings);
     saveSettings();
+    loadSettings();
     resetConfirmModal.close();
 });
 
@@ -259,7 +261,6 @@ themeDropdown.addEventListener("change", evt => {
     settings.theme = selectedTheme
     saveSettings();
 });
-
 
 /*
 sortDropdown.addEventListener("change", _ => {

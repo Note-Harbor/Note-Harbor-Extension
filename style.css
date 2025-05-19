@@ -225,6 +225,7 @@ pre {
   overflow-y: clip;
   white-space: pre-wrap;
 }
+
 .deleteButton{
   color: var(--theme-accentText)
 }
@@ -603,7 +604,6 @@ pre {
 .menu-item:active {
   background: var(--theme-submenuClick);
 }
-
 
 .settings-modal {
   width: 70%;

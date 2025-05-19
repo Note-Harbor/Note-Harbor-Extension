@@ -426,6 +426,7 @@ pre {
 #addTagButton {
   width: 30px;
   height: 30px;
+  font-size: 20px;
   align-items: center;
 }
 
@@ -514,7 +515,8 @@ pre {
   display: flex;
   user-select: none;
   background-color: var(--theme-accent);
-  color: var(--theme-accent-text);
+  color: var(--theme-accentText);
+  align-items: center;
 }
 
 .tag-bar {

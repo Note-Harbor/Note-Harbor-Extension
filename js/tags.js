@@ -78,7 +78,7 @@ function insertTag(folderName) {
         tag.classList.remove('drag-over'); 
     });
 
-    tag.addEventListener("dblclick", function(event) {
+    tag.addEventListener("contextmenu", function(event) {
         event.preventDefault(); // prevent default of highlighting selected text
         if (tagInput.textContent.trim() === "") {
             tagInput.textContent = "";

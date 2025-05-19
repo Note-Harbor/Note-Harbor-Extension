@@ -10,6 +10,11 @@ function loadFolders() {
     for (const folderName of allFolders.reverse()) {
         insertTag(folderName);
     }
+
+    const allTagInputs = document.querySelectorAll(".tag-input");
+    allTagInputs.forEach(input => {
+        input.contentEditable = false;
+    });
 }
 
 function saveFolders() {

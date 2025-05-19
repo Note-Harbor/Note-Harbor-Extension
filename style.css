@@ -530,10 +530,14 @@ pre {
 
 .note-tag {
   background-color: var(--theme-accent);
-  color: var(--theme-accent-text);
+  color: var(--theme-accentText);
   padding: 2px 8px;
   border-radius: 5px;
+  align-items: center;
   position: relative;
+  display: flex;
+  align-items: center;
+  font-size: 12px;
 }
 
 .custom-context-menu {

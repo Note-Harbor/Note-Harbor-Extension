@@ -10,7 +10,8 @@ document.addEventListener("visibilitychange", _ => { saveNotesOrder(); saveFolde
 // context menu --> add new note
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     const content = request.content;
+    const title = request.url || "Untitled";
 
     // make that new message if it's non-empty
-    if (content) addNote(content);
+    if (content) addNote(content, title);
 });

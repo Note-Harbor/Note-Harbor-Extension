@@ -45,8 +45,8 @@ function deleteAllNotes() {
  * @param {object} insertAfter - the note that precedes the new note you're trying to add
  */
 
-function addNote(text, insertAfter) {
-    const title = titleInput.value || "";
+function addNote(text, titleText, insertAfter) {
+    const title = titleText || "";
     const content = text === "" ? infoInput.value : text;
     infoInput.value = ""; // empty out the textbox
     titleInput.value = "";

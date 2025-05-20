@@ -239,6 +239,13 @@ cancelDeleteNotes.addEventListener("click", () => {
     deleteConfirmModal.close();
 });
 
+deleteConfirmModal.addEventListener("click", function(event) {
+    const modalContent = document.getElementById("delall");
+    if (!modalContent.contains(event.target)) {
+        deleteConfirmModal.close();
+    }
+});
+
 //reset confirm stuff
 const resetSettings = document.getElementById("resetSettings");
 resetSettings.addEventListener("click", () => {
@@ -254,6 +261,13 @@ confirmResetNotes.addEventListener("click", function() {
 
 cancelResetNotes.addEventListener("click", () => {
     resetConfirmModal.close();
+});
+
+resetConfirmModal.addEventListener("click", function(event) {
+    const modalContent = document.getElementById("resetSettings");
+    if (!modalContent.contains(event.target)) {
+        resetConfirmModal.close();
+    }
 });
 
 themeDropdown.addEventListener("change", evt => {

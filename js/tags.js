@@ -257,13 +257,15 @@ function insertTag(folderName) {
         }
     });
 
+    // Delete confirmation sequence
+    const modal = document.getElementById("deleteFolderModal");
+
     const deleteButton = document.createElement("button");
     deleteButton.className = "del-tag";
     deleteButton.textContent = "x";
     deleteButton.addEventListener("click", function(event) {
         event.stopPropagation();
 
-        const modal = document.getElementById("deleteFolderModal");
         const confirmBtn = document.getElementById("confirmDeleteFolder");
         const cancelBtn = document.getElementById("cancelDeleteFolder");
 
@@ -289,6 +291,14 @@ function insertTag(folderName) {
 
             tag.remove();
             updateVisible();
+            modal.close();
+        }
+    });
+
+    modal.addEventListener("click", function(event) {
+        const modalContent = modal.querySelector(".modal-content");
+
+        if (!modalContent.contains(event.target)) {
             modal.close();
         }
     });

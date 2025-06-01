@@ -2,12 +2,13 @@ const infoInput = document.getElementById("info");
 const titleInput = document.getElementById("title");
 
 export default Notes = {
+    data: {},
+
     // a bunch of helper functions in case we need them later
     // tbh we don't really need them but it's nicer to type
     async loadNotes() {
-        console.log("bleghhhh");
         const { notesData } = await chrome.storage.local.get("notesData");
-        notes = notesData;
+        data = notesData;
     },
 
     async saveNotes() {

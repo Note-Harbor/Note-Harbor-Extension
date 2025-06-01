@@ -57,7 +57,7 @@ function updateVisible() {
     });
 }
 
-function insertTag(folderName) {
+async function insertTag(folderName) {
     if (tagContainer.querySelector('.new-tag')) {
         return; 
     }
@@ -250,7 +250,7 @@ function insertTag(folderName) {
 
                     notes[draggedNoteId].tags = [];
                     notes[draggedNoteId].tags.push(tagText);
-                    saveNotes();
+                    await saveNotes();
                 }
             }
 

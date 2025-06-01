@@ -6,7 +6,7 @@ const defaultSettings = {
 
 Object.assign(settings, defaultSettings);
 
-function loadSettings() {
+async function loadSettings() {
     const settingsObject = JSON.parse(localStorage.getItem("settings")) || {};
     const keys = Object.keys(settingsObject);
     console.log("keys!!", keys);
@@ -76,7 +76,7 @@ function saveSettings() {
     }
 }
 
-function sortNotesByTag() {
+async function sortNotesByTag() {
     const notesArray = Object.entries(notes);
 
     notesArray.sort(([, noteA], [, noteB]) => {
@@ -112,10 +112,10 @@ function sortNotesByTag() {
 
     notes = sortedNotes;
     reloadNoteHTML();
-    saveNotes();
+    await saveNotes();
 }
 
-function sortNotesByDate() {
+async function sortNotesByDate() {
     const notesArray = Object.entries(notes);
     notesArray.sort(([idA], [idB]) => idA - idB);
 
@@ -126,7 +126,7 @@ function sortNotesByDate() {
 
     notes = sortedNotes;
     reloadNoteHTML();
-    saveNotes();
+    await saveNotes();
 }
 
 // Get references to elements

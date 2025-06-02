@@ -1,9 +1,27 @@
-// our service worker loses all state every 30s, so we're treating chrome.storage.local as the single source of truth
-// to persist data, make changes to storage
+/** Helpful type definitions
+ * @typedef {Object} Note
+ * @property {string} title - Title of the note
+ * @property {string} content - Content of the note
+ * @property {Date} createdDate - The date the note was created
+ * @property {number} folderID - unique ID of the folder
+ * 
+ * @typedef {Object} Folder
+ * @property {string} folderName
+ * @property {number} folderID
+ * 
+ * @typedef AppData
+ * @property {Note[]} notes
+ * @property {number[]} folders
+ */
+
+/** @type AppData - Stores the app's state */
 const appData = {
 	notes: [],
 	folders: []
 }
+
+// Our service worker loses all state every 30s, so we're treating chrome.storage.local as the single source of truth
+// To persist data, make changes to storage
 const initAppData = chrome.storage.local.get().then((items) => {
 	Object.assign(appData, items);
 });
@@ -11,6 +29,10 @@ const initAppData = chrome.storage.local.get().then((items) => {
 
 async function saveStorage() {
 	return chrome.storage.local.set(appData);
+}
+
+async function PaulRevere() {
+	chrome.runtime.sendMessage("updateNotes");
 }
 
 
@@ -24,36 +46,39 @@ chrome.runtime.onInstalled.addListener(async () => {
 	})
 
 	// initialize storage
-	try {
-		await initAppData;
-	} catch (e) {
-		// no error handling ?
-	}
+	await initAppData
 	chrome.storage.local.set(appData);
 });
 
 // handle context menu click
 chrome.contextMenus.onClicked.addListener((info, tab) => {
-	console.log(info, tab);
 	if (info.menuItemId === "addnote") {
-		console.log(`Adding the note "${info.selectionText}"`);
-		
-		// we don't need a response, don't bother waiting for one
-		chrome.runtime.sendMessage({content: info.selectionText});
+		chrome.runtime.sendMessage({
+			command: "addNote",
+			data: { /** @type Note */
+				title: "",
+				content: info.selectionText,
+				createdDate: Date.now(),
+				folderID: -1
+			}
+		});
 	}
-})
+});
 
 // open panel onclick
 chrome.sidePanel
 	.setPanelBehavior({ openPanelOnActionClick: true })
 	.catch((error) => console.error(error))
 
-/** Usage:
+/** Usage
  * chrome.runtime.sendMessage({command: "getData"})
- * chrome.runtime.sendMessage({command: "addNote", title: "test", content: "hello world"})
+ * chrome.runtime.sendMessage({command: "addNote", data: {title: "test", content: "hello world"}})
  **/
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-	if (message === null) return;
+	if (message === null || message.command === null) {
+		sendResponse("CHECK YOU FORMATTED THE COMMAND PROPERLY");
+		return;
+	};
 	const command = message.command;
 	
 	switch (command) {
@@ -63,9 +88,13 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 		}
 
 		case "addNote": {
-			const {title, content, folder} = message;
+			/** @type Note */
+			const noteData = message.data;
+			const {title, content, createdDate, folderID} = noteData;
+			appData.notes.push({title, content, createdDate, folderID});
+			chrome.runtime.message("addNoteUI")
+			saveStorage();
 		}
-
 
 		default: {
 			sendResponse("I DONT KNOW WHAT YOU WANT ME TO DO");

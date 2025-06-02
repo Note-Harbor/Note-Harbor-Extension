@@ -437,6 +437,11 @@ pre {
   align-items: center;
 }
 
+#downloadButton {
+  width: 30px;
+  text-align: center;
+}
+
 /* Wrapper for new tag */
 .new-tag {
   background-color: var(--theme-accent);

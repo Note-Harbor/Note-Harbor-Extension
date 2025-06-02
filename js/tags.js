@@ -57,6 +57,25 @@ function updateVisible() {
     });
 }
 
+//creates error messages
+function showTimedMessage(text, duration = 3000) {
+    const messageBox = document.getElementById("errorMessage");
+
+    messageBox.textContent = text;
+    messageBox.style.display = "block";
+    messageBox.style.opacity = "1";
+
+    //fade away smoothly
+    setTimeout(() => {
+        messageBox.style.transition = "opacity 0.5s ease";
+        messageBox.style.opacity = "0";
+        setTimeout(() => {
+            messageBox.style.display = "none";
+            messageBox.style.transition = "";
+        }, 1000);
+    }, duration);
+    }
+
 function insertTag(folderName) {
     if (tagContainer.querySelector('.new-tag')) {
         return; 
@@ -112,6 +131,8 @@ function insertTag(folderName) {
             range.collapse(false);
             sel.removeAllRanges();
             sel.addRange(range);
+
+            showTimedMessage("Tag Character Limit Exceeded!", 3000);
         }
     });
 

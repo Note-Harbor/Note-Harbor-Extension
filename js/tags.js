@@ -100,6 +100,21 @@ function insertTag(folderName) {
         disableInput = true;
     });
 
+    const char_limit = 20;
+    tag.addEventListener("input", function () {
+        if (tagInput.textContent.length > char_limit) {
+            tagInput.textContent = tagInput.textContent.slice(0, char_limit);
+
+            //adjusts caret
+            const range = document.createRange();
+            const sel = window.getSelection();
+            range.selectNodeContents(tagInput);
+            range.collapse(false);
+            sel.removeAllRanges();
+            sel.addRange(range);
+        }
+    });
+
     const tagInput = document.createElement("div");
     tagInput.className = "tag-input";
     tagInput.contentEditable = true;

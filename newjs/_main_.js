@@ -8,12 +8,16 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (command === "addNoteUI") {
         let noteObject = data;
         addNoteHTML(noteObject)
+    } else if (command === "deleteNoteUI") {
+        reloadNoteHTML();
     }
 });
 
 
 
-
+add.addEventListener("click", _ => {
+    addNote();
+});
 document.addEventListener("DOMContentLoaded", _ => { reloadNoteHTML(); });
 document.addEventListener("visibilitychange", _ => { reloadNoteHTML(); });
 
@@ -48,42 +52,23 @@ function deleteAllNotes() {
     chrome.runtime.sendMessage({command: "deleteAllNotes"});
 }
 
-/**
- * this function only creates the note in the notes[] array, then calls addNoteHTML
- * @param {Note} note - The note object
- * @param {object} insertAfter - the note that precedes the new note you're trying to add
- */
-
-async function addNote(noteObject, insertAfter) {
+async function addNote() {
     const title = titleInput.value || "";
-    const content = text === "" ? infoInput.value : text;
+    const content = infoInput.value || "";
     infoInput.value = ""; // empty out the textbox
     titleInput.value = "";
 
     // stop if no text is provided
     if (title === "" && content === "") return;
 
-    const id = Date.now();
-    const tags = [];
+    /** @type {Note} */
+    const noteObject = {
+        title,
+        content,
+        folderID: -1
+    }
 
-    notes[id] = { title, content, tags };
-
-    //Move new note to top
-    const notesArray = Object.entries(notes);
-    if (notesArray.length > 0) {
-        newNote = notesArray.pop()
-        notesArray.unshift(newNote);  
-
-        const sortedNotes = {};
-        notesArray.forEach(([id, note]) => {
-            sortedNotes[id] = note;
-        });
-        notes = sortedNotes;
-    }  
-    
-    await saveNotes();
-    reloadNoteHTML();
-    console.log(tags);
+    chrome.runtime.sendMessage({command: "addNote", data: noteObject});
 }
 
 /**
@@ -109,7 +94,8 @@ function addNoteHTML(noteObject, insertAfter) {
     deleteButton.style.display = "none";
     deleteButton.addEventListener("click", evt => {
         evt.stopPropagation();
-        deleteNote(id);
+        console.log(`deleting note ${noteID}`)
+        deleteNote(noteID);
         customMenu.style.display = "none";
 
         // remove overlay

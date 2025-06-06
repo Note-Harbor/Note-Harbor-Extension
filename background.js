@@ -103,15 +103,19 @@ function processCommand(message, sender, sendResponse) {
 		}
 
 		case "addNote": {
-			/** @type Note */
-			const noteData = data;
+			const { title, content, createdDate, folderID } = data;
 			// you can replace the noteID with whatever you want, as long as it's a unique string/number
 			let noteObject = {
 				noteID: (Math.random()+"").slice(2) + (Math.random()+"").slice(2),
-				title: noteData.title,
-				content: noteData.content,
-				createdDate: noteData.createdDate,
-				folderID: noteData.folderID || -1
+				title: title || "",
+				content: content || "",
+				createdDate: createdDate || Date.now(),
+				folderID: folderID || -1
+			}
+
+			if (noteObject.title === "" && noteObject.content === "") {
+				console.error("WARNING, TRYING TO ADD EMPTY NOTE!", noteObject);
+				return;
 			}
 
 			appData.notes.push(noteObject);
@@ -121,9 +125,10 @@ function processCommand(message, sender, sendResponse) {
 		}
 
 		case "deleteNote": {
-			const noteID = data.id;
+			const noteID = data.noteID;
 
-			let deletedNoteIndex = appData.notes.find(note => note.noteID === noteID);
+			let deletedNoteIndex = appData.notes.findIndex(note => note.noteID === noteID);
+			console.log(`deleting note index ${deletedNoteIndex}`);
 			if (deletedNoteIndex !== -1) {
 				let noteObject = appData.notes.splice(deletedNoteIndex, 1)[0];
 				chrome.runtime.sendMessage({command: "deleteNoteUI", data: noteObject});

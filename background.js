@@ -54,7 +54,7 @@ chrome.runtime.onInstalled.addListener(async () => {
 // handle context menu click
 chrome.contextMenus.onClicked.addListener((info, tab) => {
 	if (info.menuItemId === "addnote") {
-		chrome.runtime.sendMessage({
+		processCommand({
 			command: "addNote",
 			data: { /** @type Note */
 				title: "",

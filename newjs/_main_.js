@@ -1,31 +1,21 @@
-chrome.runtime.sendMessage({command: "getNotes"}, (response) => {
-    console.log(response);
+
+
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    console.log(request);
+
+    const { command, data } = request;
+
+    if (command === "addNoteUI") {
+        let noteObject = data;
+        addNoteHTML(noteObject)
+    }
 });
 
 
 
 
-(async _ => {
-    
-    
-    // await loadSettings();
-    // await loadNotes();
-    //insertTag();
-    //formatBar.append(createFormatBar());
-
-    add.addEventListener("click", _ => { addNote(""); });
-    document.addEventListener("DOMContentLoaded", _ => { reloadNoteHTML(); loadFolders(); });
-    document.addEventListener("visibilitychange", _ => { saveNotesOrder(); saveFolders(); });
-
-    // context menu --> add new note
-    chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-        const content = request.content;
-
-        // make that new message if it's non-empty
-        if (content) addNote(content);
-    });
-})()
-
+document.addEventListener("DOMContentLoaded", _ => { reloadNoteHTML(); });
+document.addEventListener("visibilitychange", _ => { reloadNoteHTML(); });
 
 
 
@@ -34,17 +24,19 @@ const infoInput = document.getElementById("info");
 const titleInput = document.getElementById("title");
 
 
-
+// call on DOM reload and page init
 function reloadNoteHTML() {
-    // delete all the current notes
-    const currentNotes = Array.from(document.getElementsByClassName("note"));
-    for (let i = 0; i < currentNotes.length; i++) {
-        currentNotes[i].remove();
-    }
+    chrome.runtime.sendMessage({command: "getNotes"}, (notes) => {
+        // delete all the current notes
+        const currentNotes = Array.from(document.getElementsByClassName("note"));
+        for (let i = 0; i < currentNotes.length; i++) {
+            currentNotes[i].remove();
+        }
 
-    // add them all back from notes[]
-    Object.entries(notes).reverse().forEach(([id, {title, content, tags}]) => {
-        addNoteHTML(title, content, tags, id);
+        // add them all back from notes[]
+        notes.forEach(noteObject => {
+            addNoteHTML(noteObject);
+        });
     });
 }
 
@@ -53,19 +45,16 @@ function deleteNote(id) {
 }
 
 function deleteAllNotes() {
-    notes = {};
-    reloadNoteHTML();
-    await saveNotes();
-    reloadFolders();
-},
+    chrome.runtime.sendMessage({command: "deleteAllNotes"});
+}
 
 /**
  * this function only creates the note in the notes[] array, then calls addNoteHTML
- * @param {string} text - textual/body content of note
+ * @param {Note} note - The note object
  * @param {object} insertAfter - the note that precedes the new note you're trying to add
  */
 
-function addNote(text, insertAfter) {
+async function addNote(noteObject, insertAfter) {
     const title = titleInput.value || "";
     const content = text === "" ? infoInput.value : text;
     infoInput.value = ""; // empty out the textbox
@@ -95,35 +84,32 @@ function addNote(text, insertAfter) {
     await saveNotes();
     reloadNoteHTML();
     console.log(tags);
-},
+}
 
 /**
  * Generates the actual HTML element in the DOM
  * don't call directly unless you're reloading
- * @param {string} title - title of a note
- * @param {string} text - textual/body content of a note
- * @param {string[]} tags - list containing all tags of a given note
- * @param {string} id 
+ * @param {Note} noteObject - The note we're trying to add
  * @param {object} insertAfter - the note that precedes the new note you're trying to add
  */
-addNoteHTML(title, text, tags, id, insertAfter = null) {
-    if (!id) {
-        console.log("no ID provided!!!");
-    }
+function addNoteHTML(noteObject, insertAfter) {
+    let { noteID, title, content, createdDate, folderID } = noteObject;
+
+    if (!noteID) console.log("no ID provided!!!");
+
     // create note elements, then add event listeners
     const note = document.createElement("div");
     note.className = "note";
-    note.id = id;
+    note.id = noteID;
     note.draggable = true;
 
     const deleteButton = document.createElement("button");
     deleteButton.className = "del";
     deleteButton.textContent = "X";
     deleteButton.style.display = "none";
-    deleteButton.addEventListener("click", function (event) {
-        event.stopPropagation();
+    deleteButton.addEventListener("click", evt => {
+        evt.stopPropagation();
         deleteNote(id);
-        note.remove();
         customMenu.style.display = "none";
 
         // remove overlay
@@ -132,8 +118,8 @@ addNoteHTML(title, text, tags, id, insertAfter = null) {
     });
     note.appendChild(deleteButton);
 
-    addDraggingEvents(note);
-    addContextMenuToNote(note);
+    // addDraggingEvents(note);
+    // addContextMenuToNote(note);
 
     note.addEventListener("mouseover", function () {
         deleteButton.style.display = "block";
@@ -190,43 +176,43 @@ addNoteHTML(title, text, tags, id, insertAfter = null) {
     noteTitle.innerText = title;
     const noteContent = document.createElement("textarea");
     noteContent.className = "note-content displayNone body";
-    noteContent.value = text;
+    noteContent.value = content;
     const noteDisplay = document.createElement("div");
     noteDisplay.className = "note-display body";
-    noteDisplay.innerHTML = DOMPurify.sanitize(marked.parse(text));
+    noteDisplay.innerHTML = DOMPurify.sanitize(marked.parse(content));
 
     note.appendChild(noteTitle);
     note.appendChild(noteContent);
     note.appendChild(noteDisplay);
 
-    const tagBar = document.createElement("div");
-    tagBar.className = "tag-bar";
+    // const tagBar = document.createElement("div");
+    // tagBar.className = "tag-bar";
 
-    if(tags) {
-        tags.forEach((tag) => {
-            const tagElement = document.createElement("div");
-            tagElement.className = "note-tag";
-            tagElement.textContent = tag;
+    // if(tags) {
+    //     tags.forEach((tag) => {
+    //         const tagElement = document.createElement("div");
+    //         tagElement.className = "note-tag";
+    //         tagElement.textContent = tag;
 
-            tagBar.appendChild(tagElement);
-        });
-    }
+    //         tagBar.appendChild(tagElement);
+    //     });
+    // }
 
-    note.appendChild(tagBar);
+    // note.appendChild(tagBar);
 
-    const bottomBar = createFormatBar();
+    // const bottomBar = createFormatBar();
 
     const timeText = document.createElement("div");
     timeText.className = "time-text";
     timeText.style = "justify-content: right";
-    const noteCreatedTime = new Date(+id);
+    const noteCreatedTime = new Date(+createdDate);
     timeText.textContent = `${noteCreatedTime.toLocaleString([], {
         timeStyle: "short",
         dateStyle: "short"
     })}`;
     const bottomDiv = document.createElement("div");
     bottomDiv.className = "bottomDiv";
-    bottomDiv.appendChild(bottomBar);
+    // bottomDiv.appendChild(bottomBar);
     bottomDiv.appendChild(timeText);
     note.appendChild(bottomDiv);
 
@@ -235,9 +221,9 @@ addNoteHTML(title, text, tags, id, insertAfter = null) {
     } else {
         container.prepend(note);
     }
-},
+}
 
-async saveNotesOrder() {
+async function saveNotesOrder() {
     const newNotesOrder = {};
     const noteElements = Array.from(container.getElementsByClassName("note"));
 
@@ -248,10 +234,9 @@ async saveNotesOrder() {
 
     notes = newNotesOrder;
     await saveNotes();
-},
+}
 
-async addContextMenuToNote(note) {
-    console.log(note);
+async function addContextMenuToNote(note) {
     note.addEventListener("contextmenu", function(event) {
         event.preventDefault(); 
 
@@ -259,7 +244,7 @@ async addContextMenuToNote(note) {
         customMenu.style.left = `${event.clientX}px`;
         customMenu.style.top = `${event.clientY}px`;
 
-        document.getElementById("rem").addEventListener("click", function() {
+        document.getElementById("rem").addEventListener("click", async () => {
             let tagBar = note.querySelector('.tag-bar');
             while (tagBar.firstChild) {
                 tagBar.removeChild(tagBar.firstChild);
@@ -284,7 +269,7 @@ async addContextMenuToNote(note) {
                 menuItem.className = "menu-item";
                 menuItem.textContent = input.textContent; 
 
-                menuItem.addEventListener("click", () => {
+                menuItem.addEventListener("click", async () => {
                     let tagBar = note.querySelector('.tag-bar');
                     const tagElement = document.createElement("div");
                     tagElement.className = "note-tag";

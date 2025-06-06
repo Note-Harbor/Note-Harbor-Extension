@@ -239,7 +239,7 @@ export default Notes = {
             customMenu.style.left = `${event.clientX}px`;
             customMenu.style.top = `${event.clientY}px`;
 
-            document.getElementById("rem").addEventListener("click", function() {
+            document.getElementById("rem").addEventListener("click", async () => {
                 let tagBar = note.querySelector('.tag-bar');
                 while (tagBar.firstChild) {
                     tagBar.removeChild(tagBar.firstChild);
@@ -264,7 +264,7 @@ export default Notes = {
                     menuItem.className = "menu-item";
                     menuItem.textContent = input.textContent; 
 
-                    menuItem.addEventListener("click", () => {
+                    menuItem.addEventListener("click", async () => {
                         let tagBar = note.querySelector('.tag-bar');
                         const tagElement = document.createElement("div");
                         tagElement.className = "note-tag";

@@ -203,7 +203,6 @@ pre {
   height: auto;
   max-height: 500px;
   height: auto;
-  max-height: 100px;
   width: 100%;
   background-color: var(--theme-foreground);
   border: none;

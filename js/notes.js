@@ -5,7 +5,7 @@ function resizeTextarea(textarea) {
     // Reset height to shrink if needed
     textarea.style.height = "auto";
     // Grow to content (with max height cap)
-    textarea.style.height = Math.min(textarea.scrollHeight, 300) + "px";
+    textarea.style.height = Math.min(textarea.scrollHeight, 500) + "px";
 }
 
 // notes are stored as an object

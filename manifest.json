@@ -9,6 +9,9 @@
   "side_panel":{
     "default_path": "sidepanel.html"
   },
+  "icons": {
+    "48": "img/NH_logo.png"
+  },
   "permissions": [
     "sidePanel",
     "contextMenus",

@@ -57,6 +57,25 @@ function updateVisible() {
     });
 }
 
+//creates error messages
+function showTimedMessage(text, duration = 3000) {
+    const messageBox = document.getElementById("errorMessage");
+
+    messageBox.textContent = text;
+    messageBox.style.display = "block";
+    messageBox.style.opacity = "1";
+
+    //fade away smoothly
+    setTimeout(() => {
+        messageBox.style.transition = "opacity 0.5s ease";
+        messageBox.style.opacity = "0";
+        setTimeout(() => {
+            messageBox.style.display = "none";
+            messageBox.style.transition = "";
+        }, 1000);
+    }, duration);
+    }
+
 function insertTag(folderName) {
     if (tagContainer.querySelector('.new-tag')) {
         return; 
@@ -98,6 +117,29 @@ function insertTag(folderName) {
         tagInput.contentEditable = true;
         tagInput.focus();
         disableInput = true;
+    });
+
+    //Creates character limit warning
+    const char_limit = 20;
+    let warningOn = false;
+    tag.addEventListener("input", function () {
+        if (tagInput.textContent.length > char_limit) {
+            tagInput.textContent = tagInput.textContent.slice(0, char_limit);
+
+            //adjusts caret
+            const range = document.createRange();
+            const sel = window.getSelection();
+            range.selectNodeContents(tagInput);
+            range.collapse(false);
+            sel.removeAllRanges();
+            sel.addRange(range);
+
+            if (!warningOn) {
+                warningOn = true;
+                showTimedMessage("Tag Character Limit Exceeded!", 3000);
+                setTimeout(() => warningOn = false, 3000);
+            }
+        }
     });
 
     const tagInput = document.createElement("div");
@@ -257,13 +299,15 @@ function insertTag(folderName) {
         }
     });
 
+    // Delete confirmation sequence
+    const modal = document.getElementById("deleteFolderModal");
+
     const deleteButton = document.createElement("button");
     deleteButton.className = "del-tag";
     deleteButton.textContent = "x";
     deleteButton.addEventListener("click", function(event) {
         event.stopPropagation();
 
-        const modal = document.getElementById("deleteFolderModal");
         const confirmBtn = document.getElementById("confirmDeleteFolder");
         const cancelBtn = document.getElementById("cancelDeleteFolder");
 
@@ -289,6 +333,14 @@ function insertTag(folderName) {
 
             tag.remove();
             updateVisible();
+            modal.close();
+        }
+    });
+
+    modal.addEventListener("click", function(event) {
+        const modalContent = modal.querySelector(".modal-content");
+
+        if (!modalContent.contains(event.target)) {
             modal.close();
         }
     });

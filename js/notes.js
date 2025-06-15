@@ -45,6 +45,11 @@ function deleteAllNotes() {
  * @param {object} insertAfter - the note that precedes the new note you're trying to add
  */
 
+function eraseNote() {
+    titleInput.value = "";
+    infoInput.value = "";
+}
+
 function addNote(text, insertAfter) {
     const title = titleInput.value || "";
     const content = text === "" ? infoInput.value : text;
@@ -192,7 +197,6 @@ function addNoteHTML(title, text, tags, id, insertAfter = null) {
         });
     }
 
-    note.appendChild(tagBar);
 
     const bottomBar = createFormatBar();
 
@@ -207,6 +211,7 @@ function addNoteHTML(title, text, tags, id, insertAfter = null) {
     const bottomDiv = document.createElement("div");
     bottomDiv.className = "bottomDiv";
     bottomDiv.appendChild(bottomBar);
+    bottomDiv.appendChild(tagBar);
     bottomDiv.appendChild(timeText);
     note.appendChild(bottomDiv);
 

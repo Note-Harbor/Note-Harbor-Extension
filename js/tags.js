@@ -119,7 +119,9 @@ function insertTag(folderName) {
         disableInput = true;
     });
 
+    //Creates character limit warning
     const char_limit = 20;
+    let warningOn = false;
     tag.addEventListener("input", function () {
         if (tagInput.textContent.length > char_limit) {
             tagInput.textContent = tagInput.textContent.slice(0, char_limit);
@@ -132,7 +134,11 @@ function insertTag(folderName) {
             sel.removeAllRanges();
             sel.addRange(range);
 
-            showTimedMessage("Tag Character Limit Exceeded!", 3000);
+            if (!warningOn) {
+                warningOn = true;
+                showTimedMessage("Tag Character Limit Exceeded!", 3000);
+                setTimeout(() => warningOn = false, 3000);
+            }
         }
     });
 

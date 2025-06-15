@@ -1,6 +1,13 @@
 const infoInput = document.getElementById("info");
 const titleInput = document.getElementById("title");
 
+function resizeTextarea(textarea) {
+    // Reset height to shrink if needed
+    textarea.style.height = "auto";
+    // Grow to content (with max height cap)
+    textarea.style.height = Math.min(textarea.scrollHeight, 500) + "px";
+}
+
 // notes are stored as an object
 // key: Date.now()
 // value: {content: string, tags: string[], title: string}
@@ -144,6 +151,13 @@ function addNoteHTML(title, text, tags, id, insertAfter = null) {
             noteContent.classList.remove("displayNone");
             noteDisplay.classList.add("displayNone");
             
+            setTimeout(() => resizeTextarea(noteContent), 0);
+
+            if (!noteContent.hasResizeListener) {
+                noteContent.addEventListener("input", e => resizeTextarea(e.target));
+                noteContent.hasResizeListener = true;
+            }
+
             // Disable dragging if note in focused mode
             note.draggable = false;
             overlay.addEventListener("click", function () {
@@ -176,6 +190,7 @@ function addNoteHTML(title, text, tags, id, insertAfter = null) {
     const noteContent = document.createElement("textarea");
     noteContent.className = "note-content displayNone body";
     noteContent.value = text;
+
     const noteDisplay = document.createElement("div");
     noteDisplay.className = "note-display body";
     noteDisplay.innerHTML = DOMPurify.sanitize(marked.parse(text));

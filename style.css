@@ -407,8 +407,16 @@ pre {
   position: absolute;
   right: 10px;
   bottom: 10px;
-  background-color: #006884;
-  color: #FFFFFF;
+  background-color: var(--theme-button);
+  color: var(--theme-buttonText);
+}
+
+#add:hover {
+background-color: var(--theme-hover);
+}
+
+#add:active {
+  background-color: var(--theme-click)
 }
 
 #erase {

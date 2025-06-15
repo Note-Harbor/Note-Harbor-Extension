@@ -136,7 +136,7 @@ function insertTag(folderName) {
 
             if (!warningOn) {
                 warningOn = true;
-                showTimedMessage("Tag Character Limit Exceeded!", 3000);
+                showTimedMessage("Folder Character Limit Exceeded!", 3000);
                 setTimeout(() => warningOn = false, 3000);
             }
         }

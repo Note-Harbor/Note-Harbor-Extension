@@ -10,7 +10,7 @@
     "default_path": "sidepanel.html"
   },
   "icons": {
-    "48": "img/NH_logo_zoom.png",
+    "64": "img/NH_logo_zoom.png",
     "128": "img/NH_logo.png"
   },
   "permissions": [
@@ -19,7 +19,10 @@
     "storage"
   ],
   "action": {
-    "default_title": "Click to open panel"
+    "default_title": "Click to open panel",
+    "default_icon": {
+      "16": "img/NH_logo_zoom.png"
+    }
   },
   "commands": {
     "_execute_action": {

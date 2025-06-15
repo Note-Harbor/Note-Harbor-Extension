@@ -65,8 +65,8 @@ function saveSettings() {
         des.setProperty("--theme-hover",        themes[selectedTheme].hover       || unimplementedColor);
         des.setProperty("--theme-click",        themes[selectedTheme].click       || unimplementedColor);
         des.setProperty("--theme-border",       themes[selectedTheme].border      || unimplementedColor);
-        des.setProperty("--theme-accent",       themes[selectedTheme].accent      || unimplementedColor);
-        des.setProperty("--theme-accentText",   themes[selectedTheme].accentText  || unimplementedColor);
+        des.setProperty("--theme-button",       themes[selectedTheme].button      || unimplementedColor);
+        des.setProperty("--theme-buttonText",   themes[selectedTheme].buttonText  || unimplementedColor);
         des.setProperty("--theme-format",       themes[selectedTheme].format      || unimplementedColor);
         des.setProperty("--theme-formatText",   themes[selectedTheme].formatText  || unimplementedColor);
         des.setProperty("--theme-formatHover",  themes[selectedTheme].formatHover || unimplementedColor);

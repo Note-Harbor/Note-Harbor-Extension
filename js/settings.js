@@ -150,6 +150,9 @@ const resetConfirmModal = document.getElementById("resetConfirmModal");
 const confirmResetNotes = document.getElementById("confirmResetNotes");
 const cancelResetNotes = document.getElementById("cancelResetNotes");
 
+// Download notes
+const downloadButton = document.getElementById("downloadButton");
+
 // Toggle settings menu on button click
 settingsButton.addEventListener("click", function() {
     event.preventDefault();
@@ -274,6 +277,26 @@ themeDropdown.addEventListener("change", evt => {
     const selectedTheme = evt.target.value;
     settings.theme = selectedTheme
     saveSettings();
+});
+
+downloadButton.addEventListener("click", () => {
+    const folders = JSON.parse(localStorage.getItem("folders") || "[]");
+    const data = {
+        folders: folders,
+        notes: notes
+    };
+    const blob = new Blob([JSON.stringify(data, null, 2)], {
+        type: "application/json"
+    });
+
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "notes.json";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
 });
 
 /*

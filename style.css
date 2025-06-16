@@ -477,6 +477,11 @@ background-color: var(--theme-hover);
   align-items: center;
 }
 
+#downloadButton {
+  width: 40px;
+  text-align: center;
+}
+
 /* Wrapper for new tag */
 .new-tag {
   background-color: var(--theme-button);

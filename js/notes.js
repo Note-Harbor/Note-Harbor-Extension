@@ -1,6 +1,5 @@
 const infoInput = document.getElementById("info");
 const titleInput = document.getElementById("title");
-const downloadButton = document.getElementById("downloadButton");
 
 // notes are stored as an object
 // key: Date.now()
@@ -39,27 +38,6 @@ function deleteAllNotes() {
     saveNotes();
     reloadFolders();
 }
-
-downloadButton.addEventListener("click", () => {
-    const folders = JSON.parse(localStorage.getItem("folders") || "[]");
-    const data = {
-        folders: folders,
-        notes: notes
-    };
-    const blob = new Blob([JSON.stringify(data, null, 2)], {
-        type: "application/json"
-    });
-
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "notes.json";
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-});
-
 
 /**
  * this function only creates the note in the notes[] array, then calls addNoteHTML

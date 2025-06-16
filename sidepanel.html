@@ -28,9 +28,6 @@
     
     <div class="flex">
       <div id="tagRow">
-        <button id="downloadButton" class="topButton shadow" title="Download Notes">
-          <i class="fas fa-download fa-sm"></i>
-        </button>
         <div id="dropdown" class="dropdown topButton shadow">
           <div class="dropdown-content">
             <span id="dropdown-arrow">&#9660;</span>
@@ -84,6 +81,13 @@
           <label class="settingsHeader">Reset All Settings</label>
           <p class="settingsText">Restore all settings to default. Your notes will not be deleted.</p>
           <button id="resetSettings" class="topButton settingsButton">Reset All Settings</button>
+        </div>
+        <div class="settingsDiv">
+          <label class="settingsHeader">Download Notes</label>
+          <p class="settingsText">Download notes in preferred format.</p>
+          <button id="downloadButton" class="topButton settingsButton" title="Download Notes">
+            <i class="fas fa-download"></i>
+          </button>
         </div>
       </div>
     </dialog>

@@ -2,36 +2,35 @@
  * Creates dragging events for note objects
  * @param {object} note
  */
+let draggedNote = null;
+
 function addDraggingEvents(note) {
-    let startY = 0;
+  note.draggable = true;
 
-    note.addEventListener("dragstart", function (event) {
-        event.dataTransfer.setData("text/plain", note.id);
-        note.classList.add("dragging");
-        startY = event.clientY;
-    });
+  note.addEventListener("dragstart", (event) => {
+    draggedNote = note;
+    note.classList.add("dragging");
+  });
 
-    note.addEventListener("dragend", function () {
-        note.classList.remove("dragging");
-    });
+  note.addEventListener("dragend", () => {
+    note.classList.remove("dragging");
+    draggedNote = null;
+  });
 
-    note.addEventListener("dragover", function (event) {
-        event.preventDefault();
-    });
+  note.addEventListener("dragover", (event) => {
+    event.preventDefault();
+    if (!draggedNote || draggedNote === note) {
+        return;
+    }
+    const rect = note.getBoundingClientRect();
+    const halfway = rect.top + rect.height / 2;
 
-    note.addEventListener("drop", function (event) {
-        event.preventDefault();
-        const draggedNoteId = event.dataTransfer.getData("text/plain");
-        const draggedNote = document.getElementById(draggedNoteId);
-        const endY = event.clientY;
+    if (event.clientY < halfway) {
+      note.parentNode.insertBefore(draggedNote, note);
+    } else {
+      note.parentNode.insertBefore(draggedNote, note.nextSibling);
+    }
+  });
 
-        if (draggedNote && draggedNote !== note) {
-            if (endY < startY) {
-                note.insertAdjacentElement("beforebegin", draggedNote);
-            } else {
-                note.insertAdjacentElement("afterend", draggedNote);
-            }
-        }
-    });
+  note.addEventListener("drop", (event) => event.preventDefault());
 }
-

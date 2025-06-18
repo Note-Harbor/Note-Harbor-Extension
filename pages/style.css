@@ -7,8 +7,10 @@
   --theme-hover: #135473;
   --theme-click: #053D57;
   --theme-border: #053D57;
-  --theme-accent: #006884; /* for use in certain buttons */
-  --theme-accentText: #F2F1EF;
+  --theme-button: #006884; /* for use in certain buttons */
+  --theme-buttonText: #F2F1EF;
+  --theme-button: #006884; /* for use in certain buttons */
+  --theme-buttonText: #F2F1EF;
   --theme-format: #D9D9D9;
   --theme-formatText: #000000;
   --theme-formatHover: #C4C4C4;
@@ -18,7 +20,8 @@
 }
 
 a:link {
-  color: var(--theme-accent-text);
+  color: var(--theme-button-text);
+  color: var(--theme-button-text);
 }
 
 a:hover {
@@ -57,7 +60,8 @@ label {
 }
 
 h1, h2, h3, h4, h5, h6, p {
-  margin: 0px;
+  margin: 0;
+  margin: 0;
   overflow-wrap: break-word;
 }
 
@@ -109,6 +113,8 @@ pre {
   justify-content: space-between;
   gap: 10px;
   margin-bottom: 10px;
+  position: relative;
+  position: relative;
 }
 
 #container {
@@ -144,8 +150,10 @@ pre {
   text-align: center;
   width: 25px;
   height: 25px;
-  background-color: var(--theme-accent);
-  color: var(--theme-accent-text);
+  background-color: var(--theme-button);
+  color: var(--theme-buttonText);
+  background-color: var(--theme-button);
+  color: var(--theme-buttonText);
   box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.3);
 }
 
@@ -192,13 +200,15 @@ pre {
 }
 
 .note-content {
-  height: 100px;
+  height: auto;
+  max-height: 500px;
+  height: auto;
   width: 100%;
   background-color: var(--theme-foreground);
   border: none;
   padding: 5px;
-  min-height: 88px;
   overflow-x: scroll;
+  overflow-y: scroll;
   white-space: pre-wrap;
   color: var(--theme-text);
 }
@@ -206,28 +216,32 @@ pre {
 .note-content:focus {
   outline: none;
   color: var(--theme-text);
-  
+
+
 }
 
 .note-content:link {
-  color: var(--accent-text);
+  color: var(--button-text);
+  color: var(--button-text);
 }
 
 .note-display {
-  height: 100px;
+  height: auto;
+  max-height: 100px;
+  height: auto;
+  max-height: 100px;
   max-width: 100%;
   background-color: var(--theme-foreground);
   color: var(--theme-text);
   border: none;
   padding: 5px;
-  min-height: 88px;
   overflow-x: scroll;
   overflow-y: clip;
   white-space: pre-wrap;
 }
 
 .deleteButton{
-  color: var(--theme-accentText)
+  color: var(--theme-buttonText)
 }
 
 .time-text {
@@ -244,7 +258,7 @@ pre {
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
-  z-index: 1;
+  z-index: 2;
   /* Make sure it's on top */
 }
 
@@ -294,7 +308,8 @@ pre {
   border-color: var(--theme-border);
   background-color: var(--theme-foreground);
   color: var(--theme-text);
-  height: 130px;
+  height: 150px;
+  height: 150px;
   transition: transform .2s ease-in-out;
 }
 
@@ -362,13 +377,12 @@ pre {
 }
 
 .topButton {
-  width: 5em;
   border-radius: 10px;
-  background-color: var(--theme-accent);
-  color: var(--theme-accentText);
+  background-color: var(--theme-button);
+  color: var(--theme-buttonText);
+  background-color: var(--theme-button);
+  color: var(--theme-buttonText);
   border: 0px;
-  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.3);
-  /* border: 1px solid var(--theme-border); */
 }
 
 .topButton:hover {
@@ -385,8 +399,10 @@ pre {
 }
 
 .closeButton {
-  background-color: var(--theme-accent);
-  color: var(--theme-accentText);
+  background-color: var(--theme-button);
+  color: var(--theme-buttonText);
+  background-color: var(--theme-button);
+  color: var(--theme-buttonText);
   border: none;
   width: 30px;
   height: 30px;
@@ -403,7 +419,31 @@ pre {
 }
 
 #add {
-  height: 133px;
+  height: 30px;
+  width: 75px;
+  z-index: 1;
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  background-color: var(--theme-button);
+  color: var(--theme-buttonText);
+}
+
+#add:hover {
+background-color: var(--theme-hover);
+}
+
+#add:active {
+  background-color: var(--theme-click)
+}
+
+#erase {
+  height: 30px;
+  width: 65px;
+  z-index: 1;
+  position: absolute;
+  right: 95px;
+  bottom: 10px;
 }
 
 .shadow {
@@ -437,16 +477,20 @@ pre {
   align-items: center;
 }
 
+#downloadButton {
+  width: 40px;
+  text-align: center;
+}
+
 /* Wrapper for new tag */
 .new-tag {
-  background-color: var(--theme-accent);
+  background-color: var(--theme-button);
   color: var(--theme-placeholder);
   padding: 2px 8px;
-  border-radius: 5px;
+  border-radius: 10px;
   align-items: center;
   display: flex;
   font-size: 12px;
-  box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.3);
 }
 
 .new-tag:focus {
@@ -462,16 +506,16 @@ pre {
 }
 
 .tag {
-  background-color: var(--theme-accent);
-  color: var(--theme-accentText);
-  padding: 2px 8px;
-  border-radius: 5px;
+  height: 30px;
+  background-color: var(--theme-button);
+  color: var(--theme-buttonText);
+  padding: 0px 8px;
+  border-radius: 10px;
   align-items: center;
   position: relative;
   display: flex;
   align-items: center;
   font-size: 12px;
-  box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.3);
 }
 
 .tag:hover {
@@ -485,13 +529,13 @@ pre {
 .tag:focus {
   border: none;
   background-color: var(--theme-hover);
-  color: var(--theme-accentText);
+  color: var(--theme-buttonText);
   cursor: text;
 }
 
 .tag-input {
   background-color: transparent;
-  color: var(--theme-accentText);
+  color: var(--theme-buttonText);
   border: none;
   outline: none;
   padding: 0; 
@@ -502,8 +546,8 @@ pre {
 
 .tag-input:empty:before {
   content: "Add Folder Name...";
-  background-color: var(--theme-accent);
-  color: var(--theme-accent-text);
+  background-color: transparent;
+  color: var(--theme-placeholder);
 }
 
 .del-tag {
@@ -515,8 +559,8 @@ pre {
   font-size: 12px;
   display: flex;
   user-select: none;
-  background-color: var(--theme-accent);
-  color: var(--theme-accentText);
+  background-color: transparent;
+  color: var(--theme-buttonText);
   align-items: center;
 }
 
@@ -525,7 +569,7 @@ pre {
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 5px 10px;
+  padding-left: 5px;
   gap: 5px;
 }
 
@@ -536,9 +580,10 @@ pre {
 }
 
 .note-tag {
-  background-color: var(--theme-accent);
-  color: var(--theme-accentText);
-  padding: 2px 8px;
+  background-color: var(--theme-button);
+  color: var(--theme-buttonText);
+  height: 20px;
+  padding: 0px 8px;
   border-radius: 5px;
   align-items: center;
   position: relative;
@@ -550,7 +595,7 @@ pre {
 .custom-context-menu {
   position: absolute;
   display: none;
-  z-index: 1000;
+  z-index: 1;
   background-color: #ffffff; 
   color: #000000;
   border: 1px solid rgba(0, 0, 0, 0.2); 
@@ -582,7 +627,7 @@ pre {
   width: 150px;
   display: none;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-  z-index: 500;
+  z-index: 1;
 }
 
 /* Style for dropdown items */
@@ -721,7 +766,7 @@ pre {
   min-width: max-content;
   background: var(--theme-foreground);
   border-radius: 10px;
-  z-index: 10;
+  z-index: 1;
   border: 2px solid var(--theme-border);
   padding: 5px;
   font-family: Arial, sans-serif; 
@@ -745,4 +790,21 @@ pre {
 
 .hidden {
   display: none;
+}
+
+#errorMessage {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--theme-format);
+  color: var(--theme-formatText);
+  /*background-color: #323232;
+  color: white; */
+  padding: 10px 20px;
+  border-radius: 5px;
+  display: none;
+  z-index: 9999;
+  font-family: sans-serif;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
 }

@@ -9,13 +9,20 @@
   "side_panel":{
     "default_path": "./pages/main.html"
   },
+  "icons": {
+    "64": "img/NH_logo_zoom.png",
+    "128": "img/NH_logo.png"
+  },
   "permissions": [
     "sidePanel",
     "contextMenus",
     "storage"
   ],
   "action": {
-    "default_title": "Click to open panel"
+    "default_title": "Click to open panel",
+    "default_icon": {
+      "16": "img/NH_logo_zoom.png"
+    }
   },
   "commands": {
     "_execute_action": {

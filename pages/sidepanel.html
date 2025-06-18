@@ -23,22 +23,25 @@
         <textarea id="info" class="topInput body" autofocus="autofocus" style="margin-left:5px; margin-right:5px;" placeholder="Write Here!"></textarea>
         <div id="formatBar"></div>
       </div>
-
-      <button id="add" class="topButton shadow">Add<br>Note</button>
+      <button id="add" class="topButton">Add Note</button>
+      <button id="erase" class="topButton">Erase</button>
     </div>
     
     <div class="flex">
       <div id="tagRow">
-        <div id="dropdown" class="dropdown topButton shadow">
+        <div id="dropdown" class="dropdown topButton">
           <div class="dropdown-content">
             <span id="dropdown-arrow">&#9660;</span>
           </div>
           <div id="dropdown-menu" class="dropdown-menu hidden"></div>
         </div>
-        <button id="addTagButton" class="topButton shadow" title="Add Folder">+</button>
+        <button id="addTagButton" class="topButton" title="Add Folder">+</button>
         <div id="folderRow"></div>
       </div>
     </div>
+
+    <!-- Creates Error Message -->
+    <div id="errorMessage"></div>
 
     <!-- Holds all the notes -->
     <div id="container"></div>
@@ -82,6 +85,13 @@
           <label class="settingsHeader">Reset All Settings</label>
           <p class="settingsText">Restore all settings to default. Your notes will not be deleted.</p>
           <button id="resetSettings" class="topButton settingsButton">Reset All Settings</button>
+        </div>
+        <div class="settingsDiv">
+          <label class="settingsHeader">Download Notes</label>
+          <p class="settingsText">Download notes in preferred format.</p>
+          <button id="downloadButton" class="topButton settingsButton" title="Download Notes">
+            <i class="fas fa-download"></i>
+          </button>
         </div>
       </div>
     </dialog>

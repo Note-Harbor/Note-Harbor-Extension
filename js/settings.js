@@ -65,8 +65,8 @@ function saveSettings() {
         des.setProperty("--theme-hover",        themes[selectedTheme].hover       || unimplementedColor);
         des.setProperty("--theme-click",        themes[selectedTheme].click       || unimplementedColor);
         des.setProperty("--theme-border",       themes[selectedTheme].border      || unimplementedColor);
-        des.setProperty("--theme-accent",       themes[selectedTheme].accent      || unimplementedColor);
-        des.setProperty("--theme-accentText",   themes[selectedTheme].accentText  || unimplementedColor);
+        des.setProperty("--theme-button",       themes[selectedTheme].button      || unimplementedColor);
+        des.setProperty("--theme-buttonText",   themes[selectedTheme].buttonText  || unimplementedColor);
         des.setProperty("--theme-format",       themes[selectedTheme].format      || unimplementedColor);
         des.setProperty("--theme-formatText",   themes[selectedTheme].formatText  || unimplementedColor);
         des.setProperty("--theme-formatHover",  themes[selectedTheme].formatHover || unimplementedColor);
@@ -149,6 +149,9 @@ const cancelDeleteNotes = document.getElementById("cancelDeleteNotes");
 const resetConfirmModal = document.getElementById("resetConfirmModal");
 const confirmResetNotes = document.getElementById("confirmResetNotes");
 const cancelResetNotes = document.getElementById("cancelResetNotes");
+
+// Download notes
+const downloadButton = document.getElementById("downloadButton");
 
 // Toggle settings menu on button click
 settingsButton.addEventListener("click", function() {
@@ -239,6 +242,13 @@ cancelDeleteNotes.addEventListener("click", () => {
     deleteConfirmModal.close();
 });
 
+deleteConfirmModal.addEventListener("click", function(event) {
+    const modalContent = document.getElementById("delall");
+    if (!modalContent.contains(event.target)) {
+        deleteConfirmModal.close();
+    }
+});
+
 //reset confirm stuff
 const resetSettings = document.getElementById("resetSettings");
 resetSettings.addEventListener("click", () => {
@@ -256,10 +266,37 @@ cancelResetNotes.addEventListener("click", () => {
     resetConfirmModal.close();
 });
 
+resetConfirmModal.addEventListener("click", function(event) {
+    const modalContent = document.getElementById("resetSettings");
+    if (!modalContent.contains(event.target)) {
+        resetConfirmModal.close();
+    }
+});
+
 themeDropdown.addEventListener("change", evt => {
     const selectedTheme = evt.target.value;
     settings.theme = selectedTheme
     saveSettings();
+});
+
+downloadButton.addEventListener("click", () => {
+    const folders = JSON.parse(localStorage.getItem("folders") || "[]");
+    const data = {
+        folders: folders,
+        notes: notes
+    };
+    const blob = new Blob([JSON.stringify(data, null, 2)], {
+        type: "application/json"
+    });
+
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "notes.json";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
 });
 
 /*

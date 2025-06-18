@@ -1,8 +1,18 @@
 const infoInput = document.getElementById("info");
 const titleInput = document.getElementById("title");
 
-export default Notes = {
-    data: {},
+function resizeTextarea(textarea) {
+    // Reset height to shrink if needed
+    textarea.style.height = "auto";
+    // Grow to content (with max height cap)
+    textarea.style.height = Math.min(textarea.scrollHeight, 500) + "px";
+}
+
+// notes are stored as an object
+// key: Date.now()
+// value: {content: string, tags: string[], title: string}
+// this lets us sort the notes by date, and delete by some ID
+let notes = {};
 
     // a bunch of helper functions in case we need them later
     // tbh we don't really need them but it's nicer to type
@@ -45,11 +55,16 @@ export default Notes = {
      * @param {object} insertAfter - the note that precedes the new note you're trying to add
      */
 
-    async addNote(text, insertAfter) {
-        const title = titleInput.value || "";
-        const content = text === "" ? infoInput.value : text;
-        infoInput.value = ""; // empty out the textbox
-        titleInput.value = "";
+function eraseNote() {
+    titleInput.value = "";
+    infoInput.value = "";
+}
+
+function addNote(text, insertAfter) {
+    const title = titleInput.value || "";
+    const content = text === "" ? infoInput.value : text;
+    infoInput.value = ""; // empty out the textbox
+    titleInput.value = "";
 
         // stop if no text is provided
         if (title === "" && content === "") return;
@@ -132,21 +147,28 @@ export default Notes = {
                 overlay.className = "overlay";
                 document.body.appendChild(overlay);
 
-                // show only noteContent
-                const noteTitle = note.getElementsByClassName("note-title")[0];
-                const noteContent = note.getElementsByClassName("note-content")[0];
-                const noteDisplay = note.getElementsByClassName("note-display")[0];
-                noteContent.classList.remove("displayNone");
-                noteDisplay.classList.add("displayNone");
-                
-                // Disable dragging if note in focused mode
-                note.draggable = false;
-                overlay.addEventListener("click", function () {
-                    // remove overlay
-                    document.body.removeChild(overlay);
-                    note.classList.remove("overlay-created");
-                    note.style.zIndex = null;
-                    note.draggable = true;
+            // show only noteContent
+            const noteTitle = note.getElementsByClassName("note-title")[0];
+            const noteContent = note.getElementsByClassName("note-content")[0];
+            const noteDisplay = note.getElementsByClassName("note-display")[0];
+            noteContent.classList.remove("displayNone");
+            noteDisplay.classList.add("displayNone");
+            
+            setTimeout(() => resizeTextarea(noteContent), 0);
+
+            if (!noteContent.hasResizeListener) {
+                noteContent.addEventListener("input", e => resizeTextarea(e.target));
+                noteContent.hasResizeListener = true;
+            }
+
+            // Disable dragging if note in focused mode
+            note.draggable = false;
+            overlay.addEventListener("click", function () {
+                // remove overlay
+                document.body.removeChild(overlay);
+                note.classList.remove("overlay-created");
+                note.style.zIndex = null;
+                note.draggable = true;
 
                     // update noteDisplay, persist to notes
                     notes[note.id].title = noteTitle.innerText;
@@ -164,16 +186,17 @@ export default Notes = {
             }
         });
 
-        const noteTitle = document.createElement("div");
-        noteTitle.contentEditable = "plaintext-only";
-        noteTitle.className = "note-title title";
-        noteTitle.innerText = title;
-        const noteContent = document.createElement("textarea");
-        noteContent.className = "note-content displayNone body";
-        noteContent.value = text;
-        const noteDisplay = document.createElement("div");
-        noteDisplay.className = "note-display body";
-        noteDisplay.innerHTML = DOMPurify.sanitize(marked.parse(text));
+    const noteTitle = document.createElement("div");
+    noteTitle.contentEditable = "plaintext-only";
+    noteTitle.className = "note-title title";
+    noteTitle.innerText = title;
+    const noteContent = document.createElement("textarea");
+    noteContent.className = "note-content displayNone body";
+    noteContent.value = text;
+
+    const noteDisplay = document.createElement("div");
+    noteDisplay.className = "note-display body";
+    noteDisplay.innerHTML = DOMPurify.sanitize(marked.parse(text));
 
         note.appendChild(noteTitle);
         note.appendChild(noteContent);
@@ -192,23 +215,23 @@ export default Notes = {
             });
         }
 
-        note.appendChild(tagBar);
 
         const bottomBar = createFormatBar();
 
-        const timeText = document.createElement("div");
-        timeText.className = "time-text";
-        timeText.style = "justify-content: right";
-        const noteCreatedTime = new Date(+id);
-        timeText.textContent = `${noteCreatedTime.toLocaleString([], {
-            timeStyle: "short",
-            dateStyle: "short"
-        })}`;
-        const bottomDiv = document.createElement("div");
-        bottomDiv.className = "bottomDiv";
-        bottomDiv.appendChild(bottomBar);
-        bottomDiv.appendChild(timeText);
-        note.appendChild(bottomDiv);
+    const timeText = document.createElement("div");
+    timeText.className = "time-text";
+    timeText.style = "justify-content: right";
+    const noteCreatedTime = new Date(+id);
+    timeText.textContent = `${noteCreatedTime.toLocaleString([], {
+        timeStyle: "short",
+        dateStyle: "short"
+    })}`;
+    const bottomDiv = document.createElement("div");
+    bottomDiv.className = "bottomDiv";
+    bottomDiv.appendChild(bottomBar);
+    bottomDiv.appendChild(tagBar);
+    bottomDiv.appendChild(timeText);
+    note.appendChild(bottomDiv);
 
         if (insertAfter && insertAfter.nextElementSibling) {
             container.insertBefore(note, insertAfter.nextElementSibling);

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="style.css" />
+    <script src="lib/purify.min.js"></script>
+    <script src="lib/marked.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  </head>
+
+  <body>
+    <!-- Floating Settings Menu -->
+    <div id="settingsMenu" class="settings-menu">
+      <div class="menu-item" id="settingsOption">Settings</div>
+      <div class="menu-item" id="sortOption">Sort By</div>
+      <div class="menu-item" id="websiteOption">Website</div>
+    </div>
+
+    <!-- Floating Sort Menu (Appears When Clicking "Sort By") -->
+    <div id="sortMenu" class="settings-menu">
+      <div class="menu-item" id="sortByDate">Sort by Date</div>
+      <div class="menu-item" id="sortByTag">Sort by Tag</div>
+    </div>
+
+    <a href="./main.html">test</a>
+
+    <div class="modal-content">
+      <div class="settingsTop">
+        <p id="settingsTitle">Settings</p>
+        <button id="closeSettings" class="closeButton">X</button>
+      </div>
+      <div class="settingsDiv">
+        <label class="settingsHeader">Select Theme</label>
+        <p class="settingsText">Choose a color palette for Note Harbor!</p>
+        <select id="themeDropdown">
+          <option value="legacy">Legacy</option>
+          <option value="light">Light</option>
+          <option value="dark">Dark</option>
+          <option value="matcha">Matcha</option>
+          <option value="nebula">Nebula</option>
+        </select>
+      </div>
+      <div class="settingsDiv">
+        <label class="settingsHeader">Delete All Notes</label>
+        <p class="settingsText">Permanently delete all your notes. This action cannot be undone.</p>
+        <button id="delall" class="topButton settingsButton">Delete All Notes</button>
+      </div>
+      <div class="settingsDiv">
+        <label class="settingsHeader">Reset All Settings</label>
+        <p class="settingsText">Restore all settings to default. Your notes will not be deleted.</p>
+        <button id="resetSettings" class="topButton settingsButton">Reset All Settings</button>
+      </div>
+    </div>
+
+    <dialog id="deleteConfirmModal" class="settings-modal confirmModal">
+      <div class="modal-content">
+        <div class="settingsTop">
+          <p class="settingsHeader">Are you sure?</p>
+          <button id="cancelDeleteNotes" class="closeButton">X</button>
+        </div>
+        <div class="settingsDiv">
+          <p class="settingsText">This will permanently delete all your notes. This action cannot be undone.</p>
+          <button id="confirmDeleteNotes" class="topButton settingsButton">Delete All Notes</button>
+        </div>
+      </div>
+    </dialog>
+    <dialog id="resetConfirmModal" class="settings-modal confirmModal">
+      <div class="modal-content">
+        <div class="settingsTop">
+          <p class="settingsHeader">Are you sure?</p>
+          <button id="cancelResetNotes" class="closeButton">X</button>
+        </div>
+        <div class="settingsDiv">
+          <p class="settingsText">This will permanently reset your settings. This action cannot be undone.</p>
+          <button id="confirmResetNotes" class="topButton settingsButton">Reset All Settings</button>
+        </div>
+      </div>
+    </dialog>
+    <dialog id="deleteFolderModal" class="settings-modal confirmModal">
+      <div class="modal-content">
+        <div class="settingsTop">
+          <p class="settingsHeader">Delete Tag?</p>
+          <button id="cancelDeleteFolder" class="closeButton">X</button>
+        </div>
+        <div class="settingsDiv">
+          <p class="settingsText">This will remove the tag from all notes.</p>
+          <button id="confirmDeleteFolder" class="topButton settingsButton">Delete Tag</button>
+        </div>
+      </div>
+    </dialog>
+  </body>
+
+  <!-- Script call order matters -->
+  <script src="newjs/_main_.js"></script>
+</html>

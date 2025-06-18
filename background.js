@@ -32,7 +32,7 @@ async function saveStorage() {
 	return chrome.storage.local.set(appData);
 }
 
-async function PaulRevere() {
+function PaulRevere() {
 	chrome.runtime.sendMessage({command: "UpdateUI"});
 }
 

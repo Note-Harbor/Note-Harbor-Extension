@@ -5,7 +5,9 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
     const { command, data } = request;
 
-    if (command === "addNoteUI") {
+    if (command === "UpdateUI") {
+        reloadNoteHTML();
+    } else if (command === "addNoteUI") {
         let noteObject = data;
         addNoteHTML(noteObject)
     } else if (command === "deleteNoteUI") {
@@ -28,6 +30,26 @@ const infoInput = document.getElementById("info");
 const titleInput = document.getElementById("title");
 
 
+function deleteNote(id) {
+    chrome.runtime.sendMessage({command: "deleteNote", data: {noteID: id}});
+}
+function deleteAllNotes() {
+    chrome.runtime.sendMessage({command: "deleteAllNotes"});
+}
+
+function addNote() {
+    const title = titleInput.value || "";
+    const content = infoInput.value || "";
+    infoInput.value = ""; // empty out the textbox
+    titleInput.value = "";
+
+    // stop if no text is provided
+    if (title === "" && content === "") return;
+
+    const noteObject = { title, content, folderID: -1 }
+    chrome.runtime.sendMessage({command: "addNote", data: noteObject});
+}
+
 // call on DOM reload and page init
 function reloadNoteHTML() {
     chrome.runtime.sendMessage({command: "getNotes"}, (notes) => {
@@ -42,33 +64,6 @@ function reloadNoteHTML() {
             addNoteHTML(noteObject);
         });
     });
-}
-
-function deleteNote(id) {
-    chrome.runtime.sendMessage({command: "deleteNote", data: {noteID: id}});
-}
-
-function deleteAllNotes() {
-    chrome.runtime.sendMessage({command: "deleteAllNotes"});
-}
-
-async function addNote() {
-    const title = titleInput.value || "";
-    const content = infoInput.value || "";
-    infoInput.value = ""; // empty out the textbox
-    titleInput.value = "";
-
-    // stop if no text is provided
-    if (title === "" && content === "") return;
-
-    /** @type {Note} */
-    const noteObject = {
-        title,
-        content,
-        folderID: -1
-    }
-
-    chrome.runtime.sendMessage({command: "addNote", data: noteObject});
 }
 
 /**

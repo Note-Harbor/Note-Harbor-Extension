@@ -1,4 +1,6 @@
-
+let notes = [];
+let folders = [];
+let currentFolder = -1;
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     console.log(request);
@@ -11,26 +13,38 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         let noteObject = data;
         addNoteHTML(noteObject)
     } else if (command === "deleteNoteUI") {
-        reloadNoteHTML();
+        let noteObject = data;
+        let target = document.getElementById(noteObject.noteID);
+
+        if (target) target.remove();
     }
 });
 
 
 
-add.addEventListener("click", _ => {
-    addNote();
-});
-document.addEventListener("DOMContentLoaded", _ => { reloadNoteHTML(); });
-document.addEventListener("visibilitychange", _ => { reloadNoteHTML(); });
+add.addEventListener("click", _ => addNote());
+document.addEventListener("DOMContentLoaded", _ => reloadNoteHTML());
+document.addEventListener("visibilitychange", _ => reloadNoteHTML());
 
-
+function reloadData(callback) {
+    return chrome.runtime.sendMessage({command: "getData"}, (data) => {
+        notes = data.notes;
+        folders = data.folders;
+        callback();
+    });
+}
 
 
 const infoInput = document.getElementById("info");
 const titleInput = document.getElementById("title");
+const noteEditor = document.getElementById("noteEditor");
+
+const closeButton = document.getElementById("noteEditor_close");
+closeButton.addEventListener("click", _ => { noteEditor.close(); });
 
 
 function deleteNote(id) {
+    console.log(`deleting note ${id}`)
     chrome.runtime.sendMessage({command: "deleteNote", data: {noteID: id}});
 }
 function deleteAllNotes() {
@@ -39,8 +53,8 @@ function deleteAllNotes() {
 
 function addNote() {
     const title = titleInput.value || "";
-    const content = infoInput.value || "";
-    infoInput.value = ""; // empty out the textbox
+    const content = infoInput.innerText || "";
+    infoInput.innerText = ""; // empty out the textbox
     titleInput.value = "";
 
     // stop if no text is provided
@@ -54,10 +68,7 @@ function addNote() {
 function reloadNoteHTML() {
     chrome.runtime.sendMessage({command: "getNotes"}, (notes) => {
         // delete all the current notes
-        const currentNotes = Array.from(document.getElementsByClassName("note"));
-        for (let i = 0; i < currentNotes.length; i++) {
-            currentNotes[i].remove();
-        }
+        Array.from(document.getElementsByClassName("note")).forEach(v => v.remove());
 
         // add them all back from notes[]
         notes.forEach(noteObject => {
@@ -86,76 +97,66 @@ function addNoteHTML(noteObject, insertAfter) {
     const deleteButton = document.createElement("button");
     deleteButton.className = "del";
     deleteButton.textContent = "X";
-    deleteButton.style.display = "none";
     deleteButton.addEventListener("click", evt => {
         evt.stopPropagation();
-        console.log(`deleting note ${noteID}`)
         deleteNote(noteID);
         customMenu.style.display = "none";
-
-        // remove overlay
-        let ove = document.getElementsByClassName("overlay");
-        if (ove.length !== 0) document.body.removeChild(ove[0]);
     });
     note.appendChild(deleteButton);
 
-    // addDraggingEvents(note);
-    // addContextMenuToNote(note);
-
-    note.addEventListener("mouseover", function () {
+    note.addEventListener("mouseover", () => {
         deleteButton.style.display = "block";
     });
-
-    note.addEventListener("mouseout", function () {
-        deleteButton.style.display = "none";
+    note.addEventListener("mouseout", () => {
+        // deleteButton.style.display = "none";
     });
-
     note.addEventListener("click", function (event) {
         // if the user clicks on a link inside the note, don't change into edit mode
         if (event.target.nodeName === "A") return;
 
-        if (!this.classList.contains("overlay-created")) {
-            const overlay = document.createElement("div");
-            overlay.className = "overlay";
-            document.body.appendChild(overlay);
+        noteEditor.showModal();
 
-            // show only noteContent
-            const noteTitle = note.getElementsByClassName("note-title")[0];
-            const noteContent = note.getElementsByClassName("note-content")[0];
-            const noteDisplay = note.getElementsByClassName("note-display")[0];
-            noteContent.classList.remove("displayNone");
-            noteDisplay.classList.add("displayNone");
+        document.getElementById("noteEditor_title").value = title;
+        document.getElementById("noteEditor_info").innerText = content;
+
+        // show only noteContent
+        const noteTitle = note.getElementsByClassName("note-title")[0];
+        const noteContent = note.getElementsByClassName("note-content")[0];
+        const noteDisplay = note.getElementsByClassName("note-display")[0];
+        noteContent.classList.remove("displayNone");
+        noteDisplay.classList.add("displayNone");
+        
+
+        noteEditor.addEventListener("click", evt => {
             
-            // Disable dragging if note in focused mode
-            note.draggable = false;
-            overlay.addEventListener("click", function () {
-                // remove overlay
-                document.body.removeChild(overlay);
-                note.classList.remove("overlay-created");
-                note.style.zIndex = null;
-                note.draggable = true;
+        })
+        // Disable dragging if note in focused mode
+        overlay.addEventListener("click", function () {
+            // remove overlay
+            document.body.removeChild(overlay);
+            note.classList.remove("overlay-created");
+            note.style.zIndex = null;
+            note.draggable = true;
 
-                // update noteDisplay, persist to notes
-                notes[note.id].title = noteTitle.innerText;
-                notes[note.id].content = noteContent.value;
-                //TODO: persist tags as well
-                noteDisplay.innerHTML = DOMPurify.sanitize(marked.parse(noteContent.value));
+            // update noteDisplay, persist to notes
+            notes[note.id].title = noteTitle.innerText;
+            notes[note.id].content = noteContent.value;
+            //TODO: persist tags as well
+            noteDisplay.innerHTML = DOMPurify.sanitize(marked.parse(noteContent.value));
 
-                // only show noteDisplay
-                noteContent.classList.add("displayNone");
-                noteDisplay.classList.remove("displayNone");
-            });
+            // only show noteDisplay
+            noteContent.classList.add("displayNone");
+            noteDisplay.classList.remove("displayNone");
+        });
 
-            this.classList.add("overlay-created");
-            this.style.zIndex = "999";
-        }
+        this.classList.add("overlay-created");
+        this.style.zIndex = "999";
     });
 
     const noteTitle = document.createElement("div");
-    noteTitle.contentEditable = "plaintext-only";
-    noteTitle.className = "note-title title";
+    noteTitle.className = "note-title";
     noteTitle.innerText = title;
-    const noteContent = document.createElement("textarea");
+    const noteContent = document.createElement("div");
     noteContent.className = "note-content displayNone body";
     noteContent.value = content;
     const noteDisplay = document.createElement("div");
@@ -288,7 +289,12 @@ async function addContextMenuToNote(note) {
 
 
 
-
+titleInput.addEventListener("keydown", evt => {
+    if (evt.ctrlKey && evt.key === "Enter") {
+        evt.preventDefault();
+        addNote(""); // that was easy
+    }
+});
 infoInput.addEventListener("keydown", evt => {
     if (evt.ctrlKey && evt.key === "Enter") {
         evt.preventDefault();

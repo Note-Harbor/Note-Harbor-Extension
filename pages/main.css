@@ -1,0 +1,70 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+    background-color: skyblue;
+    
+}
+
+.draftArea {
+    padding: 10px;
+    background-color: aliceblue;
+    display: flex;
+}
+
+#info, #noteEditor_info {
+    background-color: white;
+    min-height: 50px;
+    border: 1px black solid;
+}
+
+[contenteditable="plaintext-only"] {
+    padding: 5px;
+    user-select: all;
+}
+
+[contenteditable="plaintext-only"]:empty:before{
+    content:attr(placeholder);
+    color:gray;
+    font-style:italic;
+}
+
+#container {
+    display: flex;
+    padding: 10px;
+    background-color: limegreen;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.note {
+    background-color: pink;
+    min-width: 300px;
+    flex-grow: 1;
+}
+
+#noteEditor {
+    background-color: purple;
+}
+
+
+::backdrop {
+  background-image: linear-gradient(
+    45deg,
+    magenta,
+    rebeccapurple,
+    dodgerblue,
+    green
+  );
+  opacity: 0.75;
+}
+
+
+
+
+
+
+.none {
+    display: none !important;
+}

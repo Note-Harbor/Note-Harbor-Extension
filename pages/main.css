@@ -1,16 +1,11 @@
-*, *::before, *::after {
-  box-sizing: border-box;
+#draftArea {
+    background-color: green;
 }
 
-body {
-    background-color: skyblue;
-    
-}
-
-.draftArea {
-    padding: 10px;
-    background-color: aliceblue;
-    display: flex;
+.cuteBorder {
+    border: 2px solid;
+    border-color: var(--theme-border);
+    border-radius: 10px;
 }
 
 #info, #noteEditor_info {
@@ -33,15 +28,57 @@ body {
 #container {
     display: flex;
     padding: 10px;
-    background-color: limegreen;
     gap: 10px;
     flex-wrap: wrap;
 }
 
+.del {
+  position: absolute;
+  top: -7px;
+  right: -7px;
+  border-radius: 50%;
+  border: 0px;
+  display: none;
+  text-align: center;
+  width: 25px;
+  height: 25px;
+  background-color: var(--theme-button);
+  color: var(--theme-buttonText);
+  background-color: var(--theme-button);
+  color: var(--theme-buttonText);
+  box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.3);
+}
+
+.del:hover {
+  background-color: var(--theme-hover);
+}
+
+.del:active {
+  background-color: var(--theme-click);
+}
+
 .note {
-    background-color: pink;
-    min-width: 300px;
-    flex-grow: 1;
+  width: 100%;
+  padding: 5px;
+  background-color: var(--theme-foreground);
+  position: relative;
+  border-radius: 10px;
+  height: 100%;
+  outline: 2px solid var(--theme-border);
+  box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.3);
+  color: var(--theme-text);
+  transition: transform .2s ease-in-out;
+}
+
+.note:hover {
+  transform: scale(1.01);
+}
+
+.note-title {
+  padding: 5px;
+  border-radius: 10px 10px 0px 0px;
+  color: var(--theme-text);
+  /* background-color: #e1e1e1 */ 
 }
 
 #noteEditor {
@@ -57,14 +94,96 @@ body {
     dodgerblue,
     green
   );
-  opacity: 0.75;
+  opacity: 0.5;
+}
+
+.settingsButton {
+  font-size: 40px
+}
+
+input {
+    border-radius: 10px;
+}
+
+.flex {
+    display: flex;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+
+
+.none {
+    display: none !important;
 }
 
 
 
 
 
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 2;
+  /* Make sure it's on top */
+}
 
-.none {
-    display: none !important;
+.topInput {
+  min-width: 100px;
+  border-radius: 5px;
+  padding: 5px;
+  background-color: var(--theme-foreground);
+  color: var(--theme-text);
+}
+.topInput::placeholder {
+  color: var(--theme-placeholder);
+}
+
+.time-text {
+  color: var(--theme-text);
+  text-align: end;
+  width: 100%;
+  margin-right: 10px;
+}
+
+
+
+#search {
+  flex: 1;
+  border-radius: 10px;
+  height: 34px;
+  border: 2px solid;
+  border-color: var(--theme-border);
+  /*box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.3);*/
+}
+
+#search:hover {
+  background-color: var(--theme-submenuHover);
+}
+
+#search:active {
+  background-color: var(--theme-submenuClick);
+}
+
+#search:focus {
+  border: 2px solid var(--theme-border);
+  outline: 0px;
+}
+
+#search::-webkit-calendar-picker-indicator {
+  display: none !important;
 }

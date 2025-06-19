@@ -2,30 +2,15 @@
 <html>
   <head>
     <link rel="stylesheet" href="style.css" />
-    <script src="lib/purify.min.js"></script>
-    <script src="lib/marked.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   </head>
 
   <body>
-    <!-- Floating Settings Menu -->
-    <div id="settingsMenu" class="settings-menu">
-      <div class="menu-item" id="settingsOption">Settings</div>
-      <div class="menu-item" id="sortOption">Sort By</div>
-      <div class="menu-item" id="websiteOption">Website</div>
-    </div>
-
-    <!-- Floating Sort Menu (Appears When Clicking "Sort By") -->
-    <div id="sortMenu" class="settings-menu">
-      <div class="menu-item" id="sortByDate">Sort by Date</div>
-      <div class="menu-item" id="sortByTag">Sort by Tag</div>
-    </div>
-
-    <a href="./main.html">test</a>
-
+    
     <div class="modal-content">
       <div class="settingsTop">
         <p id="settingsTitle">Settings</p>
+        <a href="./main.html">Return</a>
         <button id="closeSettings" class="closeButton">X</button>
       </div>
       <div class="settingsDiv">
@@ -48,6 +33,13 @@
         <label class="settingsHeader">Reset All Settings</label>
         <p class="settingsText">Restore all settings to default. Your notes will not be deleted.</p>
         <button id="resetSettings" class="topButton settingsButton">Reset All Settings</button>
+      </div>
+      <div class="settingsDiv">
+        <label class="settingsHeader">Download Notes</label>
+        <p class="settingsText">Download notes in preferred format.</p>
+        <button id="downloadButton" class="topButton settingsButton" title="Download Notes">
+          <i class="fas fa-download"></i>
+        </button>
       </div>
     </div>
 
@@ -75,20 +67,10 @@
         </div>
       </div>
     </dialog>
-    <dialog id="deleteFolderModal" class="settings-modal confirmModal">
-      <div class="modal-content">
-        <div class="settingsTop">
-          <p class="settingsHeader">Delete Tag?</p>
-          <button id="cancelDeleteFolder" class="closeButton">X</button>
-        </div>
-        <div class="settingsDiv">
-          <p class="settingsText">This will remove the tag from all notes.</p>
-          <button id="confirmDeleteFolder" class="topButton settingsButton">Delete Tag</button>
-        </div>
-      </div>
-    </dialog>
+
   </body>
 
   <!-- Script call order matters -->
-  <script src="newjs/_main_.js"></script>
+  <script src="../newjs/themes.js"></script>
+  <script src="../newjs/_settings_.js"></script>
 </html>

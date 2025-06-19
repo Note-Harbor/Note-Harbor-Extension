@@ -13,30 +13,23 @@
  * @typedef AppData
  * @property {Note[]} notes
  * @property {number[]} folders
+ * @property {{theme: number}} settings
  */
 
 /** @type AppData - Stores the app's state */
 const appData = {
 	notes: [],
-	folders: []
-}
-
-// Our service worker loses all state every 30s, so we're treating chrome.storage.local as the single source of truth
-// To persist data, make changes to storage
-const initAppData = chrome.storage.local.get().then((items) => {
-	Object.assign(appData, items);
-});
-
-
-async function saveStorage() {
-	return chrome.storage.local.set(appData);
-}
-
-function PaulRevere() {
-	chrome.runtime.sendMessage({command: "UpdateUI"});
+	folders: [],
+	settings: {
+		theme: "light"
+	}
 }
 
 
+// appData.settings.theme
+
+const saveStorage = async () => chrome.storage.local.set(appData);
+const getStorage = async () => chrome.storage.local.get(appData);
 
 chrome.runtime.onInstalled.addListener(async () => {
 	// setup chrome context menus
@@ -47,7 +40,8 @@ chrome.runtime.onInstalled.addListener(async () => {
 	})
 
 	// initialize storage
-	await initAppData
+	const initAppData = await getStorage();
+	Object.assign(appData, initAppData);
 	chrome.storage.local.set(appData);
 });
 
@@ -99,6 +93,16 @@ function processCommand(message, sender, sendResponse) {
 		}
 		case "getStructure": {
 			sendResponse(appData.folders);
+			break;
+		}
+		case "getTheme": {
+			sendResponse(appData.settings.theme);
+			break;
+		}
+
+		case "setTheme": {
+			appData.settings.theme = data.theme;
+			chrome.runtime.sendMessage({command: "setThemeUI", data: {theme: data.theme}});
 			break;
 		}
 

@@ -1,0 +1,130 @@
+const unimplementedColor = "#F00BA7";
+const themes = {
+    legacy: {
+        text: "#000000",
+        placeholder: "#747474",
+        background: "#97BCC7",
+        foreground: "#F2F1EF",
+        codeblocks: "#CFCFCF",
+        hover: "#135473",
+        click: "#053D57",
+        border: "#053D57",
+        button: "#006884",
+        buttonText: "#F2F1EF",
+        format: "#D9D9D9",
+        formatText: "#000000",
+        formatHover: "#C4C4C4",
+        formatClick: "#B0B0B0",
+        submenuHover: "#D9D9D9",
+        submenuClick: "#C4C4C4"
+    },
+    light: {
+        text: "#000000",         
+        placeholder: "#A0A0A0",  
+        background: "#FFFFFF",   
+        foreground: "#FFFFFF",   
+        codeblocks: "#E0E0E0",   
+        hover: "#DFDFDF",        
+        click: "#C7C7C7",        
+        border: "#C8C8C8",       
+        button: "#EDEDED",       
+        buttonText: "#000000",   
+        format: "#EDEDED",       
+        formatText: "#000000", 
+        formatHover: "#D9D9D9",
+        formatClick: "#C4C4C4",  
+        submenuHover: "#DFDFDF",
+        submenuClick: "#CCCCCC" 
+    },
+    dark: {
+        text: "#E6E6E6",
+        placeholder: "#A0A0A0",
+        background: "#181818",
+        foreground: "#2A2A2A",
+        codeblocks: "#3A3A3A",
+        hover: "#444444",
+        click: "#333333",
+        border: "#383838", 
+        button: "#505050",
+        buttonText: "#E0E0E0",
+        format: "#505050",
+        formatText: "#E0E0E0",
+        formatHover: "#464646",
+        formatClick: "#3C3C3C",
+        submenuHover: "#404040",
+        submenuClick: "#363636"
+    },
+    matcha: {
+        text: "#5A4632",
+        placeholder: "#84715B",
+        background: "#EDE3C9",
+        foreground: "#FFF8E5",
+        codeblocks: "#DAC3A3",
+        hover: "#8A9A5B",
+        click: "#7A8B4B",
+        border: "#A98467",
+        button: "#A0B762",
+        buttonText: "#FFF8E5",
+        format: "#A0B762",
+        formatText: "#FFF8E5",
+        formatHover: "#8FA456",
+        formatClick: "#7F934D",
+        submenuHover: "#EDE3C9",
+        submenuClick: "#D6CBAF"
+    },
+    nebula: {
+        text: "#e2dbf0",
+        placeholder: "#A693B0",
+        background: "#121022",
+        foreground: "#282143",
+        codeblocks: "#4A3B6A",
+        hover: "#66001d",
+        click: "#4d0016",
+        border: "#5B4B8A",
+        button: "#99002b",       
+        buttonText: "#DDD1E3",
+        format: "#99002b",
+        formatText: "#DDD1E3",
+        formatHover: "#870026",
+        formatClick: "#7A001F",
+        submenuHover: "#5B4B8A",
+        submenuClick: "#4F4178"
+    }
+}
+
+// initialize to correct theme on load
+chrome.runtime.sendMessage({command: "getTheme"}, theme => loadTheme(theme));
+
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    console.log(request);
+    const { command, data } = request;
+
+    if (command === "setThemeUI") {
+        console.log(`Loading theme ${data.theme}`);
+        loadTheme(data.theme);
+    }
+});
+
+function loadTheme(themeName) {
+    const des = document.body.style;
+    let selectedTheme = themes[themeName];
+    des.setProperty("--theme-text",         selectedTheme.text        || unimplementedColor)
+    des.setProperty("--theme-placeholder",  selectedTheme.placeholder || unimplementedColor);
+    des.setProperty("--theme-background",   selectedTheme.background  || unimplementedColor);
+    des.setProperty("--theme-foreground",   selectedTheme.foreground  || unimplementedColor);
+    des.setProperty("--theme-codeblocks",   selectedTheme.codeblocks  || unimplementedColor);
+    des.setProperty("--theme-hover",        selectedTheme.hover       || unimplementedColor);
+    des.setProperty("--theme-click",        selectedTheme.click       || unimplementedColor);
+    des.setProperty("--theme-border",       selectedTheme.border      || unimplementedColor);
+    des.setProperty("--theme-button",       selectedTheme.button      || unimplementedColor);
+    des.setProperty("--theme-buttonText",   selectedTheme.buttonText  || unimplementedColor);
+    des.setProperty("--theme-format",       selectedTheme.format      || unimplementedColor);
+    des.setProperty("--theme-formatText",   selectedTheme.formatText  || unimplementedColor);
+    des.setProperty("--theme-formatHover",  selectedTheme.formatHover || unimplementedColor);
+    des.setProperty("--theme-formatClick",  selectedTheme.formatClick || unimplementedColor);
+    des.setProperty("--theme-submenuHover", selectedTheme.submenuHover || unimplementedColor);
+    des.setProperty("--theme-submenuClick", selectedTheme.submenuClick || unimplementedColor);
+}
+
+
+

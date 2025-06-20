@@ -1,108 +1,117 @@
 :root {
-  --theme-text: #000000;
-  --theme-placeholder: #747474; /* for use in placeholder text */
-  --theme-background: #97BCC7;
-  --theme-foreground: #F2F1EF;
-  --theme-codeblocks: #CFCFCF;
-  --theme-hover: #135473;
-  --theme-click: #053D57;
-  --theme-border: #053D57;
-  --theme-button: #006884; /* for use in certain buttons */
-  --theme-buttonText: #F2F1EF;
-  --theme-button: #006884; /* for use in certain buttons */
-  --theme-buttonText: #F2F1EF;
-  --theme-format: #D9D9D9;
-  --theme-formatText: #000000;
-  --theme-formatHover: #C4C4C4;
-  --theme-formatClick: #B0B0B0;
-  --theme-submenuHover: #D9D9D9;
-  --theme-submenuClick: #C4C4C4;
+    --theme-text: #000000;
+    --theme-placeholder: #747474; /* for use in placeholder text */
+    --theme-background: #97BCC7;
+    --theme-foreground: #F2F1EF;
+    --theme-codeblocks: #CFCFCF;
+    --theme-hover: #135473;
+    --theme-click: #053D57;
+    --theme-border: #053D57;
+    --theme-button: #006884; /* for use in certain buttons */
+    --theme-buttonText: #F2F1EF;
+    --theme-format: #D9D9D9;
+    --theme-formatText: #000000;
+    --theme-formatHover: #C4C4C4;
+    --theme-formatClick: #B0B0B0;
+    --theme-submenuHover: #D9D9D9;
+    --theme-submenuClick: #C4C4C4;
 }
 
 a:link {
-  color: var(--theme-button-text);
-  color: var(--theme-button-text);
+    color: var(--theme-button-text);
+    color: var(--theme-button-text);
 }
 
 a:hover {
-  color: var(--theme-hover);
+    color: var(--theme-hover);
 }
 
 a:active {
-  color: var(--theme-click);
+    color: var(--theme-click);
 }
 
 body {
-  background-color: var(--theme-background);
-  overflow: hidden;
-  margin: 10px;
-  overflow-y: scroll;
-  overflow-x: hidden;
-  font-family: Arial, Helvetica, sans-serif;
+    background-color: var(--theme-background);
+    overflow: hidden;
+    margin: 10px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 textarea, input, button, select {
-  font-family: inherit;
+    font-family: inherit;
 }
 
 label {
-  font-size: medium;
+    font-size: medium;
 }
 
 h1, h2, h3, h4, h5, h6, p {
-  margin: 0;
-  margin: 0;
-  overflow-wrap: break-word;
+    margin: 0;
+    margin: 0;
+    overflow-wrap: break-word;
 }
 
 /* Codeblocks */
 pre {
-  background-color: var(--theme-codeblocks);
-  margin: 0px;
-  padding: 5px;
-  border: solid 1px var(--theme-border);
+    background-color: var(--theme-codeblocks);
+    margin: 0px;
+    padding: 5px;
+    border: solid 1px var(--theme-border);
 }
 
 /* width */
 ::-webkit-scrollbar {
-  width: 2px;
-  height: 2%;
-  color: 006884;
+    width: 2px;
+    height: 2%;
+    color: 006884;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+    background: #f1f1f1;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #888;
+    background: #888;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+    background: #555;
 }
 
 ::backdrop {
-  background: gray;
-  opacity: 0.50;
+    background: gray;
+    opacity: 0.50;
 }
 
 
+.primaryButton {
+    background-color: var(--theme-button);
+    color: var(--theme-buttonText);
+    padding: 10px;
+}
 
+.secondaryButton {
+    background-color: var(--theme-format);
+    color: var(--theme-formatText);
+    padding: 10px;
+}
 
-
-
-
+.settingsIcon {
+    background-color: var(--theme-button);
+    color: var(--theme-buttonText);
+}
 
 
 
 
 .flex {
-  display: flex
+    display: flex
 }
 .displayNone {
-  display: none;
+    display: none;
 }

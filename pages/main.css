@@ -1,5 +1,27 @@
-#draftArea {
-    background-color: green;
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+#draftArea, #noteEditor[open] {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: end;
+    gap: 5px;
+    padding: 5px;
+    background-color: var(--theme-foreground);
+    justify-content: end;
+}
+
+#noteEditor {
+    border-color: black;
+}
+
+.title {
+    font-weight: bold;
+}
+
+.body {
+    border-radius: 0px;
 }
 
 .cuteBorder {
@@ -8,10 +30,8 @@
     border-radius: 10px;
 }
 
-#info, #noteEditor_info {
-    background-color: white;
+.body {
     min-height: 50px;
-    border: 1px black solid;
 }
 
 [contenteditable="plaintext-only"] {
@@ -27,82 +47,69 @@
 
 #container {
     display: flex;
-    padding: 10px;
     gap: 10px;
+    margin-top: 10px;
     flex-wrap: wrap;
 }
 
 .del {
-  position: absolute;
-  top: -7px;
-  right: -7px;
-  border-radius: 50%;
-  border: 0px;
-  display: none;
-  text-align: center;
-  width: 25px;
-  height: 25px;
-  background-color: var(--theme-button);
-  color: var(--theme-buttonText);
-  background-color: var(--theme-button);
-  color: var(--theme-buttonText);
-  box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.3);
+    position: absolute;
+    top: -7px;
+    right: -7px;
+    border-radius: 50%;
+    border: 0px;
+    display: none;
+    text-align: center;
+    width: 25px;
+    height: 25px;
+    background-color: var(--theme-button);
+    color: var(--theme-buttonText);
+    background-color: var(--theme-button);
+    color: var(--theme-buttonText);
+    box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.3);
 }
 
 .del:hover {
-  background-color: var(--theme-hover);
+    background-color: var(--theme-hover);
 }
 
 .del:active {
-  background-color: var(--theme-click);
+    background-color: var(--theme-click);
 }
 
 .note {
-  width: 100%;
-  padding: 5px;
-  background-color: var(--theme-foreground);
-  position: relative;
-  border-radius: 10px;
-  height: 100%;
-  outline: 2px solid var(--theme-border);
-  box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.3);
-  color: var(--theme-text);
-  transition: transform .2s ease-in-out;
+    width: 100%;
+    padding: 10px;
+    background-color: var(--theme-foreground);
+    position: relative;
+    border-radius: 10px;
+    height: 100%;
+    outline: 2px solid var(--theme-border);
+    box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.3);
+    color: var(--theme-text);
+    transition: transform .2s ease-in-out;
 }
 
 .note:hover {
-  transform: scale(1.01);
+    transform: scale(1.01);
 }
 
 .note-title {
-  padding: 5px;
-  border-radius: 10px 10px 0px 0px;
-  color: var(--theme-text);
-  /* background-color: #e1e1e1 */ 
+    border-radius: 10px 10px 0px 0px;
+    color: var(--theme-text);
+    margin-bottom: 5px;
+    font-weight: bold;
+    overflow-x: hidden;
 }
 
-#noteEditor {
-    background-color: purple;
-}
-
-
-::backdrop {
-  background-image: linear-gradient(
-    45deg,
-    magenta,
-    rebeccapurple,
-    dodgerblue,
-    green
-  );
-  opacity: 0.5;
-}
-
-.settingsButton {
-  font-size: 40px
-}
-
-input {
+#settingsButton {
+    text-align: center;
+    vertical-align: middle;
+    width: 34px;
+    height: 34px;
+    font-size: 20px;
     border-radius: 10px;
+    border: none;
 }
 
 .flex {
@@ -113,6 +120,8 @@ input {
     display: flex;
     flex-direction: row;
     gap: 10px;
+    margin-bottom: 10px;
+    align-items: center;
 }
 
 .column {
@@ -127,63 +136,81 @@ input {
     display: none !important;
 }
 
+.topButton {
+    border-radius: 5px;
+    border: none;
+    padding: 4px;
+}
 
+#add {
+    background-color: var(--theme-button);
+    color: var(--theme-buttonText);
+}
+
+#erase {
+    background-color: var(--theme-format);
+    color: var(--theme-formatText);
+}
 
 
 
 .overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 2;
-  /* Make sure it's on top */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 2;
+    /* Make sure it's on top */
 }
 
 .topInput {
-  min-width: 100px;
-  border-radius: 5px;
-  padding: 5px;
-  background-color: var(--theme-foreground);
-  color: var(--theme-text);
+    min-width: 100px;
+    padding: 5px;
+    width: 100%;
+    background-color: var(--theme-foreground);
+    color: var(--theme-text);
+    border: none;
 }
 .topInput::placeholder {
-  color: var(--theme-placeholder);
+    color: var(--theme-placeholder);
+}
+.topInput:focus {
+    border: 1px solid red;
 }
 
 .time-text {
-  color: var(--theme-text);
-  text-align: end;
-  width: 100%;
-  margin-right: 10px;
+    color: var(--theme-text);
+    text-align: end;
+    width: 100%;
+    margin-right: 10px;
 }
 
 
 
 #search {
-  flex: 1;
-  border-radius: 10px;
-  height: 34px;
-  border: 2px solid;
-  border-color: var(--theme-border);
-  /*box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.3);*/
+    flex: 1;
+    border-radius: 10px;
+    height: 34px;
+    border: 2px solid;
+    border-color: var(--theme-border);
+    /*box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.3);*/
 }
 
 #search:hover {
-  background-color: var(--theme-submenuHover);
+    background-color: var(--theme-submenuHover);
 }
 
 #search:active {
-  background-color: var(--theme-submenuClick);
+    background-color: var(--theme-submenuClick);
 }
 
 #search:focus {
-  border: 2px solid var(--theme-border);
-  outline: 0px;
+    border: 2px solid var(--theme-border);
+    outline: 0px;
 }
 
 #search::-webkit-calendar-picker-indicator {
-  display: none !important;
+    display: none !important;
 }

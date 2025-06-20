@@ -2,9 +2,7 @@
 <html>
     <head>
         <link rel="stylesheet" href="main.css" />
-        <!-- <link rel="stylesheet" href="main2.css" /> -->
         <link rel="stylesheet" href="theme.css" />
-        <!-- <link rel="stylesheet" href="style.css" /> -->
         <script src="../lib/purify.min.js"></script>
         <script src="../lib/marked.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -12,26 +10,29 @@
 
     <body>
         <div class="row">
+            <!-- SEARCH !!!! -->
             <input id="search" class="topInput" type="text" list="prefixes" autocomplete="off" placeholder="Search Notes">
             <datalist id="prefixes">
                 <option value="tag:">Tag Name</option>
                 <option value="title:">Note Title</option>
             </datalist>
-            <a href="settings.html"><i class="settingsButton fa-solid fa-gear"></i></a>
+            <button id="settingsButton" class="settingsIcon"><i class="fa-solid fa-gear"></i></button>
         </div>
 
+        <!-- DRAFT AREA !!!! -->
         <div id="draftArea" class="cuteBorder">
-            <input id="title" type="text" placeholder="Title" class="topInput">
+            <input id="title" type="text" placeholder="Title" class="topInput title">
             <div id="info" autofocus placeholder="Write Here!" contenteditable="plaintext-only" class="topInput body"></div>
-            <button id="add" class="topButton">Add Note</button>
-            <button id="erase" class="topButton">Erase</button>
+            <button id="erase" class="topButton secondaryButton">Erase</button>
+            <button id="add" class="topButton primaryButton">Add Note</button>
         </div>
 
-        <!-- Holds all the notes -->
+        <!-- NOTE CONTAINER !!!!?!?? -->
         <div id="container"></div>
 
-        <dialog id="noteEditor" class="draftArea">
-            <input id="noteEditor_title" type="text" placeholder="Title" class="topInput">
+        <!-- Detailed note modal -->
+        <dialog id="noteEditor" class="cuteBorder">
+            <input id="noteEditor_title" type="text" placeholder="Title" class="topInput title">
             <div id="noteEditor_info" autofocus placeholder="Write Here!" contenteditable="plaintext-only" class="topInput body"></div>
             <div id="noteEditor_formatBar"></div>
             <button id="noteEditor_delete" class="topButton">Delete</button>

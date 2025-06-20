@@ -23,6 +23,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
 
 add.addEventListener("click", _ => addNote());
+settingsButton.addEventListener("click", _ => { window.location.href = "settings.html" });
 document.addEventListener("DOMContentLoaded", _ => reloadNoteHTML());
 document.addEventListener("visibilitychange", _ => reloadNoteHTML());
 

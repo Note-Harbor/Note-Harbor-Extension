@@ -103,6 +103,7 @@ function processCommand(message, sender, sendResponse) {
 		case "setTheme": {
 			appData.settings.theme = data.theme;
 			chrome.runtime.sendMessage({command: "setThemeUI", data: {theme: data.theme}});
+			saveStorage();
 			break;
 		}
 

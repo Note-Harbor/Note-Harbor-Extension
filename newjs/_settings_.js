@@ -88,21 +88,3 @@ downloadButton.addEventListener("click", () => {
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
 });
-
-/*
-sortDropdown.addEventListener("change", _ => {
-    settings.sortChoice = sortDropdown.value;
-    saveSettings();
-});
-
-sortButton.addEventListener("click", function(event) {
-    event.stopPropagation();
-    if (settings.sortChoice === "date") {
-        sortNotesByDate();
-    } else if (settings.sortChoice === "tag") {
-        sortNotesByTag();
-    } else {
-        console.log("UNIMPLEMENTED SORT FEATURE");
-    }
-});
-*/

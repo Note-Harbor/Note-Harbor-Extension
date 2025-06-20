@@ -96,7 +96,6 @@ const themes = {
 chrome.runtime.sendMessage({command: "getTheme"}, theme => loadTheme(theme));
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    console.log(request);
     const { command, data } = request;
 
     if (command === "setThemeUI") {

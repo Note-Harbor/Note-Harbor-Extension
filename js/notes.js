@@ -85,15 +85,15 @@ function addNote(text, insertAfter) {
     titleInput.value = "";
 
     // stop if no text is provided
-    if (title === "" && content === "") {}
+    if (title === "" && content === "") {
         if (!warningOn) {
             warningOn = true;
             showTimedMessage("Type Something Before Creating a Note!", 3000);
             setTimeout(() => warningOn = false, 3000);
         }
         return;
+    }
         
-
     const id = Date.now();
     const tags = [];
 

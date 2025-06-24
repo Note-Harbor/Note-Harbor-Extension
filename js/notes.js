@@ -1,6 +1,7 @@
 const infoInput = document.getElementById("info");
 const titleInput = document.getElementById("title");
 
+
 function resizeTextarea(textarea) {
     // Reset height to shrink if needed
     textarea.style.height = "auto";
@@ -57,6 +58,26 @@ function eraseNote() {
     infoInput.value = "";
 }
 
+//creates error messages
+function showTimedMessage(text, duration = 3000) {
+    const messageBox = document.getElementById("errorMessage");
+
+    messageBox.textContent = text;
+    messageBox.style.display = "block";
+    messageBox.style.opacity = "1";
+
+    //fade away smoothly
+    setTimeout(() => {
+        messageBox.style.transition = "opacity 0.5s ease";
+        messageBox.style.opacity = "0";
+        setTimeout(() => {
+            messageBox.style.display = "none";
+            messageBox.style.transition = "";
+        }, 1000);
+    }, duration);
+    }
+
+warningOn = false;
 function addNote(text, insertAfter) {
     const title = titleInput.value || "";
     const content = text === "" ? infoInput.value : text;
@@ -64,7 +85,14 @@ function addNote(text, insertAfter) {
     titleInput.value = "";
 
     // stop if no text is provided
-    if (title === "" && content === "") return;
+    if (title === "" && content === "") {}
+        if (!warningOn) {
+            warningOn = true;
+            showTimedMessage("Type Something Before Creating a Note!", 3000);
+            setTimeout(() => warningOn = false, 3000);
+        }
+        return;
+        
 
     const id = Date.now();
     const tags = [];

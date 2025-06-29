@@ -478,8 +478,9 @@ background-color: var(--theme-hover);
 }
 
 #downloadButton {
-  width: 40px;
+  width: 140px;
   text-align: center;
+  align-items: center;
 }
 
 /* Wrapper for new tag */

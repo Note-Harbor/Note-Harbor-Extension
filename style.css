@@ -9,8 +9,6 @@
   --theme-border: #053D57;
   --theme-button: #006884; /* for use in certain buttons */
   --theme-buttonText: #F2F1EF;
-  --theme-button: #006884; /* for use in certain buttons */
-  --theme-buttonText: #F2F1EF;
   --theme-format: #D9D9D9;
   --theme-formatText: #000000;
   --theme-formatHover: #C4C4C4;
@@ -596,14 +594,14 @@ background-color: var(--theme-hover);
   position: absolute;
   display: none;
   z-index: 1;
-  background-color: #ffffff; 
-  color: #000000;
   border: 1px solid rgba(0, 0, 0, 0.2); 
   border-radius: 4px; 
   padding: 4px 0; 
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   font-family: Arial, sans-serif; 
   font-size: 12px; 
+  background-color: var(--theme-button);
+  color: var(--theme-buttonText);
 }
 
 .custom-context-menu .menu-item {
@@ -614,7 +612,7 @@ background-color: var(--theme-hover);
 }
 
 .custom-context-menu .menu-item:hover {
-  background-color: #f5f5f5;
+  background-color: var(--theme-hover);
 }
 
 /* Hide menus by default */

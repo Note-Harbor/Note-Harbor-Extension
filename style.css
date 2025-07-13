@@ -517,6 +517,7 @@ background-color: var(--theme-hover);
   display: flex;
   align-items: center;
   font-size: 12px;
+  white-space: nowrap;
 }
 
 .tag:hover {
@@ -572,6 +573,7 @@ background-color: var(--theme-hover);
   justify-content: space-between;
   padding-left: 5px;
   gap: 5px;
+  white-space: nowrap;
 }
 
 

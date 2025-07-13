@@ -380,8 +380,6 @@ pre {
   border-radius: 10px;
   background-color: var(--theme-button);
   color: var(--theme-buttonText);
-  background-color: var(--theme-button);
-  color: var(--theme-buttonText);
   border: 0px;
 }
 
@@ -444,6 +442,9 @@ background-color: var(--theme-hover);
   position: absolute;
   right: 95px;
   bottom: 10px;
+  background-color: var(--theme-foreground);
+  color: var(--theme-text);
+  border: 2px solid var(--theme-button);
 }
 
 .shadow {
@@ -690,7 +691,6 @@ background-color: var(--theme-hover);
   width: 140px;
   height: 35px;
   margin-top: 5px;
-  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.3);
 }
 
 #themeDropdown {

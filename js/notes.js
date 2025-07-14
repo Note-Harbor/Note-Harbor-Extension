@@ -54,17 +54,24 @@ function deleteAllNotes() {
 
 function eraseNote() {
     titleInput.value = "";
-    infoInput.value = "";
+    mainQuill.setText("");
 }
 
-function addNote(text, insertAfter) {
+function addNote(noteDelta) {
     const title = titleInput.value || "";
-    const content = text === "" ? infoInput.value : text;
-    infoInput.value = ""; // empty out the textbox
-    titleInput.value = "";
 
-    // stop if no text is provided
-    if (title === "" && content === "") return;
+    let content = "";
+    if (noteDelta) {
+        content = noteDelta;
+    } else {
+        content = mainQuill.getContents();
+        // stop if no text is provided
+        if (title === "" && mainQuill.editor.isBlank()) return;
+
+        // empty the textboxes
+        titleInput.value = "";
+        mainQuill.setText("");
+    }
 
     const id = Date.now();
     const tags = [];
@@ -93,12 +100,12 @@ function addNote(text, insertAfter) {
  * Generates the actual HTML element in the DOM
  * don't call directly unless you're reloading
  * @param {string} title - title of a note
- * @param {string} text - textual/body content of a note
+ * @param {object} content - delta of a note
  * @param {string[]} tags - list containing all tags of a given note
  * parameter id = id 
  * @param {object} insertAfter - the note that precedes the new note you're trying to add
  */
-function addNoteHTML(title, text, tags, id, insertAfter = null) {
+function addNoteHTML(title, content, tags, id, insertAfter = null) {
     if (!id) {
         console.log("no ID provided!!!");
     }
@@ -144,12 +151,8 @@ function addNoteHTML(title, text, tags, id, insertAfter = null) {
             overlay.className = "overlay";
             document.body.appendChild(overlay);
 
-            // show only noteContent
             const noteTitle = note.getElementsByClassName("note-title")[0];
             const noteContent = note.getElementsByClassName("note-content")[0];
-            const noteDisplay = note.getElementsByClassName("note-display")[0];
-            noteContent.classList.remove("displayNone");
-            noteDisplay.classList.add("displayNone");
             
             setTimeout(() => resizeTextarea(noteContent), 0);
 
@@ -167,15 +170,9 @@ function addNoteHTML(title, text, tags, id, insertAfter = null) {
                 note.style.zIndex = null;
                 note.draggable = true;
 
-                // update noteDisplay, persist to notes
+                // persist to notes
                 notes[note.id].title = noteTitle.innerText;
-                notes[note.id].content = noteContent.value;
-                //TODO: persist tags as well
-                noteDisplay.innerHTML = DOMPurify.sanitize(marked.parse(noteContent.value));
-
-                // only show noteDisplay
-                noteContent.classList.add("displayNone");
-                noteDisplay.classList.remove("displayNone");
+                notes[note.id].content = noteQuill.getContents().ops;
             });
 
             this.classList.add("overlay-created");
@@ -187,22 +184,18 @@ function addNoteHTML(title, text, tags, id, insertAfter = null) {
     noteTitle.contentEditable = "plaintext-only";
     noteTitle.className = "note-title title";
     noteTitle.innerText = title;
-    const noteContent = document.createElement("textarea");
-    noteContent.className = "note-content displayNone body";
-    noteContent.value = text;
-
-    const noteDisplay = document.createElement("div");
-    noteDisplay.className = "note-display body";
-    noteDisplay.innerHTML = DOMPurify.sanitize(marked.parse(text));
+    const noteContent = document.createElement("div");
+    noteContent.className = "note-content body";
+    // set the value when we initialize Quill
+    noteContent.id = `editor-${note.id}`;
 
     note.appendChild(noteTitle);
     note.appendChild(noteContent);
-    note.appendChild(noteDisplay);
 
     const tagBar = document.createElement("div");
     tagBar.className = "tag-bar";
 
-    if(tags) {
+    if (tags) {
         tags.forEach((tag) => {
             const tagElement = document.createElement("div");
             tagElement.className = "note-tag";
@@ -214,6 +207,7 @@ function addNoteHTML(title, text, tags, id, insertAfter = null) {
 
 
     const bottomBar = createFormatBar();
+    bottomBar.id = `format-${note.id}`
 
     const timeText = document.createElement("div");
     timeText.className = "time-text";
@@ -235,6 +229,18 @@ function addNoteHTML(title, text, tags, id, insertAfter = null) {
     } else {
         container.prepend(note);
     }
+
+
+    const noteQuill = new Quill(`#editor-${note.id}`, {
+        theme: "snow",
+        placeholder: "Write Here!",
+        modules: {
+            toolbar: `#format-${note.id}`
+        }
+    });
+    console.log("natsumi")
+    console.log(content);
+    noteQuill.setContents(content);
 }
 
 function saveNotesOrder() {
@@ -253,7 +259,7 @@ function saveNotesOrder() {
 infoInput.addEventListener("keydown", evt => {
     if (evt.ctrlKey && evt.key === "Enter") {
         evt.preventDefault();
-        addNote(""); // that was easy
+        addNote(); // that was easy
     }
 });
 

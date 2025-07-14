@@ -1,5 +1,3 @@
-const toolbarOptions = ["bold", "italic", "underline", "strike"];
-
 const options = {
   theme: "snow",
   placeholder: "Write Here!",

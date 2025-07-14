@@ -303,8 +303,8 @@ function insertTag(folderName) {
     const modal = document.getElementById("deleteFolderModal");
 
     const deleteButton = document.createElement("button");
-    deleteButton.className = "del-tag";
-    deleteButton.textContent = "x";
+    deleteButton.className = "close-btn del-tag";
+    deleteButton.textContent = "";
     deleteButton.addEventListener("click", function(event) {
         event.stopPropagation();
 

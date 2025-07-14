@@ -109,8 +109,8 @@ function addNoteHTML(title, text, tags, id, insertAfter = null) {
     note.draggable = true;
 
     const deleteButton = document.createElement("button");
-    deleteButton.className = "del";
-    deleteButton.textContent = "X";
+    deleteButton.className = "close-btn del";
+    deleteButton.textContent = "";
     deleteButton.style.display = "none";
     deleteButton.addEventListener("click", function (event) {
         event.stopPropagation();

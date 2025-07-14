@@ -187,7 +187,7 @@ sortByTag.addEventListener("click", function() {
 
 // Open GitHub when "Website" is clicked
 websiteOption.addEventListener("click", function() {
-    window.open("https://github.com/Note-Harbor/Note-Harbor-Extension", "_blank");
+    window.open("https://noteharbor.vercel.app/", "_blank");
 });
 
 

@@ -13,7 +13,7 @@
         <option value="title:">Note Title</option>
       </datalist>
 
-      <button id="openSettings" class="topButton">Settings</button>
+      <button id="openSettings" class="settings-btn topButton"></button>
     </div>
     
     <div class="topContainer">
@@ -28,13 +28,12 @@
     
     <div class="flex">
       <div id="tagRow">
-        <div id="dropdown" class="dropdown topButton">
+        <div id="dropdown" class="dropdown-btn dropdown topButton">
           <div class="dropdown-content">
-            <span id="dropdown-arrow">&#9660;</span>
           </div>
           <div id="dropdown-menu" class="dropdown-menu hidden"></div>
         </div>
-        <button id="addTagButton" class="topButton" title="Add Folder">+</button>
+        <button id="addTagButton" class="plus-btn topButton" title="Add Folder"></button>
         <div id="folderRow"></div>
       </div>
     </div>
@@ -62,7 +61,7 @@
       <div class="modal-content">
         <div class="settingsTop">
           <p id="settingsTitle">Settings</p>
-          <button id="closeSettings" class="closeButton">X</button>
+          <button id="closeSettings" class="close-btn closeButton"></button>
         </div>
         <div class="settingsDiv">
           <label class="settingsHeader">Select Theme</label>
@@ -99,7 +98,7 @@
       <div class="modal-content">
         <div class="settingsTop">
           <p class="settingsHeader">Are you sure?</p>
-          <button id="cancelDeleteNotes" class="closeButton">X</button>
+          <button id="cancelDeleteNotes" class="close-btn closeButton">X</button>
         </div>
         <div class="settingsDiv">
           <p class="settingsText">This will permanently delete all your notes. This action cannot be undone.</p>
@@ -111,7 +110,7 @@
       <div class="modal-content">
         <div class="settingsTop">
           <p class="settingsHeader">Are you sure?</p>
-          <button id="cancelResetNotes" class="closeButton">X</button>
+          <button id="cancelResetNotes" class="close-btn closeButton">X</button>
         </div>
         <div class="settingsDiv">
           <p class="settingsText">This will permanently reset your settings. This action cannot be undone.</p>
@@ -123,7 +122,7 @@
       <div class="modal-content">
         <div class="settingsTop">
           <p class="settingsHeader">Delete Tag?</p>
-          <button id="cancelDeleteFolder" class="closeButton">X</button>
+          <button id="cancelDeleteFolder" class="close-btn closeButton">X</button>
         </div>
         <div class="settingsDiv">
           <p class="settingsText">This will remove the tag from all notes.</p>

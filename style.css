@@ -392,9 +392,7 @@ pre {
   background-color: var(--theme-click);
 }
 
-#openSettings {
-  height: 34px;
-}
+
 
 .closeButton {
   background-color: var(--theme-button);
@@ -667,9 +665,8 @@ background-color: var(--theme-hover);
   min-width: 200px;
 }
 
-#settingsTitle {
-  font-size: 20px;
-  color: var(--theme-text);
+#confirmDeleteFolder {
+  width: 100%;
 }
 
 .settingsHeader {
@@ -684,13 +681,58 @@ background-color: var(--theme-hover);
   color: var(--theme-text);
   margin-bottom: 3px;
   display: flex;
-  width: 85%;
+  width: auto;
 }
 
 .settingsButton {
   width: 140px;
   height: 35px;
   margin-top: 5px;
+}
+
+#openSettings {
+  height: 34px;
+  width: 34px;
+}
+
+.settings-btn {
+  background-size: 16px 16px;
+  background-image: url('./assets/icons/gear-solid.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: var(--theme-button);
+  border: none;
+  cursor: pointer;
+}
+
+.close-btn {
+  background-size: 16px 16px;
+  background-image: url('./assets/icons/xmark-solid.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: var(--theme-button);
+  border: none;
+  cursor: pointer;
+}
+
+.plus-btn {
+  background-size: 16px 16px;
+  background-image: url('./assets/icons/plus-solid.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: var(--theme-button);
+  border: none;
+  cursor: pointer;
+}
+
+.dropdown-btn {
+  background-size: 16px 16px;
+  background-image: url('./assets/icons/folder-solid.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: var(--theme-button);
+  border: none;
+  cursor: pointer;
 }
 
 #themeDropdown {
@@ -712,6 +754,8 @@ background-color: var(--theme-hover);
 
 .settingsDiv {
   margin-top: 10px;
+  display: flex;
+  flex-direction: column;
 }
 /* width */
 ::-webkit-scrollbar {
@@ -745,6 +789,7 @@ background-color: var(--theme-hover);
   width: 30px;
   height: 30px;
   align-items: center;
+  justify-content: center;
   font-family: Arial, sans-serif; 
   font-size: 12px; 
 }
@@ -765,7 +810,7 @@ background-color: var(--theme-hover);
 
 .dropdown-menu {
   position: absolute;
-  top: 100%;
+  top: 35px;
   min-width: max-content;
   background: var(--theme-foreground);
   border-radius: 10px;

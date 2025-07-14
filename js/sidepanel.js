@@ -1,7 +1,7 @@
 loadSettings();
 loadNotes();
 //insertTag();
-//formatBar.append(createFormatBar());
+formatBar.append(createFormatBar());
 
 add.addEventListener("click", _ => { addNote(""); });
 erase.addEventListener("click", _ => { eraseNote(); });

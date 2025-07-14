@@ -29,11 +29,5 @@
       "suggested_key": "Ctrl+Shift+L",
       "description": "Opens our glorious sidebar!"
     }
-  },
-  "content_scripts": [
-    {
-      "js": ["quill.min.js", "content.js"],
-      "css": ["quill.snow.css"]
-    }
-  ]
+  }
 }

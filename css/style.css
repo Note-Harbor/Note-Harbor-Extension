@@ -32,6 +32,8 @@ a:active {
   color: var(--theme-click);
 }
 
+
+
 body {
   background-color: var(--theme-background);
   overflow: hidden;
@@ -326,12 +328,10 @@ pre {
   font-size: 13px;
 }
 .bottom-bar {
-  margin: 5px;
-  padding: 5px;
   background-color: var(--theme-format);
   border-radius: 5px;
-  height: 10px;
-  width: 55px;
+  /* height: 25px; */
+  width: 210px;
   display: flex;
   justify-content: center;
   align-items: center;

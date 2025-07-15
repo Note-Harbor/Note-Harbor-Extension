@@ -32,8 +32,6 @@ a:active {
   color: var(--theme-click);
 }
 
-
-
 body {
   background-color: var(--theme-background);
   overflow: hidden;
@@ -331,7 +329,7 @@ pre {
   background-color: var(--theme-format);
   border-radius: 5px;
   /* height: 25px; */
-  width: 210px;
+  width: 135px;
   display: flex;
   justify-content: center;
   align-items: center;

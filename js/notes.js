@@ -66,7 +66,10 @@ function addNote(noteDelta) {
     } else {
         content = mainQuill.getContents();
         // stop if no text is provided
-        if (title === "" && mainQuill.editor.isBlank()) return;
+        if (title === "" && mainQuill.editor.isBlank()) {
+            showTimedMessage("Type Something First!", 3000)
+            return;
+        }
 
         // empty the textboxes
         titleInput.value = "";

@@ -144,7 +144,7 @@ function addNoteHTML(title, content, tags, id, insertAfter = null) {
     note.addEventListener("mouseout", function () {
         deleteButton.style.display = "none";
     });
-
+    
     note.addEventListener("click", function (event) {
         // if the user clicks on a link inside the note, don't change into edit mode
         if (event.target.nodeName === "A") return;
@@ -164,7 +164,31 @@ function addNoteHTML(title, content, tags, id, insertAfter = null) {
                 noteContent.hasResizeListener = true;
             }
 
-            // Disable dragging if note in focused mode
+            // Enforce title character limit
+            const char_limit = 30;
+            let warningOn = false;
+            noteTitle.addEventListener("input", function () {
+                const text = noteTitle.innerText;
+                if (text.length > char_limit) {
+                    noteTitle.innerText = text.slice(0, char_limit);
+
+                    // Reset caret to end
+                    const range = document.createRange();
+                    const sel = window.getSelection();
+                    range.selectNodeContents(noteTitle);
+                    range.collapse(false);
+                    sel.removeAllRanges();
+                    sel.addRange(range);
+
+                    if (!warningOn) {
+                        warningOn = true;
+                        showTimedMessage("Title character limit exceeded!", 3000);
+                        setTimeout(() => warningOn = false, 3000);
+                    }
+                }
+            });
+            
+            // disable dragging if not in focus mode
             note.draggable = false;
             overlay.addEventListener("click", function () {
                 // remove overlay

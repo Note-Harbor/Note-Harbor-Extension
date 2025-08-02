@@ -58,12 +58,13 @@ function eraseNote() {
 }
 
 function addNote(noteDelta) {
-    const title = titleInput.value || "";
-
+    let title = titleInput.value || "";
     let content = "";
+
     if (noteDelta) {
         // simulate Quill data format for add to harbor text
         content = {ops: [{insert: noteDelta.insert}]};
+        title = noteDelta.insert.slice(0,26).trimEnd() + "...";
     } else {
         content = mainQuill.getContents();
         // stop if no text is provided

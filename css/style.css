@@ -269,12 +269,13 @@ pre {
   min-width: 100px;
   border-radius: 5px;
   padding: 5px;
-  background-color: var(--theme-foreground);
+  background-color: transparent;
   color: var(--theme-text);
   word-wrap: break-word;
   overflow-wrap: break-word;
   white-space: pre-wrap; 
   width: 100%;
+  z-index: 0;
 }
 
 .topInput::placeholder {

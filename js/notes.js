@@ -62,7 +62,8 @@ function addNote(noteDelta) {
 
     let content = "";
     if (noteDelta) {
-        content = noteDelta;
+        // simulate Quill data format for add to harbor text
+        content = {ops: [{insert: noteDelta.insert}]};
     } else {
         content = mainQuill.getContents();
         // stop if no text is provided

@@ -114,6 +114,10 @@ pre {
   gap: 10px;
   margin-bottom: 10px;
   position: relative;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: pre-wrap; 
+  max-width: 100%;
 }
 
 #container {
@@ -267,7 +271,12 @@ pre {
   padding: 5px;
   background-color: var(--theme-foreground);
   color: var(--theme-text);
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: pre-wrap; 
+  width: 100%;
 }
+
 .topInput::placeholder {
   color: var(--theme-placeholder);
 }
@@ -308,12 +317,17 @@ pre {
   background-color: var(--theme-foreground);
   color: var(--theme-text);
   height: 150px;
-  height: 150px;
-  transition: transform .2s ease-in-out;
+  width: 100%;
+  padding-bottom: 32px;
+  transition: transform .2s ease-in-out; 
 }
 
 .inputContainer:hover {
   transform: scale(1.01);
+}
+
+#formatBar {
+  border: none;
 }
 
 .bottomDiv {
@@ -367,8 +381,18 @@ pre {
   border: 0px;
   color: var(--theme-text);
   min-height: 74px;
-  resize: none;
 }
+
+#info .ql-editor {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
+  overflow-x: hidden;
+  min-height: 100px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
 #info:focus {
   outline: none;
 }

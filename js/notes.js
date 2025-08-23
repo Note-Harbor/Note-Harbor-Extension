@@ -267,7 +267,7 @@ function addNoteHTML(title, content, folders, id, insertAfter = null) {
             toolbar: `#format-${note.id}`
         }
     });
-    console.log("natsumi")
+    //console.log("natsumi")
     console.log(content);
     noteQuill.setContents(content);
 }

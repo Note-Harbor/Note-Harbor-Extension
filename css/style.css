@@ -349,6 +349,10 @@ pre {
   align-items: center;
 }
 
+div[id^="format-"].bottom-bar {
+  margin-left: 4px;
+}
+
 .bottom-bar button {
   background-color: var(--theme-format);
   color: var(--theme-formatText);
@@ -383,8 +387,6 @@ pre {
   color: var(--theme-text);
   min-height: 74px;
 }
-
-
 
 .ql-container {
   border: none !important;
@@ -657,12 +659,6 @@ background-color: var(--theme-hover);
   padding-left: 5px;
   gap: 5px;
   white-space: nowrap;
-}
-
-
-.bottom-bar {
-  display: flex;
-  padding-left: 5px;
 }
 
 .note-folder {

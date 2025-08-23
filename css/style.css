@@ -778,7 +778,7 @@ background-color: var(--theme-hover);
 
 .settings-btn {
   background-size: 16px 16px;
-  background-image: url('./assets/icons/gear-solid.svg');
+  background-image: url('../assets/icons/gear-solid.svg');
   background-repeat: no-repeat;
   background-position: center;
   background-color: var(--theme-button);
@@ -788,7 +788,7 @@ background-color: var(--theme-hover);
 
 .close-btn {
   background-size: 16px 16px;
-  background-image: url('./assets/icons/xmark-solid.svg');
+  background-image: url('../assets/icons/xmark-solid.svg');
   background-repeat: no-repeat;
   background-position: center;
   background-color: var(--theme-button);
@@ -798,7 +798,7 @@ background-color: var(--theme-hover);
 
 .plus-btn {
   background-size: 16px 16px;
-  background-image: url('./assets/icons/plus-solid.svg');
+  background-image: url('../assets/icons/plus-solid.svg');
   background-repeat: no-repeat;
   background-position: center;
   background-color: var(--theme-button);
@@ -808,7 +808,7 @@ background-color: var(--theme-hover);
 
 .dropdown-btn {
   background-size: 16px 16px;
-  background-image: url('./assets/icons/folder-solid.svg');
+  background-image: url('../assets/icons/folder-solid.svg');
   background-repeat: no-repeat;
   background-position: center;
   background-color: var(--theme-button);

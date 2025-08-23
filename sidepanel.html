@@ -1,9 +1,12 @@
 <html>
   <head>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="css/style.css" />
     <script src="lib/purify.min.js"></script>
     <script src="lib/marked.min.js"></script>
+    <script src="lib/quill.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
   </head>
   <body>
     <div class="topContainerSearch">
@@ -18,12 +21,14 @@
     
     <div class="topContainer">
       <div class="inputContainer">
-        <input id="title" class="topInput title" type="text" placeholder="Title">
-        <textarea id="info" class="topInput body" autofocus="autofocus" style="margin-left:5px; margin-right:5px;" placeholder="Write Here!"></textarea>
-        <div id="formatBar"></div>
+        <input id="title" class="topInput title" type="text" placeholder="Title" maxlength="30">
+        <div id="info" class="topInput body" autofocus="autofocus" placeholder="Write Here!"></div>
+        <div class="mainBar">
+          <div id="formatBar"></div>
+          <button id="add" class="topButton">Add Note</button>
+          <button id="erase" class="topButton">Erase</button>
+        </div>
       </div>
-      <button id="add" class="topButton">Add Note</button>
-      <button id="erase" class="topButton">Erase</button>
     </div>
     
     <div class="flex">
@@ -143,4 +148,6 @@
   <script src="js/themes.js"></script>
   <script src="js/tags.js"></script>
   <script src="js/sidepanel.js"></script>
+
+  <script src="js/editor.js"></script>
 </html>

@@ -31,7 +31,7 @@ const themes = {
         buttonText: "#000000",   
         format: "#EDEDED",       
         formatText: "#000000", 
-        formatHover: "#D9D9D9",
+        formatHover: "#777777",
         formatClick: "#C4C4C4",  
         submenuHover: "#DFDFDF",
         submenuClick: "#CCCCCC" 

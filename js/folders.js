@@ -1,28 +1,28 @@
-const tagContainer = document.getElementById("folderRow");
-const addTag = document.getElementById("addTagButton");
+const folderContainer = document.getElementById("folderContainer");
+const addFolder = document.getElementById("addFolderButton");
 
-addTag.addEventListener("click", () => insertTag(""));
+addFolder.addEventListener("click", () => insertFolder(""));
 
 function loadFolders() {
     const notesText = localStorage.getItem("folders");
     let allFolders = JSON.parse(notesText);
 
     for (const folderName of allFolders.reverse()) {
-        insertTag(folderName);
+        insertFolder(folderName);
     }
 
-    const allTagInputs = document.querySelectorAll(".tag-input");
-    allTagInputs.forEach(input => {
+    const allFolderInputs = document.querySelectorAll(".folder-input");
+    allFolderInputs.forEach(input => {
         input.contentEditable = false;
     });
 }
 
 function saveFolders() {
-    const tagInputs = document.querySelectorAll('.tag-input');
+    const folderInputs = document.querySelectorAll('.folder-input');
     const uniqueFolders = [];
     const seenFolders = new Set();
 
-    tagInputs.forEach((input) => {
+    folderInputs.forEach((input) => {
         const content = input.textContent.trim();
         if (content !== "" && !seenFolders.has(content)) {
             uniqueFolders.push(content);
@@ -36,13 +36,13 @@ function saveFolders() {
 
 function reloadFolders() {
     // delete all folders
-    const currentNotes = Array.from(document.getElementsByClassName("tag"));
+    const currentNotes = Array.from(document.getElementsByClassName("folder"));
     for (let i = 0; i < currentNotes.length; i++) {
         currentNotes[i].remove();
     }
 
     // add them all back from notes[]
-    // Object.entries(notes).map(([id, {title, content, tags}]) => addNoteHTML(title, content, tags, id));
+    // Object.entries(notes).map(([id, {title, content, folders}]) => addNoteHTML(title, content, folders, id));
 }
 
 function deleteFolders(name) {
@@ -51,9 +51,9 @@ function deleteFolders(name) {
 }
 
 function updateVisible() {
-    const visibleTags = Array.from(tagContainer.children);
-    visibleTags.forEach((tag, index) => {
-        tag.style.display = index < 4 ? "flex" : "none";
+    const visibleFolders = Array.from(folderContainer.children);
+    visibleFolders.forEach((folder, index) => {
+        folder.style.display = index < 4 ? "flex" : "none";
     });
 }
 
@@ -76,34 +76,34 @@ function showTimedMessage(text, duration = 3000) {
     }, duration);
     }
 
-function insertTag(folderName) {
-    if (tagContainer.querySelector('.new-tag')) {
+function insertFolder(folderName) {
+    if (folderContainer.querySelector('.new-folder')) {
         return; 
     }
 
     saveFolders();
-    // tag as wrapper, tag-input for inputs, del-tag for delete button to avoid any editable issues
-    const tag = document.createElement("div");
-    tag.className = "new-tag";
-    tag.setAttribute("tabindex", "0"); // make tag focusable
+    // folder as wrapper, folder-input for inputs, del-folder for delete button to avoid any editable issues
+    const folder = document.createElement("div");
+    folder.className = "new-folder";
+    folder.setAttribute("tabindex", "0"); // make folder focusable
     let disableInput = true;
 
-    tag.addEventListener('dragover', function(event) {
+    folder.addEventListener('dragover', function(event) {
         event.preventDefault(); // Prevent the default to allow drop
-        tag.classList.add('drag-over');
+        folder.classList.add('drag-over');
     });
     
-    tag.addEventListener('dragleave', function(event) {
-        tag.classList.remove('drag-over'); 
+    folder.addEventListener('dragleave', function(event) {
+        folder.classList.remove('drag-over'); 
     });
 
-    tag.addEventListener("contextmenu", function(event) {
+    folder.addEventListener("contextmenu", function(event) {
         event.preventDefault(); // prevent default of highlighting selected text
-        if (tagInput.textContent.trim() === "") {
-            tagInput.textContent = "";
+        if (folderInput.textContent.trim() === "") {
+            folderInput.textContent = "";
         }
         else {
-            tag.className = "tag";
+            folder.className = "folder";
         }
 
         const currentNotes = Array.from(document.getElementsByClassName("note"));
@@ -112,24 +112,24 @@ function insertTag(folderName) {
         }
 
         disableInput = false;
-        tagInput.style.marginRight = "7px";
+        folderInput.style.marginRight = "7px";
         deleteButton.style.display = "block";
-        tagInput.contentEditable = true;
-        tagInput.focus();
+        folderInput.contentEditable = true;
+        folderInput.focus();
         disableInput = true;
     });
 
     //Creates character limit warning
     const char_limit = 20;
     let warningOn = false;
-    tag.addEventListener("input", function () {
-        if (tagInput.textContent.length > char_limit) {
-            tagInput.textContent = tagInput.textContent.slice(0, char_limit);
+    folder.addEventListener("input", function () {
+        if (folderInput.textContent.length > char_limit) {
+            folderInput.textContent = folderInput.textContent.slice(0, char_limit);
 
             //adjusts caret
             const range = document.createRange();
             const sel = window.getSelection();
-            range.selectNodeContents(tagInput);
+            range.selectNodeContents(folderInput);
             range.collapse(false);
             sel.removeAllRanges();
             sel.addRange(range);
@@ -142,26 +142,26 @@ function insertTag(folderName) {
         }
     });
 
-    const tagInput = document.createElement("div");
-    tagInput.className = "tag-input";
-    tagInput.contentEditable = true;
-    tagInput.textContent = "";
+    const folderInput = document.createElement("div");
+    folderInput.className = "folder-input";
+    folderInput.contentEditable = true;
+    folderInput.textContent = "";
 
-    tag.handleTagFocus = function () {
+    folder.handleFolderFocus = function () {
         update();
-        this.tagInput.focus();
+        this.folderInput.focus();
     };
 
-    tag.addEventListener("focus", tag.handleTagFocus);
+    folder.addEventListener("focus", folder.handleFolderFocus);
 
     function update() { // selects the notes that contain selected folder
-        if(tag.className == "new-tag") {
+        if(folder.className == "new-folder") {
             return;
         }
     }
 
-    tag.addEventListener("click", function(event) {
-        if (document.activeElement === tagInput) {
+    folder.addEventListener("click", function(event) {
+        if (document.activeElement === folderInput) {
             return;
         }
 
@@ -170,18 +170,18 @@ function insertTag(folderName) {
         const currentNotes = Array.from(document.getElementsByClassName("note"));
         for (let i = 0; i < currentNotes.length; i++) {
             let currentNote = currentNotes[i];
-            const tagBar = currentNote.querySelector(".tag-bar").children;
+            const folderBar = currentNote.querySelector(".folder-bar").children;
 
-            if (tagBar) {
-                let tagExists = false;
-                for (const tag of tagBar) {
-                    if (tag.textContent.trim() === tagInput.textContent.trim()) {
-                        tagExists = true;
+            if (folderBar) {
+                let folderExists = false;
+                for (const folder of folderBar) {
+                    if (folder.textContent.trim() === folderInput.textContent.trim()) {
+                        folderExists = true;
                         break;
                     }
                 }
 
-                if(!tagExists) {
+                if(!folderExists) {
                     currentNote.style.display = "none";
                 }
                 else {
@@ -194,72 +194,75 @@ function insertTag(folderName) {
         }
     });
 
-    tag.blurTag = function() {
-        if (tagInput.textContent.trim() === "") {
+    folder.blurFolder = function() {
+        if (folderInput.textContent.trim() === "")
+        {
             // If it's still new and empty, remove it completely
-            tag.remove();
+            folder.remove();
             updateVisible();
             return;
         }
-
-        tag.className = "tag";
-        tagInput.style.marginRight = "0px";
+    
+        folder.className = "folder";
+    
+        folderInput.style.marginRight = "0px";
         deleteButton.style.display = "none";
-
+    
         const currentNotes = Array.from(document.getElementsByClassName("note"));
         for (let i = 0; i < currentNotes.length; i++) {
             let currentNote = currentNotes[i];
             currentNote.style.display = "block";
         }
-
-        tagInput.contentEditable = false;
+    
+        folderInput.contentEditable = false;
         saveFolders();
     }
+    
 
-    tag.addEventListener("blur", function(event) {
-        tag.blurTag();
+    folder.addEventListener("blur", function(event) {
+        folder.blurFolder();
     });
 
-    tagInput.addEventListener("blur", function(event) {
-        tag.blurTag();
+    folderInput.addEventListener("blur", function(event) {
+        folder.blurFolder();
     });
 
-    let oldTagName = tag.textContent.trim();
+    let oldFolderName = folder.textContent.trim();
 
-    tagInput.addEventListener("keydown", function(event) {
+    folderInput.addEventListener("keydown", function(event) {
         if (event.key === "Enter") {
             event.preventDefault();
         }
     });
 
-    tagInput.addEventListener("keyup", function(event) {
+    folderInput.addEventListener("keyup", function(event) {
         update();
 
-        const newTagName = tagInput.textContent.trim();
+        const newFolderName = folderInput.textContent.trim();
 
-        if (newTagName !== "") {
-            tag.className = "tag";
+        if (newFolderName !== "") {
+            folder.className = "folder";
 
-            if (newTagName !== oldTagName) {
+            if (newFolderName !== oldFolderName) {
                 for (let [id, note] of Object.entries(notes)) {
-                    if (note.tags.includes(oldTagName)) {
-                        note.tags = note.tags.map(t => t === oldTagName ? newTagName : t);
+                    if (note.folders.includes(oldFolderName)) {
+                        note.folders = note.folders.map(t => t === oldFolderName ? newFolderName : t);
 
-                        const tagBar = document.getElementById(id).querySelector('.tag-bar');
-                        tagBar.innerHTML = "";
-                        note.tags.forEach(tagText => {
-                            const newTag = document.createElement("span");
-                            newTag.className = "tag";
-                            newTag.textContent = tagText;
-                            tagBar.appendChild(newTag);
+                        const folderBar = document.getElementById(id).querySelector('.folder-bar');
+                        folderBar.innerHTML = "";
+                        note.folders.forEach(folderText => {
+                            const newFolder = document.createElement("span");
+                            newFolder.className = "folder";
+                            newFolder.textContent = folderText;
+                            folderBar.appendChild(newFolder);
                         });
                     }
                 }
-                oldTagName = newTagName;
+                oldFolderName = newFolderName;
             }
 
         } else {
-            tag.className = "new-tag";
+            folder.className = "new-folder";
 
             const currentNotes = Array.from(document.getElementsByClassName("note"));
             for (let i = 0; i < currentNotes.length; i++) {
@@ -269,30 +272,30 @@ function insertTag(folderName) {
     });
 
     // for dropping a note on top of a folder
-    tag.addEventListener('drop', function(event) {
+    folder.addEventListener('drop', function(event) {
         event.preventDefault();
         
         const draggedNoteId = event.dataTransfer.getData('text/plain');
         let draggedNote = document.getElementById(draggedNoteId);
 
         if (draggedNote) {
-            let tagText = tag.querySelector('.tag-input').textContent.trim();
-            if (tagText) {
-                let tagBar = draggedNote.querySelector('.tag-bar');
-                let existingTags = Array.from(tagBar.getElementsByClassName('note-tag')).map(tag => tag.textContent.trim());
+            let folderText = folder.querySelector('.folder-input').textContent.trim();
+            if (folderText) {
+                let folderBar = draggedNote.querySelector('.folder-bar');
+                let existingFolders = Array.from(folderBar.getElementsByClassName('note-folder')).map(folder => folder.textContent.trim());
 
-                if (!existingTags.includes(tagText)) {
-                    const tagElement = document.createElement("div");
-                    tagElement.className = "note-tag";
-                    tagElement.textContent = tagText;
+                if (!existingFolders.includes(folderText)) {
+                    const folderElement = document.createElement("div");
+                    folderElement.className = "note-folder";
+                    folderElement.textContent = folderText;
 
-                    while (tagBar.firstChild) {
-                        tagBar.removeChild(tagBar.firstChild);
+                    while (folderBar.firstChild) {
+                        folderBar.removeChild(folderBar.firstChild);
                     }
-                    tagBar.appendChild(tagElement);
+                    folderBar.appendChild(folderElement);
 
-                    notes[draggedNoteId].tags = [];
-                    notes[draggedNoteId].tags.push(tagText);
+                    notes[draggedNoteId].folders = [];
+                    notes[draggedNoteId].folders.push(folderText);
                     saveNotes();
                 }
             }
@@ -304,7 +307,7 @@ function insertTag(folderName) {
     const modal = document.getElementById("deleteFolderModal");
 
     const deleteButton = document.createElement("button");
-    deleteButton.className = "close-btn del-tag";
+    deleteButton.className = "close-btn del-folder";
     deleteButton.textContent = "";
     deleteButton.addEventListener("click", function(event) {
         event.stopPropagation();
@@ -319,20 +322,20 @@ function insertTag(folderName) {
         cancelBtn.onclick = () => modal.close();
 
         newConfirmBtn.onclick = () => {
-            tag.blurTag();
+            folder.blurFolder();
 
             for (let [id, note] of Object.entries(notes)) {
-                console.log(note.tags, tag.textContent);
-                if (note.tags.includes(tagInput.textContent)) {
-                    let tagBar = document.getElementById(id).querySelector('.tag-bar');
-                    while (tagBar.firstChild) {
-                        tagBar.removeChild(tagBar.firstChild);
+                console.log(note.folders, folder.textContent);
+                if (note.folders.includes(folderInput.textContent)) {
+                    let folderBar = document.getElementById(id).querySelector('.folder-bar');
+                    while (folderBar.firstChild) {
+                        folderBar.removeChild(folderBar.firstChild);
                     }
-                    note.tags = []; 
+                    note.folders = []; 
                 }
             }
 
-            tag.remove();
+            folder.remove();
             updateVisible();
             modal.close();
         }
@@ -351,21 +354,21 @@ function insertTag(folderName) {
     });
 
     if (folderName && folderName !== "") {
-        tag.className = "tag";
-        tagInput.textContent = folderName;
-        tagInput.style.marginRight = "0px";
+        folder.className = "folder";
+        folderInput.textContent = folderName;
+        folderInput.style.marginRight = "0px";
         deleteButton.style.display = "none";
     }
 
-    tag.appendChild(tagInput);
-    tag.tagInput = tagInput;
+    folder.appendChild(folderInput);
+    folder.folderInput = folderInput;
 
-    tag.appendChild(deleteButton);
+    folder.appendChild(deleteButton);
 
-    tagContainer.prepend(tag);
+    folderContainer.prepend(folder);
     
-    // automatically focus on new tag input
-    tagInput.focus();
+    // automatically focus on new folder input
+    folderInput.focus();
     updateVisible();
 }
 
@@ -374,7 +377,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const menu = document.getElementById("dropdown-menu");
 
     dropdown.addEventListener("click", () => {
-        const tags = document.querySelectorAll('.tag');
+        const folders = document.querySelectorAll('.folder');
         menu.innerHTML = '';
 
         const allNotes = document.createElement('div');
@@ -382,22 +385,22 @@ document.addEventListener("DOMContentLoaded", () => {
         allNotes.textContent = "All Notes";
 
         allNotes.addEventListener("click", () => {
-            tags.forEach(tag => {
-                tag.blurTag();
+            folders.forEach(folder => {
+                folder.blurFolder();
             });
         });
 
         menu.appendChild(allNotes);
     
-        tags.forEach(tag => {
+        folders.forEach(folder => {
             const menuItem = document.createElement('div');
             menuItem.className = "dropdown-item";
-            menuItem.textContent = tag.tagInput.textContent;
+            menuItem.textContent = folder.folderInput.textContent;
 
             menuItem.addEventListener("click", () => {
-                if (typeof tag.handleTagFocus === "function") {
-                    tag.handleTagFocus();
-                    tagContainer.prepend(tag);
+                if (typeof folder.handleFolderFocus === "function") {
+                    folder.handleFolderFocus();
+                    folderContainer.prepend(folder);
                     updateVisible();
                 }
             });

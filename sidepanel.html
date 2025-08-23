@@ -12,7 +12,7 @@
     <div class="topContainerSearch">
       <input id="search" class="topInput" type="text" list="prefixes" autocomplete="off" placeholder="Search Notes">
       <datalist id="prefixes">
-        <option value="tag:">Tag Name</option>
+        <option value="folder:">Folder Name</option>
         <option value="title:">Note Title</option>
       </datalist>
 
@@ -31,17 +31,17 @@
       </div>
     </div>
     
-    <div class="flex">
-      <div id="tagRow">
-        <div id="dropdown" class="dropdown-btn dropdown topButton">
-          <div class="dropdown-content">
+          <div class="flex">
+        <div id="folderRow">
+          <div id="dropdown" class="dropdown-btn dropdown topButton">
+            <div class="dropdown-content">
+            </div>
+            <div id="dropdown-menu" class="dropdown-menu hidden"></div>
           </div>
-          <div id="dropdown-menu" class="dropdown-menu hidden"></div>
+          <button id="addFolderButton" class="plus-btn topButton" title="Add Folder"></button>
+          <div id="folderContainer"></div>
         </div>
-        <button id="addTagButton" class="plus-btn topButton" title="Add Folder"></button>
-        <div id="folderRow"></div>
       </div>
-    </div>
 
     <!-- Creates Error Message -->
     <div id="errorMessage"></div>
@@ -59,7 +59,7 @@
     <!-- Floating Sort Menu (Appears When Clicking "Sort By") -->
     <div id="sortMenu" class="settings-menu">
       <div class="menu-item" id="sortByDate">Sort by Date</div>
-      <div class="menu-item" id="sortByTag">Sort by Tag</div>
+      <div class="menu-item" id="sortByFolder">Sort by Folder</div>
     </div>
 
     <dialog id="settingsModal" class="settings-modal">
@@ -126,12 +126,12 @@
     <dialog id="deleteFolderModal" class="settings-modal confirmModal">
       <div class="modal-content">
         <div class="settingsTop">
-          <p class="settingsHeader">Delete Tag?</p>
+          <p class="settingsHeader">Delete Folder?</p>
           <button id="cancelDeleteFolder" class="close-btn closeButton">X</button>
         </div>
         <div class="settingsDiv">
-          <p class="settingsText">This will remove the tag from all notes.</p>
-          <button id="confirmDeleteFolder" class="topButton settingsButton">Delete Tag</button>
+          <p class="settingsText">This will remove the folder from all notes.</p>
+          <button id="confirmDeleteFolder" class="topButton settingsButton">Delete Folder</button>
         </div>
       </div>
     </dialog>
@@ -146,7 +146,7 @@
   <script src="js/search.js"></script>
   <script src="js/settings.js"></script>
   <script src="js/themes.js"></script>
-  <script src="js/tags.js"></script>
+  <script src="js/folders.js"></script>
   <script src="js/sidepanel.js"></script>
 
   <script src="js/editor.js"></script>

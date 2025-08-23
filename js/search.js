@@ -1,12 +1,12 @@
 /**
- * Displays only the notes possessing a given tag
- * @param {string} tag 
+ * Displays only the notes possessing a given folder
+ * @param {string} folder 
  */
-function searchNotesByTag(tag) {
+function searchNotesByFolder(folder) {
     const noteElements = Array.from(document.getElementsByClassName("note"));
     const filteredNoteIDs = Object.entries(notes)
-                                .filter(([_, note]) => note.tags.join("\n").includes(tag)) // better than exact matching tag strings
-                              //.filter(([_, note]) => note.tags.includes(tag)) // alternative for exact tag matching
+                                .filter(([_, note]) => note.folders.join("\n").includes(folder)) // better than exact matching folder strings
+                              //.filter(([_, note]) => note.folders.includes(folder)) // alternative for exact folder matching
                                 .map(([id, _]) => id); // only give us the IDs
     
     noteElements.forEach(noteElement => {
@@ -67,14 +67,14 @@ function searchNotesByText(searchTerm) {
  * @param {string} input 
  */
 function handleInput(input) {
-    const tagPrefix = "tag:";
+    const folderPrefix = "folder:";
     const titlePrefix = "title:"
     
     if (input === "") { // no search, default to all notes
         showAllNotes();
-    } else if (input.startsWith(tagPrefix)) {
-        const tag = input.slice(tagPrefix.length).trim();
-        searchNotesByTag(tag);
+    } else     if (input.startsWith(folderPrefix)) {
+        const folder = input.slice(folderPrefix.length).trim();
+        searchNotesByFolder(folder);
     } else if (input.startsWith(titlePrefix)) {
         const title = input.slice(titlePrefix.length).trim();
         searchNotesByTitle(title);
@@ -95,7 +95,7 @@ function showAllNotes() {
 
 // event handlers
 search.addEventListener("input", function () {
-    const searchTag = search.value.trim().toLowerCase();
-    handleInput(searchTag);
+    const searchFolder = search.value.trim().toLowerCase();
+    handleInput(searchFolder);
 });
 

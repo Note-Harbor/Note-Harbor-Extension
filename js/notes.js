@@ -10,7 +10,7 @@ function resizeTextarea(textarea) {
 
 // notes are stored as an object
 // key: Date.now()
-// value: {content: string, tags: string[], title: string}
+// value: {content: string, folders: string[], title: string}
 // this lets us sort the notes by date, and delete by some ID
 let notes = {};
 
@@ -31,8 +31,8 @@ function reloadNoteHTML() {
     }
 
     // add them all back from notes[]
-    Object.entries(notes).reverse().forEach(([id, {title, content, tags}]) => {
-        addNoteHTML(title, content, tags, id);
+    Object.entries(notes).reverse().forEach(([id, {title, content, folders}]) => {
+        addNoteHTML(title, content, folders, id);
     });
 }
 function deleteNote(id) {
@@ -79,9 +79,9 @@ function addNote(noteDelta) {
     }
 
     const id = Date.now();
-    const tags = [];
+    const folders = [];
 
-    notes[id] = { title, content, tags };
+    notes[id] = { title, content, folders };
 
     //Move new note to top
     const notesArray = Object.entries(notes);
@@ -98,7 +98,7 @@ function addNote(noteDelta) {
     
     saveNotes();
     reloadNoteHTML();
-    console.log(tags);
+    console.log(folders);
 }
 
 /**
@@ -106,11 +106,11 @@ function addNote(noteDelta) {
  * don't call directly unless you're reloading
  * @param {string} title - title of a note
  * @param {object} content - delta of a note
- * @param {string[]} tags - list containing all tags of a given note
+ * @param {string[]} folders - list containing all folders of a given note
  * parameter id = id 
  * @param {object} insertAfter - the note that precedes the new note you're trying to add
  */
-function addNoteHTML(title, content, tags, id, insertAfter = null) {
+function addNoteHTML(title, content, folders, id, insertAfter = null) {
     if (!id) {
         console.log("no ID provided!!!");
     }
@@ -221,16 +221,16 @@ function addNoteHTML(title, content, tags, id, insertAfter = null) {
     note.appendChild(noteTitle);
     note.appendChild(noteContent);
 
-    const tagBar = document.createElement("div");
-    tagBar.className = "tag-bar";
+    const folderBar = document.createElement("div");
+    folderBar.className = "folder-bar";
 
-    if (tags) {
-        tags.forEach((tag) => {
-            const tagElement = document.createElement("div");
-            tagElement.className = "note-tag";
-            tagElement.textContent = tag;
+    if (folders) {
+        folders.forEach((folder) => {
+            const folderElement = document.createElement("div");
+            folderElement.className = "note-folder";
+            folderElement.textContent = folder;
 
-            tagBar.appendChild(tagElement);
+            folderBar.appendChild(folderElement);
         });
     }
 
@@ -249,7 +249,7 @@ function addNoteHTML(title, content, tags, id, insertAfter = null) {
     const bottomDiv = document.createElement("div");
     bottomDiv.className = "bottomDiv";
     bottomDiv.appendChild(bottomBar);
-    bottomDiv.appendChild(tagBar);
+    bottomDiv.appendChild(folderBar);
     bottomDiv.appendChild(timeText);
     note.appendChild(bottomDiv);
 
@@ -302,53 +302,53 @@ function addContextMenuToNote(note) {
         customMenu.style.top = `${event.clientY}px`;
 
         document.getElementById("rem").addEventListener("click", function() {
-            let tagBar = note.querySelector('.tag-bar');
-            while (tagBar.firstChild) {
-                tagBar.removeChild(tagBar.firstChild);
+            let folderBar = note.querySelector('.folder-bar');
+            while (folderBar.firstChild) {
+                folderBar.removeChild(folderBar.firstChild);
             }
-            notes[note.id].tags = [];
+            notes[note.id].folders = [];
             saveNotes();
 
             customMenu.style.display = "none"; 
         });
 
         document.getElementById("rem").addEventListener("mouseover", function() {
-            tagMenu.style.display = "none"; 
+            folderMenu.style.display = "none"; 
         });
         
         document.getElementById("addtofolder").addEventListener("mouseover", function(event) {
-            const tagInputs = document.querySelectorAll('.tag-input');
+            const folderInputs = document.querySelectorAll('.folder-input');
         
-            tagMenu.innerHTML = '';
+            folderMenu.innerHTML = '';
         
-            tagInputs.forEach(input => {
+            folderInputs.forEach(input => {
                 const menuItem = document.createElement('div');
                 menuItem.className = "menu-item";
                 menuItem.textContent = input.textContent; 
 
                 menuItem.addEventListener("click", () => {
-                    let tagBar = note.querySelector('.tag-bar');
-                    const tagElement = document.createElement("div");
-                    tagElement.className = "note-tag";
-                    tagElement.textContent = menuItem.textContent;
+                    let folderBar = note.querySelector('.folder-bar');
+                    const folderElement = document.createElement("div");
+                    folderElement.className = "note-folder";
+                    folderElement.textContent = menuItem.textContent;
 
-                    while (tagBar.firstChild) {
-                        tagBar.removeChild(tagBar.firstChild);
+                    while (folderBar.firstChild) {
+                        folderBar.removeChild(folderBar.firstChild);
                     }
-                    tagBar.appendChild(tagElement);
+                    folderBar.appendChild(folderElement);
 
-                    notes[note.id].tags = [];
-                    notes[note.id].tags.push(menuItem.textContent);
+                    notes[note.id].folders = [];
+                    notes[note.id].folders.push(menuItem.textContent);
                     saveNotes();
                 });
 
-                tagMenu.appendChild(menuItem);
+                folderMenu.appendChild(menuItem);
             });
     
             const customMenuRect = customMenu.getBoundingClientRect();
-            tagMenu.style.left = `${customMenuRect.right + 10}px`; 
-            tagMenu.style.top = `${customMenuRect.top}px`;
-            tagMenu.style.display = "block"; 
+            folderMenu.style.left = `${customMenuRect.right + 10}px`; 
+            folderMenu.style.top = `${customMenuRect.top}px`;
+            folderMenu.style.display = "block"; 
         });
     });
 }
@@ -363,21 +363,21 @@ customMenu.innerHTML = `
 
 document.body.appendChild(customMenu);
 
-const tagMenu = document.createElement('div');
-tagMenu.className = "custom-context-menu";
-tagMenu.style.display = "none";
+const folderMenu = document.createElement('div');
+folderMenu.className = "custom-context-menu";
+folderMenu.style.display = "none";
 
-tagMenu.addEventListener("mouseleave", () => {
-    tagMenu.style.display = "none";
+folderMenu.addEventListener("mouseleave", () => {
+    folderMenu.style.display = "none";
 });
 
-document.body.appendChild(tagMenu);
+document.body.appendChild(folderMenu);
 
 document.addEventListener("click", function () {
     customMenu.style.display = "none";
-    tagMenu.style.display = "none"; 
+    folderMenu.style.display = "none"; 
 });
 
 document.addEventListener("contextmenu", () => {
-    tagMenu.style.display = "none";
+    folderMenu.style.display = "none";
 });

@@ -530,28 +530,31 @@ background-color: var(--theme-hover);
   box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.3);
 }
 
-#tagRow {
+#folderRow {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   gap: 4px;
 }
 
-#folderRow {
+#folderContainer {
   display: flex;     
   flex-direction: row;  
   flex-wrap: wrap;
   gap: 4px;         
 }
 
-#addTagButton {
+#addFolderButton {
   width: 30px;
   height: 30px;
   font-size: 20px;
+  display: flex;
   align-items: center;
+  justify-content: center;
+  position: relative;
 }
 
-#tagDropdown {
+#folderDropdown {
   width: 50px;
   height: 30px;
   align-items: center;
@@ -563,8 +566,8 @@ background-color: var(--theme-hover);
   align-items: center;
 }
 
-/* Wrapper for new tag */
-.new-tag {
+/* Wrapper for new folder */
+.new-folder {
   background-color: var(--theme-button);
   color: var(--theme-placeholder);
   padding: 2px 8px;
@@ -574,19 +577,19 @@ background-color: var(--theme-hover);
   font-size: 12px;
 }
 
-.new-tag:focus {
+.new-folder:focus {
   border: none;
 }
 
-.new-tag:hover {
+.new-folder:hover {
   background-color: var(--theme-hover);
 }
 
-.new-tag:active {
+.new-folder:active {
   background-color: var(--theme-click);
 }
 
-.tag {
+.folder {
   height: 30px;
   background-color: var(--theme-button);
   color: var(--theme-buttonText);
@@ -600,22 +603,22 @@ background-color: var(--theme-hover);
   white-space: nowrap;
 }
 
-.tag:hover {
+.folder:hover {
   background-color: var(--theme-hover);
   cursor: pointer;
 }
-.tag:active {
+.folder:active {
   background-color: var(--theme-click);
 }
 
-.tag:focus {
+.folder:focus {
   border: none;
   background-color: var(--theme-hover);
   color: var(--theme-buttonText);
   cursor: text;
 }
 
-.tag-input {
+.folder-input {
   background-color: transparent;
   color: var(--theme-buttonText);
   border: none;
@@ -626,13 +629,13 @@ background-color: var(--theme-hover);
   margin-right: 7px;
 }
 
-.tag-input:empty:before {
+.folder-input:empty:before {
   content: "Add Folder Name...";
   background-color: transparent;
   color: var(--theme-placeholder);
 }
 
-.del-tag {
+.del-folder {
   border: none;
   border-radius: 50%;
   width: 17px;
@@ -646,7 +649,7 @@ background-color: var(--theme-hover);
   align-items: center;
 }
 
-.tag-bar {
+.folder-bar {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -662,7 +665,7 @@ background-color: var(--theme-hover);
   padding-left: 5px;
 }
 
-.note-tag {
+.note-folder {
   background-color: var(--theme-button);
   color: var(--theme-buttonText);
   height: 20px;

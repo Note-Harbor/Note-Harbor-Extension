@@ -34,15 +34,15 @@ function saveSettings() {
     localStorage.setItem("settings", JSON.stringify(settings));
 
     // Apply the new settings
-    // SETTING: Tag Sort
+    // SETTING: Folder Sort
     /*
     switch (settings.sortChoice) {
         case "date": {
             sortButton.textContent = "Sort By Date";
             break;
         }
-        case "tag": {
-            sortButton.textContent = "Sort By Tag";
+        case "folder": {
+            sortButton.textContent = "Sort By Folder";
             break;
         }
         default: {
@@ -76,29 +76,29 @@ function saveSettings() {
     }
 }
 
-function sortNotesByTag() {
+function sortNotesByFolder() {
     const notesArray = Object.entries(notes);
 
     notesArray.sort(([, noteA], [, noteB]) => {
-        const tagsA = noteA.tags.map(tag => tag.toLowerCase());
-        const tagsB = noteB.tags.map(tag => tag.toLowerCase());
+        const foldersA = noteA.folders.map(folder => folder.toLowerCase());
+        const foldersB = noteB.folders.map(folder => folder.toLowerCase());
 
-        for (let i = 0; i < Math.min(tagsA.length, tagsB.length); i++) {
-            const tagA = tagsA[i];
-            const tagB = tagsB[i];
+        for (let i = 0; i < Math.min(foldersA.length, foldersB.length); i++) {
+            const folderA = foldersA[i];
+            const folderB = foldersB[i];
 
-            if (tagA < tagB) {
+            if (folderA < folderB) {
                 return -1;
             }
-            if (tagA > tagB) {
+            if (folderA > folderB) {
                 return 1;
             }
         }
 
-        if (tagsA.length > tagsB.length) {
+        if (foldersA.length > foldersB.length) {
             return 1;
         }
-        if (tagsA.length < tagsB.length) {
+        if (foldersA.length < foldersB.length) {
             return -1;
         }
 
@@ -139,7 +139,7 @@ const settingsOption = document.getElementById("settingsOption");
 const sortOption = document.getElementById("sortOption");
 const websiteOption = document.getElementById("websiteOption");
 const sortByDate = document.getElementById("sortByDate");
-const sortByTag = document.getElementById("sortByTag");
+        const sortByFolder = document.getElementById("sortByFolder");
 
 // Comfirm menu items
 const deleteConfirmModal = document.getElementById("deleteConfirmModal");
@@ -178,10 +178,10 @@ sortByDate.addEventListener("click", function() {
     sortMenu.style.display = "none";
 });
 
-sortByTag.addEventListener("click", function() {
-    settings.sortChoice = "tag";
+sortByFolder.addEventListener("click", function() {
+    settings.sortChoice = "folder";
     saveSettings();
-    sortNotesByTag();
+    sortNotesByFolder();
     sortMenu.style.display = "none";
 });
 
@@ -309,8 +309,8 @@ sortButton.addEventListener("click", function(event) {
     event.stopPropagation();
     if (settings.sortChoice === "date") {
         sortNotesByDate();
-    } else if (settings.sortChoice === "tag") {
-        sortNotesByTag();
+    } else if (settings.sortChoice === "folder") {
+        sortNotesByFolder();
     } else {
         console.log("UNIMPLEMENTED SORT FEATURE");
     }

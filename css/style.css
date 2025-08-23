@@ -384,6 +384,12 @@ pre {
   min-height: 74px;
 }
 
+
+
+.ql-container {
+  border: none !important;
+}
+
 #info .ql-editor {
   word-wrap: break-word;
   overflow-wrap: break-word;
@@ -392,6 +398,59 @@ pre {
   min-height: 100px;
   padding: 10px;
   box-sizing: border-box;
+  border: none !important;
+}
+
+.ql-toolbar{
+  border: none !important;
+  color: var(--theme-formatText);
+  
+}
+
+/*B base color*/
+.ql-snow.ql-toolbar button.ql-bold svg .ql-stroke {
+    stroke: var(--theme-formatText);
+}
+
+/*I base color*/
+.ql-snow.ql-toolbar button.ql-italic svg .ql-stroke {
+    stroke: var(--theme-formatText);
+}
+
+/*U base color*/
+.ql-snow.ql-toolbar button.ql-underline svg .ql-stroke {
+    stroke: var(--theme-formatText);
+}
+
+.ql-snow.ql-toolbar button:hover .ql-stroke,
+.ql-snow.ql-toolbar button:focus .ql-stroke,
+.ql-snow.ql-toolbar button.ql-active .ql-stroke,
+.ql-snow.ql-toolbar button:hover .ql-stroke-miter,
+.ql-snow.ql-toolbar button:focus .ql-stroke-miter,
+.ql-snow.ql-toolbar button.ql-active .ql-stroke-miter {
+    stroke: var(--theme-formatHover) !important;
+}
+
+.ql-snow.ql-toolbar button.ql-underline:hover svg .ql-fill,
+.ql-snow.ql-toolbar button.ql-underline:focus svg .ql-fill,
+.ql-snow.ql-toolbar button.ql-underline.ql-active svg .ql-fill {
+    fill: var(--theme-formatHover);
+}
+
+/*strikethrough bar*/
+.ql-snow.ql-toolbar button.ql-strike svg .ql-stroke {
+    stroke: var(--theme-formatText);
+}
+
+/*strikethrough S*/
+.ql-snow.ql-toolbar button.ql-strike svg path {
+    fill: var(--theme-formatText) !important;
+}
+
+.ql-snow.ql-toolbar button.ql-strike:hover svg .ql-fill,
+.ql-snow.ql-toolbar button.ql-strike:focus svg .ql-fill,
+.ql-snow.ql-toolbar button.ql-strike.ql-active svg .ql-fill {
+    fill: var(--theme-formatHover) !important;
 }
 
 #info:focus {

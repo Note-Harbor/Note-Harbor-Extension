@@ -292,7 +292,7 @@ pre {
 }
 
 #search:hover {
-  background-color: var(--theme-submenuHover);
+  background-color: var(--theme-hover);
 }
 
 #search:active {
@@ -320,11 +320,14 @@ pre {
   height: 150px;
   width: 100%;
   padding-bottom: 32px;
-  transition: transform .2s ease-in-out; 
 }
 
 .inputContainer:hover {
-  transform: scale(1.01);
+  background-color: var(--theme-hover);
+}
+
+.inputContainer:active {
+  background-color: var(--theme-foreground) !important;
 }
 
 #formatBar {

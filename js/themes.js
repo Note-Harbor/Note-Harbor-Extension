@@ -24,7 +24,7 @@ const themes = {
         background: "#FFFFFF",   
         foreground: "#FFFFFF",   
         codeblocks: "#E0E0E0",   
-        hover: "#DFDFDF",        
+        hover: "#FAFAFA",        
         click: "#C7C7C7",        
         border: "#C8C8C8",       
         button: "#EDEDED",       

@@ -9,7 +9,6 @@ function createFormatBar() {
     bottomBar.style.alignItems = "center";
     bottomBar.style.display = "flex";
     bottomBar.style.width = "fit-content";
-    bottomBar.style.padding = "4px 0";
 
     bottomBar.innerHTML = `
   <span class="ql-formats" style="display: flex; gap: 2px; justify-content: center; margin: 0 auto;">

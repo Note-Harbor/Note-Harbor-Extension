@@ -353,7 +353,7 @@ pre {
 }
 
 div[id^="format-"].bottom-bar {
-  margin-left: 4px;
+  margin-right: 5px;
 }
 
 .bottom-bar button {
@@ -410,6 +410,32 @@ div[id^="format-"].bottom-bar {
   border: none !important;
   color: var(--theme-formatText);
   
+}
+
+/* Smaller toolbar overall */
+.ql-toolbar.ql-snow {
+  padding: 0px !important; /* Default is 8px */
+}
+
+/* Smaller individual buttons */
+.ql-toolbar.ql-snow button {
+  height: 24px !important; /* Default ~28px */
+  width: 24px !important;
+  padding: 1px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* Smaller button icons */
+.ql-toolbar.ql-snow button svg {
+  height: 16px !important; /* Default ~18px */
+  width: 16px !important;
+  position: static !important;
+  margin: 0 !important;
+  top: auto !important;
+  left: auto !important;
+  transform: none !important;
 }
 
 /*B base color*/
@@ -659,7 +685,7 @@ background-color: var(--theme-hover);
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding-left: 5px;
+  padding-right: 5px;
   gap: 5px;
   white-space: nowrap;
 }
@@ -667,7 +693,7 @@ background-color: var(--theme-hover);
 .note-folder {
   background-color: var(--theme-button);
   color: var(--theme-buttonText);
-  height: 20px;
+  height: 24px;
   padding: 0px 8px;
   border-radius: 5px;
   align-items: center;
@@ -920,7 +946,7 @@ background-color: var(--theme-hover);
 }
 
 .hidden {
-  display: none;
+  display: none !important;
 }
 
 #errorMessage {

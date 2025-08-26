@@ -165,6 +165,10 @@ function addNoteHTML(title, content, folders, id, insertAfter = null) {
                 noteContent.addEventListener("input", e => resizeTextarea(e.target));
                 noteContent.hasResizeListener = true;
             }
+            
+            //Show format bar when editing
+            const formatBar = note.querySelector(`#format-${note.id}`);
+            formatBar.classList.remove('hidden');
 
             // Enforce title character limit
             const char_limit = 30;
@@ -198,6 +202,10 @@ function addNoteHTML(title, content, folders, id, insertAfter = null) {
                 note.classList.remove("overlay-created");
                 note.style.zIndex = null;
                 note.draggable = true;
+
+                //remove format bar
+                const formatBar = note.querySelector(`#format-${note.id}`);
+                formatBar.classList.add('hidden');
 
                 // persist to notes
                 notes[note.id].title = noteTitle.innerText;
@@ -237,6 +245,7 @@ function addNoteHTML(title, content, folders, id, insertAfter = null) {
 
     const bottomBar = createFormatBar();
     bottomBar.id = `format-${note.id}`
+    bottomBar.classList.add('hidden');
 
     const timeText = document.createElement("div");
     timeText.className = "time-text";

@@ -461,6 +461,10 @@ div[id^="format-"].bottom-bar {
     stroke: var(--theme-formatText);
 }
 
+.ql-snow.ql-toolbar button.ql-underline svg * {
+    stroke: var(--theme-formatText);
+}
+
 .ql-snow.ql-toolbar button:hover .ql-stroke,
 .ql-snow.ql-toolbar button:focus .ql-stroke,
 .ql-snow.ql-toolbar button.ql-active .ql-stroke,
@@ -470,10 +474,11 @@ div[id^="format-"].bottom-bar {
     stroke: var(--theme-formatHover) !important;
 }
 
-.ql-snow.ql-toolbar button.ql-underline:hover svg .ql-fill,
-.ql-snow.ql-toolbar button.ql-underline:focus svg .ql-fill,
-.ql-snow.ql-toolbar button.ql-underline.ql-active svg .ql-fill {
-    fill: var(--theme-formatHover);
+/* Underline effects*/
+.ql-snow.ql-toolbar button.ql-underline:hover svg *,
+.ql-snow.ql-toolbar button.ql-underline:focus svg *,
+.ql-snow.ql-toolbar button.ql-underline.ql-active svg * {
+    stroke: var(--theme-formatHover) !important;
 }
 
 /*strikethrough bar*/

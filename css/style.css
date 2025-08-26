@@ -417,6 +417,14 @@ div[id^="format-"].bottom-bar {
   padding: 0px !important; /* Default is 8px */
 }
 
+
+#formatBar.ql-toolbar.ql-snow{
+  padding: 0px !important; /* Default is 8px */
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+}
+
 /* Smaller individual buttons */
 .ql-toolbar.ql-snow button {
   height: 24px !important; /* Default ~28px */

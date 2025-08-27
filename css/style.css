@@ -570,6 +570,14 @@ background-color: var(--theme-hover);
   border: 2px solid var(--theme-button);
 }
 
+#erase:hover {
+  background-color: var(--theme-hover);
+}
+
+#erase:active {
+  background-color: var(--theme-click)
+}
+
 .shadow {
   box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.3);
 }

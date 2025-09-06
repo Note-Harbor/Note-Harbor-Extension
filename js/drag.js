@@ -15,6 +15,7 @@ function addDraggingEvents(note) {
   note.addEventListener("dragend", () => {
     note.classList.remove("dragging");
     draggedNote = null;
+    saveNotesOrder()
   });
 
   note.addEventListener("dragover", (event) => {

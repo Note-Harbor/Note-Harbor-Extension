@@ -242,7 +242,6 @@ function addNoteHTML(title, content, folders, id, insertAfter = null) {
         });
     }
 
-
     const bottomBar = createFormatBar();
     bottomBar.id = `format-${note.id}`
     bottomBar.classList.add('hidden');

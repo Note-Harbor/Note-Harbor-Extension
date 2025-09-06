@@ -194,7 +194,10 @@ function insertFolder(folderName) {
         }
     });
 
-    folder.blurFolder = function() {
+    folder.blurFolder = function(event) {
+        const to = event && event.relatedTarget; // prevent blur on right click
+        if (to && folder.contains(to)) return;
+
         if (folderInput.textContent.trim() === "")
         {
             // If it's still new and empty, remove it completely
@@ -220,7 +223,7 @@ function insertFolder(folderName) {
     
 
     folder.addEventListener("blur", function(event) {
-        folder.blurFolder();
+        folder.blurFolder(event);
     });
 
     folderInput.addEventListener("blur", function(event) {
@@ -325,8 +328,7 @@ function insertFolder(folderName) {
             folder.blurFolder();
 
             for (let [id, note] of Object.entries(notes)) {
-                console.log(note.folders, folder.textContent);
-                if (note.folders.includes(folderInput.textContent)) {
+                if (note.folders && note.folders.includes(folderInput.textContent)) {
                     let folderBar = document.getElementById(id).querySelector('.folder-bar');
                     while (folderBar.firstChild) {
                         folderBar.removeChild(folderBar.firstChild);

@@ -12,10 +12,10 @@ function createFormatBar() {
 
     bottomBar.innerHTML = `
   <span class="ql-formats" style="display: flex; gap: 2px; justify-content: center; margin: 0 auto;">
-    <button class="ql-bold">B</button>
-    <button class="ql-italic">I</button>
-    <button class="ql-underline">U</button>
-    <button class="ql-strike">S</button>
+    <button class="ql-bold" title = "Bold">B</button>
+    <button class="ql-italic" title = "Italics">I</button>
+    <button class="ql-underline" title = "Underline">U</button>
+    <button class="ql-strike" title = "Strikethrough">S</button>
   </span>`;
     return bottomBar;
 }

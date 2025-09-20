@@ -826,43 +826,91 @@ background-color: var(--theme-hover);
 }
 
 .settings-btn {
-  background-size: 16px 16px;
-  background-image: url('../assets/icons/gear-solid.svg');
-  background-repeat: no-repeat;
-  background-position: center;
+  position: relative;
   background-color: var(--theme-button);
   border: none;
   cursor: pointer;
+  color: var(--theme-buttonText);
+  background-image: none !important;
+}
+.settings-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 16px;
+  height: 16px;
+  background-color: currentColor;
+  -webkit-mask: no-repeat center / contain;
+          mask: no-repeat center / contain;
+  -webkit-mask-image: url('../assets/icons/gear-solid.svg');
+          mask-image: url('../assets/icons/gear-solid.svg');
 }
 
 .close-btn {
-  background-size: 16px 16px;
-  background-image: url('../assets/icons/xmark-solid.svg');
-  background-repeat: no-repeat;
-  background-position: center;
+  position: relative;
   background-color: var(--theme-button);
   border: none;
   cursor: pointer;
+  color: var(--theme-buttonText);
+  background-image: none !important;
+}
+.close-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 16px;
+  height: 16px;
+  background-color: currentColor;
+  -webkit-mask: no-repeat center / contain;
+          mask: no-repeat center / contain;
+  -webkit-mask-image: url('../assets/icons/xmark-solid.svg');
+          mask-image: url('../assets/icons/xmark-solid.svg');
 }
 
 .plus-btn {
-  background-size: 16px 16px;
-  background-image: url('../assets/icons/plus-solid.svg');
-  background-repeat: no-repeat;
-  background-position: center;
+  position: relative;
   background-color: var(--theme-button);
   border: none;
   cursor: pointer;
+  color: var(--theme-buttonText);
+  background-image: none !important;
+}
+.plus-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 16px;
+  height: 16px;
+  background-color: currentColor;
+  -webkit-mask: no-repeat center / contain;
+          mask: no-repeat center / contain;
+  -webkit-mask-image: url('../assets/icons/plus-solid.svg');
+          mask-image: url('../assets/icons/plus-solid.svg');
 }
 
 .dropdown-btn {
-  background-size: 16px 16px;
-  background-image: url('../assets/icons/folder-solid.svg');
-  background-repeat: no-repeat;
-  background-position: center;
+  position: relative;
   background-color: var(--theme-button);
   border: none;
   cursor: pointer;
+  color: var(--theme-buttonText);
+  background-image: none !important;
+}
+.dropdown-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 16px;
+  height: 16px;
+  background-color: currentColor;
+  -webkit-mask: no-repeat center / contain;
+          mask: no-repeat center / contain;
+  -webkit-mask-image: url('../assets/icons/folder-solid.svg');
+          mask-image: url('../assets/icons/folder-solid.svg');
 }
 
 #themeDropdown {

@@ -18,7 +18,7 @@ function loadSettings() {
     }
 
     // set dropdown values for the first time
-    //themeDropdown.value = settings.theme;
+    themeDropdown.value = settings.theme;
     //sortDropdown.value = settings.sortChoice;
 
     console.log("Current Settings: ", settingsObject);
@@ -51,8 +51,6 @@ function saveSettings() {
         }
     }
     */
-    // SETTING: Theme
-    settings.theme = "light"
     const selectedTheme = settings.theme;
     if (themes[selectedTheme] === undefined) {
         console.log(`Invalid theme selected; themes["${selectedTheme}"] not found`);
@@ -274,13 +272,11 @@ resetConfirmModal.addEventListener("click", function(event) {
     }
 });
 
-/* Disable dropdown for now
 themeDropdown.addEventListener("change", evt => {
     const selectedTheme = evt.target.value;
     settings.theme = selectedTheme
     saveSettings();
 });
-*/
 
 downloadButton.addEventListener("click", () => {
     const folders = JSON.parse(localStorage.getItem("folders") || "[]");

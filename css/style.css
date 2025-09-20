@@ -830,11 +830,13 @@ background-color: var(--theme-hover);
   background-color: var(--theme-button);
   border: none;
   cursor: pointer;
-  color: var(--theme-buttonText);
-  background-image: none !important;
+  color: var(--theme-buttonText);        
+  background-image: none !important;     
 }
+
 .settings-btn::before {
   content: "";
+  pointer-events: none;
   position: absolute;
   inset: 0;
   margin: auto;
@@ -855,9 +857,11 @@ background-color: var(--theme-hover);
   color: var(--theme-buttonText);
   background-image: none !important;
 }
+
 .close-btn::before {
   content: "";
-  position: absolute;
+  pointer-events: none;
+  position: absolute;                  
   inset: 0;
   margin: auto;
   width: 16px;
@@ -869,6 +873,19 @@ background-color: var(--theme-hover);
           mask-image: url('../assets/icons/xmark-solid.svg');
 }
 
+.del.close-btn {
+  position: absolute !important;
+  top: -7px;
+  right: -7px;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  z-index: 2;
+}
+.del.close-btn::before {
+  pointer-events: none;
+}
+
 .plus-btn {
   position: relative;
   background-color: var(--theme-button);
@@ -877,8 +894,10 @@ background-color: var(--theme-hover);
   color: var(--theme-buttonText);
   background-image: none !important;
 }
+
 .plus-btn::before {
   content: "";
+  pointer-events: none;
   position: absolute;
   inset: 0;
   margin: auto;
@@ -898,9 +917,13 @@ background-color: var(--theme-hover);
   cursor: pointer;
   color: var(--theme-buttonText);
   background-image: none !important;
+  width: 30px;                           
+  height: 30px;
 }
+
 .dropdown-btn::before {
   content: "";
+  pointer-events: none;
   position: absolute;
   inset: 0;
   margin: auto;

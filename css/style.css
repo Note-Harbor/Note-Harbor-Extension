@@ -749,6 +749,10 @@ background-color: var(--theme-hover);
   background-color: #f5f5f5;
 }
 
+#settingsTitle {
+  color: var(--theme-text);
+}
+
 /* Hide menus by default */
 .settings-menu {
   position: absolute;

@@ -20,9 +20,10 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
 		// ensure content scripts have time to activate
 		setTimeout(() => {
 			chrome.runtime.sendMessage({
-				content: info.selectionText
+				content: info.selectionText,
+				url: info.pageUrl
 			});
-		  }, 300);
+		  }, 500);
 	}
 })
 

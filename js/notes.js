@@ -63,8 +63,15 @@ function addNote(noteDelta) {
 
     if (noteDelta) {
         // simulate Quill data format for add to harbor text
-        content = {ops: [{insert: noteDelta.insert}]};
-        title = noteDelta.insert.slice(0,26).trimEnd() + "...";
+        content = {
+        ops: [
+            {
+            insert: noteDelta.insert,
+            url: noteDelta.url
+            }
+        ]
+        };
+        title = noteDelta.insert.slice(0, 26).trimEnd() + "...";
     } else {
         content = mainQuill.getContents();
         // stop if no text is provided
@@ -81,7 +88,7 @@ function addNote(noteDelta) {
     const id = Date.now();
     const folders = [];
 
-    notes[id] = { title, content, folders };
+    notes[id] = { title, content, folders, url: noteDelta.url || null };
 
     //Move new note to top
     const notesArray = Object.entries(notes);
@@ -220,7 +227,40 @@ function addNoteHTML(title, content, folders, id, insertAfter = null) {
     const noteTitle = document.createElement("div");
     noteTitle.contentEditable = "plaintext-only";
     noteTitle.className = "note-title title";
-    noteTitle.innerText = title;
+
+    if (notes[id].url) {
+        const link = document.createElement("a");
+        link.href = notes[id].url;
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+        link.textContent = title;
+
+        link.addEventListener("click", (event) => {
+            const ok = confirm(`Open Link?\n\n${notes[id].url}`);
+            if (!ok) {
+                event.preventDefault();
+            }
+        });
+        noteTitle.appendChild(link);
+    } else {
+        noteTitle.textContent = title;
+    }
+
+    // Stop users from creating newline characters
+    noteTitle.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+        event.preventDefault(); 
+    }
+    });
+    
+    // Let users click title link if it exists
+    noteTitle.addEventListener("click", (event) => {
+    if (event.target.tagName === "A") {
+        window.open(event.target.href, "_blank", "noopener,noreferrer");
+        event.preventDefault();
+    }
+    });
+
     const noteContent = document.createElement("div");
     noteContent.className = "note-content body";
     // set the value when we initialize Quill

@@ -17,19 +17,21 @@
   --theme-formatClick: #B0B0B0;
   --theme-submenuHover: #D9D9D9;
   --theme-submenuClick: #C4C4C4;
+  --theme-link: #004E6E;
+  --theme-linkHover: #0094B8;
+  --theme-linkClick: #053D57;
 }
 
-a:link {
-  color: var(--theme-button-text);
-  color: var(--theme-button-text);
-}
-
-a:hover {
-  color: var(--theme-hover);
+a {
+  color: var(--theme-link)
 }
 
 a:active {
-  color: var(--theme-click);
+  color: var(--theme-linkClick);
+}
+
+a:hover {
+  color: var(--theme-linkHover);
 }
 
 body {

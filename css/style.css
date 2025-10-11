@@ -408,6 +408,12 @@ div[id^="format-"].bottom-bar {
   border: none !important;
 }
 
+#info.ql-container .ql-editor.ql-blank::before {
+  color: var(--theme-placeholder);
+  opacity: 1;
+  font-style: italic;
+}
+
 .ql-toolbar{
   border: none !important;
   color: var(--theme-formatText);

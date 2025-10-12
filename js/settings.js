@@ -72,6 +72,9 @@ function saveSettings() {
         des.setProperty("--theme-formatClick",  themes[selectedTheme].formatClick || unimplementedColor);
         des.setProperty("--theme-submenuHover", themes[selectedTheme].submenuHover || unimplementedColor);
         des.setProperty("--theme-submenuClick", themes[selectedTheme].submenuClick || unimplementedColor);
+        des.setProperty("--theme-link",         themes[selectedTheme].link        || unimplementedColor);
+        des.setProperty("--theme-linkHover",    themes[selectedTheme].linkHover   || unimplementedColor);
+        des.setProperty("--theme-linkClick",    themes[selectedTheme].linkClick   || unimplementedColor);
     }
 }
 

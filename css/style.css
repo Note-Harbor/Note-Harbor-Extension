@@ -1057,3 +1057,16 @@ background-color: var(--theme-hover);
   font-family: sans-serif;
   box-shadow: 0 2px 8px rgba(0,0,0,0.3);
 }
+
+.note .ql-container {
+  height: 100%;
+  overflow: hidden;
+  border: none;
+}
+
+.note .ql-editor {
+  height: 100%;             
+  overflow-y: auto;    
+  overflow-x: hidden;
+  padding-right: 8px;
+}

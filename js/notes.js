@@ -46,6 +46,20 @@ function deleteAllNotes() {
     reloadFolders();
 }
 
+function measureNote(note) {
+  const view   = note.querySelector('.note-content');
+  const editor = note.querySelector(`#editor-${note.id} .ql-editor`);
+  if (!view || !editor) return;
+
+  view.style.height = 'auto';  // allow shrink
+  void view.offsetHeight;
+
+  const cap = 500;
+  const pad = 10;
+  const next = Math.min(editor.scrollHeight + pad, cap);
+  view.style.height = next + 'px';
+}
+
 /**
  * this function only creates the note in the notes[] array, then calls addNoteHTML
  * @param {string} text - textual/body content of note
@@ -278,6 +292,9 @@ function addNoteHTML(title, content, folders, id, insertAfter = null) {
     //console.log("natsumi")
     console.log(content);
     noteQuill.setContents(content);
+    noteQuill.on('text-change', () => {
+        measureNote(note);
+    });
 }
 
 function saveNotesOrder() {

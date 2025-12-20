@@ -290,6 +290,7 @@ pre {
   height: 34px;
   border: 2px solid;
   border-color: var(--theme-border);
+  background-color: var(--theme-foreground);
   /*box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.3);*/
 }
 

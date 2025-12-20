@@ -409,7 +409,7 @@ div[id^="format-"].bottom-bar {
   border: none !important;
 }
 
-#info.ql-container .ql-editor.ql-blank::before {
+[id^="editor-"].ql-container .ql-editor.ql-blank::before {
   color: var(--theme-placeholder);
   opacity: 1;
   font-style: italic;

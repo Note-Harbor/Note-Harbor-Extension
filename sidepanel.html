@@ -90,8 +90,8 @@
           <button id="resetSettings" class="topButton settingsButton">Reset All Settings</button>
         </div>
         <div class="settingsDiv">
-          <label class="settingsHeader">Download Notes</label>
-          <p class="settingsText">Download notes in preferred format.</p>
+          <label class="settingsHeader">Download Notes (Beta)</label>
+          <p class="settingsText">Download notes in JSON format.</p>
           <button id="downloadButton" class="topButton settingsButton" title="Download Notes">
             <!-- <i class="fas fa-download"></i> --> 
             Download Notes
@@ -132,6 +132,20 @@
         <div class="settingsDiv">
           <p class="settingsText">This will remove the folder from all notes.</p>
           <button id="confirmDeleteFolder" class="topButton settingsButton">Delete Folder</button>
+        </div>
+      </div>
+    </dialog>
+    <dialog id="downloadConfirmModal" class="settings-modal confirmModal">
+      <div class="modal-content">
+        <div class="settingsTop">
+          <p class="settingsHeader">Download notes?</p>
+          <button id="cancelDownloadNotes" class="close-btn closeButton"></button>
+        </div>
+        <div class="settingsDiv">
+          <p class="settingsText">This will download all your notes locally as a JSON file. </p>
+          <button id="confirmDownloadNotes" class="topButton settingsButton">
+            Download Notes
+          </button>
         </div>
       </div>
     </dialog>

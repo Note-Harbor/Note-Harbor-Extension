@@ -141,9 +141,10 @@ const settingsOption = document.getElementById("settingsOption");
 const sortOption = document.getElementById("sortOption");
 const websiteOption = document.getElementById("websiteOption");
 const sortByDate = document.getElementById("sortByDate");
-        const sortByFolder = document.getElementById("sortByFolder");
+const sortByFolder = document.getElementById("sortByFolder");
+const downloadButton = document.getElementById("downloadButton");
 
-// Comfirm menu items
+// Confirm menu items
 const deleteConfirmModal = document.getElementById("deleteConfirmModal");
 const confirmDeleteNotes = document.getElementById("confirmDeleteNotes");
 const cancelDeleteNotes = document.getElementById("cancelDeleteNotes");
@@ -152,8 +153,9 @@ const resetConfirmModal = document.getElementById("resetConfirmModal");
 const confirmResetNotes = document.getElementById("confirmResetNotes");
 const cancelResetNotes = document.getElementById("cancelResetNotes");
 
-// Download notes
-const downloadButton = document.getElementById("downloadButton");
+const downloadConfirmModal = document.getElementById("downloadConfirmModal");
+const confirmDownloadNotes = document.getElementById("confirmDownloadNotes");
+const cancelDownloadNotes = document.getElementById("cancelDownloadNotes");
 
 // Toggle settings menu on button click
 settingsButton.addEventListener("click", function() {
@@ -275,13 +277,13 @@ resetConfirmModal.addEventListener("click", function(event) {
     }
 });
 
-themeDropdown.addEventListener("change", evt => {
-    const selectedTheme = evt.target.value;
-    settings.theme = selectedTheme
-    saveSettings();
-});
+//download confirmation stuff
 
 downloadButton.addEventListener("click", () => {
+    downloadConfirmModal.showModal();
+});
+
+confirmDownloadNotes.addEventListener("click", () => {
     const folders = JSON.parse(localStorage.getItem("folders") || "[]");
     const data = {
         folders: folders,
@@ -290,7 +292,6 @@ downloadButton.addEventListener("click", () => {
     const blob = new Blob([JSON.stringify(data, null, 2)], {
         type: "application/json"
     });
-
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
@@ -299,7 +300,26 @@ downloadButton.addEventListener("click", () => {
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
+   downloadConfirmModal.close();
 });
+
+cancelDownloadNotes.addEventListener("click", () => {
+    downloadConfirmModal.close();
+});
+
+downloadConfirmModal.addEventListener("click", (event) => {
+    const modalContent = downloadConfirmModal.querySelector(".modal-content");
+    if (!modalContent.contains(event.target)) {
+        downloadConfirmModal.close();
+    }
+});
+
+themeDropdown.addEventListener("change", evt => {
+    const selectedTheme = evt.target.value;
+    settings.theme = selectedTheme
+    saveSettings();
+});
+
 
 /*
 sortDropdown.addEventListener("change", _ => {

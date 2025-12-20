@@ -13,7 +13,7 @@ Whenever You Need Them
 
 ## About
 
-A common pain point I experience during research is clutter. Whether it’s for my internship or my schoolwork, I always find myself jumping between a crapload of tabs. Our team designed Note Harbor to simplify situations like this. 
+A common pain point people experience during research is clutter. Whether it’s for schoolwork or professional projects, it's easy to find yourself jumping between a crapload of tabs. Our team designed Note Harbor to simplify situations like this. 
 
 Our extension pops out of the side of your browser whenever you need it. Store whatever text you find or whatever ideas you come up with — all saved privately on your own computer.
 

@@ -145,15 +145,42 @@ function addNoteHTML(title, content, folders, id, insertAfter = null) {
     deleteButton.className = "close-btn del";
     deleteButton.textContent = "";
     deleteButton.style.display = "none";
+
     deleteButton.addEventListener("click", function (event) {
         event.stopPropagation();
-        deleteNote(id);
-        note.remove();
-        customMenu.style.display = "none";
+        const modal = document.getElementById("deleteSingleNoteModal");
+        modal.showModal();
+        const cancelBtn = document.getElementById("cancelDeleteSingleNote");
+        const confirmBtn = document.getElementById("confirmDeleteSingleNote");
+        const cancelHandler = () => {
+            modal.close();
+            cleanup();
+        };
+        const confirmHandler = () => {
+            deleteNote(id);
+            note.remove();
+            modal.close();
+            cleanup();
 
-        // remove overlay
-        let ove = document.getElementsByClassName("overlay");
-        if (ove.length !== 0) document.body.removeChild(ove[0]);
+            customMenu.style.display = "none";
+
+            let ove = document.getElementsByClassName("overlay");
+            if (ove.length !== 0) document.body.removeChild(ove[0]);
+        };
+
+        cancelBtn.addEventListener("click", cancelHandler);
+        confirmBtn.addEventListener("click", confirmHandler);
+
+        function cleanup() {
+            cancelBtn.removeEventListener("click", cancelHandler);
+            confirmBtn.removeEventListener("click", confirmHandler);
+        }
+    });
+    deleteSingleNoteModal.addEventListener("click", (event) => {
+        const modalContent = deleteSingleNoteModal.querySelector(".modal-content");
+        if (!modalContent.contains(event.target)) {
+            deleteSingleNoteModal.close();
+        }
     });
     note.appendChild(deleteButton);
 

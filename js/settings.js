@@ -314,12 +314,12 @@ downloadConfirmModal.addEventListener("click", (event) => {
     }
 });
 
+// Change theme
 themeDropdown.addEventListener("change", evt => {
     const selectedTheme = evt.target.value;
     settings.theme = selectedTheme
     saveSettings();
 });
-
 
 /*
 sortDropdown.addEventListener("change", _ => {

@@ -1,0 +1,1 @@
+We respect your privacy by storing all data locally on your device. We do not send any of your data to external servers or third parties. You can delete or manage this data at any time within the extension. We also do not collect analytics or tracking data.

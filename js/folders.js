@@ -140,6 +140,18 @@ function insertFolder(folderName) {
                 setTimeout(() => warningOn = false, 3000);
             }
         }
+        folderInput.addEventListener("keydown", function(event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                //Guard from empty folder titles
+                if (folderInput.textContent.trim() === "") {
+                    folder.remove();
+                    updateVisible();
+                } else {
+                    folder.blurFolder();
+                }
+            }
+        });
     });
 
     const folderInput = document.createElement("div");
@@ -164,7 +176,6 @@ function insertFolder(folderName) {
         if (document.activeElement === folderInput) {
             return;
         }
-
         update();
 
         const currentNotes = Array.from(document.getElementsByClassName("note"));

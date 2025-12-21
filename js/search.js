@@ -1,23 +1,36 @@
 /**
+ * Extract text from delta before search computations
+ * @param {Object} delta
+ * @returns {string}
+ */
+function deltaToText(delta) {
+    if (!delta || !Array.isArray(delta.ops)) return "";
+    return delta.ops
+        .map(op => typeof op.insert === "string" ? op.insert : "")
+        .join("");
+}
+
+/**
  * Displays only the notes possessing a given folder
  * @param {string} folder 
  */
 function searchNotesByFolder(folder) {
     const noteElements = Array.from(document.getElementsByClassName("note"));
     const filteredNoteIDs = Object.entries(notes)
-                                .filter(([_, note]) => note.folders.join("\n").includes(folder)) // better than exact matching folder strings
-                              //.filter(([_, note]) => note.folders.includes(folder)) // alternative for exact folder matching
-                                .map(([id, _]) => id); // only give us the IDs
-    
+        .filter(([_, note]) => {
+            if (note.folders?.includes(folder)) return true;
+            const text = deltaToText(note.content);
+            return text.includes(folder);
+        })
+        .map(([id]) => String(id));
+
     noteElements.forEach(noteElement => {
-        if (filteredNoteIDs.includes(noteElement.id)) {
-            noteElement.style.display = "block";
-        } else {
-            noteElement.style.display = "none";
-        }
+        const noteId = noteElement.id.replace("note-", "");
+        noteElement.style.display = filteredNoteIDs.includes(noteId)
+            ? "block"
+            : "none";
     });
 }
-
 /**
  * Displays only the notes whose title contains a given search term
  * @param {string} title 
@@ -44,23 +57,20 @@ function searchNotesByTitle(title) {
 function searchNotesByText(searchTerm) {
     const noteElements = Array.from(document.getElementsByClassName("note"));
     const filteredNoteIDs = Object.entries(notes)
-                                .filter(([_, note]) => {
-                                    // newlines aren't allowed in the search bar, so replace newlines/tabs with spaces
-                                    // to make search terms a little more generous
-                                    const text = note.content.replaceAll("\r\n", " ").replaceAll("\n", " ").replaceAll("\t", " ");
-                                    return text.includes(searchTerm);
-                                })
-                                .map(([id, _]) => id); // only give us the IDs
-    
+        .filter(([_, note]) => {
+            const text = deltaToText(note.content)
+                .replace(/\r?\n|\t/g, " ");
+            return text.includes(searchTerm);
+        })
+        .map(([id]) => String(id));
+
     noteElements.forEach(noteElement => {
-        if (filteredNoteIDs.includes(noteElement.id)) {
-            noteElement.style.display = "block";
-        } else {
-            noteElement.style.display = "none";
-        }
+        const noteId = noteElement.id.replace("note-", "");
+        noteElement.style.display = filteredNoteIDs.includes(noteId)
+            ? "block"
+            : "none";
     });
 }
-
 
 /**
  * Decides which search mode to use for a given search term

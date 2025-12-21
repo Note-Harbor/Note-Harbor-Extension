@@ -177,7 +177,6 @@ function insertFolder(folderName) {
             return;
         }
         update();
-
         const currentNotes = Array.from(document.getElementsByClassName("note"));
         for (let i = 0; i < currentNotes.length; i++) {
             let currentNote = currentNotes[i];

@@ -34,6 +34,7 @@ function reloadNoteHTML() {
     Object.entries(notes).reverse().forEach(([id, {title, content, folders}]) => {
         addNoteHTML(title, content, folders, id);
     });
+
 }
 function deleteNote(id) {
     delete notes[id];

@@ -738,7 +738,7 @@ background-color: var(--theme-buttonHover);
   position: absolute;
   display: none;
   z-index: 1;
-  background-color: #ffffff; 
+  background-color: var(--theme-foreground); 
   color: #000000;
   border: 1px solid rgba(0, 0, 0, 0.2); 
   border-radius: 4px; 
@@ -756,7 +756,7 @@ background-color: var(--theme-buttonHover);
 }
 
 .custom-context-menu .menu-item:hover {
-  background-color: #f5f5f5;
+  background-color: var(--theme-submenuHover)
 }
 
 #settingsTitle {
@@ -779,6 +779,7 @@ background-color: var(--theme-buttonHover);
 /* Style for dropdown items */
 .menu-item {
   padding: 8px;
+  background: var(--theme-foreground);
   color: var(--theme-text);
   font-family: Arial, sans-serif; 
   font-size: 16px; 

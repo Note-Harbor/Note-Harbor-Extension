@@ -603,7 +603,7 @@ background-color: var(--theme-buttonHover);
   display: flex;     
   flex-direction: row;  
   flex-wrap: wrap;
-  gap: 4px;         
+  gap: 4px;    
 }
 
 #addFolderButton {
@@ -631,7 +631,7 @@ background-color: var(--theme-buttonHover);
 /* Wrapper for new folder */
 .new-folder {
   background-color: var(--theme-button);
-  color: var(--theme-placeholder);
+  color: var(--theme-buttonText);
   padding: 2px 8px;
   border-radius: 10px;
   align-items: center;
@@ -694,7 +694,7 @@ background-color: var(--theme-buttonHover);
 .folder-input:empty:before {
   content: "Add Folder Name...";
   background-color: transparent;
-  color: var(--theme-placeholder);
+  color: var(--theme-buttonText);
 }
 
 .del-folder {

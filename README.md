@@ -1,15 +1,8 @@
-<!-- markdownlint-disable-next-line -->
-<div align="center">
 
-  <!-- markdownlint-disable-next-line -->
-  # Note Harbor
+ # Note Harbor
 
 Sticky Notes for Chrome, 
 Whenever You Need Them
-
-<img src="img/note-harbor-demo-screenshot.png" alt="Note Harbor Demo" width="54%" height="25%">
-
-</div>
 
 ## About
 

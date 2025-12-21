@@ -7,10 +7,9 @@
   --theme-hover: #135473;
   --theme-click: #053D57;
   --theme-border: #053D57;
-  --theme-button: #006884; /* for use in certain buttons */
+  --theme-button: #006884;
   --theme-buttonText: #F2F1EF;
-  --theme-button: #006884; /* for use in certain buttons */
-  --theme-buttonText: #F2F1EF;
+  --theme-buttonHover: #00576B;
   --theme-format: #D9D9D9;
   --theme-formatText: #000000;
   --theme-formatHover: #C4C4C4;
@@ -157,13 +156,11 @@ pre {
   height: 25px;
   background-color: var(--theme-button);
   color: var(--theme-buttonText);
-  background-color: var(--theme-button);
-  color: var(--theme-buttonText);
   box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.3);
 }
 
 .del:hover {
-  background-color: var(--theme-hover);
+  background-color: var(--theme-buttonHover);
 }
 
 .del:active {
@@ -524,7 +521,7 @@ div[id^="format-"].bottom-bar {
 }
 
 .topButton:hover {
-  background-color: var(--theme-hover);
+  background-color: var(--theme-buttonHover);
   cursor: pointer;
 }
 
@@ -537,8 +534,6 @@ div[id^="format-"].bottom-bar {
 .closeButton {
   background-color: var(--theme-button);
   color: var(--theme-buttonText);
-  background-color: var(--theme-button);
-  color: var(--theme-buttonText);
   border: none;
   width: 30px;
   height: 30px;
@@ -547,7 +542,7 @@ div[id^="format-"].bottom-bar {
 
 .closeButton:hover {
   cursor: pointer;
-  background-color: var(--theme-hover);
+  background-color: var(--theme-buttonHover);
 }
 
 .closeButton:active {
@@ -566,7 +561,7 @@ div[id^="format-"].bottom-bar {
 }
 
 #add:hover {
-background-color: var(--theme-hover);
+background-color: var(--theme-buttonHover);
 }
 
 #add:active {
@@ -649,7 +644,7 @@ background-color: var(--theme-hover);
 }
 
 .new-folder:hover {
-  background-color: var(--theme-hover);
+  background-color: var(--theme-buttonHover);
 }
 
 .new-folder:active {
@@ -671,7 +666,7 @@ background-color: var(--theme-hover);
 }
 
 .folder:hover {
-  background-color: var(--theme-hover);
+  background-color: var(--theme-buttonHover);
   cursor: pointer;
 }
 .folder:active {

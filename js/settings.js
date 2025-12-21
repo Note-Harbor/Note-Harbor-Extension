@@ -66,6 +66,7 @@ function saveSettings() {
         des.setProperty("--theme-border",       themes[selectedTheme].border      || unimplementedColor);
         des.setProperty("--theme-button",       themes[selectedTheme].button      || unimplementedColor);
         des.setProperty("--theme-buttonText",   themes[selectedTheme].buttonText  || unimplementedColor);
+        des.setProperty("--theme-buttonHover",  themes[selectedTheme].buttonHover || unimplementedColor);
         des.setProperty("--theme-format",       themes[selectedTheme].format      || unimplementedColor);
         des.setProperty("--theme-formatText",   themes[selectedTheme].formatText  || unimplementedColor);
         des.setProperty("--theme-formatHover",  themes[selectedTheme].formatHover || unimplementedColor);
@@ -278,7 +279,6 @@ resetConfirmModal.addEventListener("click", function(event) {
 });
 
 //download confirmation stuff
-
 downloadButton.addEventListener("click", () => {
     downloadConfirmModal.showModal();
 });

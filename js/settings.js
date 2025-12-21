@@ -118,7 +118,7 @@ function sortNotesByFolder() {
     saveNotes();
 }
 
-function sortNotesByDate() {
+function sortNotesByOldest() {
     const notesArray = Object.entries(notes);
     notesArray.sort(([idA], [idB]) => idA - idB);
 
@@ -132,6 +132,22 @@ function sortNotesByDate() {
     saveNotes();
 }
 
+function sortNotesByNewest() {
+    const notesArray = Object.entries(notes);
+
+    notesArray.sort(([idA], [idB]) => idB - idA);
+
+    const sortedNotes = {};
+    notesArray.forEach(([id, text]) => {
+        sortedNotes[id] = text;
+    });
+
+    notes = sortedNotes;
+    reloadNoteHTML();
+    saveNotes();
+}
+
+
 // Get references to elements
 const settingsButton = document.getElementById("openSettings");
 const settingsMenu = document.getElementById("settingsMenu");
@@ -141,8 +157,9 @@ const sortMenu = document.getElementById("sortMenu");
 const settingsOption = document.getElementById("settingsOption");
 const sortOption = document.getElementById("sortOption");
 const websiteOption = document.getElementById("websiteOption");
-const sortByDate = document.getElementById("sortByDate");
-const sortByFolder = document.getElementById("sortByFolder");
+const sortByOldest = document.getElementById("sortByOldest");
+const sortByNewest= document.getElementById("sortByNewest");
+//const sortByFolder = document.getElementById("sortByFolder");
 const downloadButton = document.getElementById("downloadButton");
 
 // Confirm menu items
@@ -176,25 +193,31 @@ sortOption.addEventListener("mouseover", function(event) {
 });
 
 // Apply sorting when clicking an option
-sortByDate.addEventListener("click", function() {
-    settings.sortChoice = "date";
+sortByOldest.addEventListener("click", function() {
+    settings.sortChoice = "oldest";
     saveSettings();
-    sortNotesByDate();
+    sortNotesByOldest();
     sortMenu.style.display = "none";
 });
 
-sortByFolder.addEventListener("click", function() {
-    settings.sortChoice = "folder";
+sortByNewest.addEventListener("click", function() {
+    settings.sortChoice = "newest";
     saveSettings();
-    sortNotesByFolder();
+    sortNotesByNewest();
     sortMenu.style.display = "none";
 });
+
+//sortByFolder.addEventListener("click", function() {
+//    settings.sortChoice = "folder";
+//    saveSettings();
+//    sortNotesByFolder();
+//    sortMenu.style.display = "none";
+//;
 
 // Open GitHub when "Website" is clicked
-websiteOption.addEventListener("click", function() {
-    window.open("https://noteharbor.vercel.app/", "_blank");
-});
-
+//websiteOption.addEventListener("click", function() {
+//    window.open("https://noteharbor.vercel.app/", "_blank");
+//});
 
 document.addEventListener("click", function(event) {
     if (!settingsMenu.contains(event.target) && event.target !== settingsButton) {

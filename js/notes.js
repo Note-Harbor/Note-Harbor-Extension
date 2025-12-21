@@ -348,7 +348,6 @@ function addNoteHTML(title, content, folders, id, insertAfter = null) {
         container.prepend(note);
     }
 
-
     const noteQuill = new Quill(`#editor-${note.id}`, {
         theme: "snow",
         placeholder: "Write Here!",

@@ -214,10 +214,10 @@ sortByNewest.addEventListener("click", function() {
 //    sortMenu.style.display = "none";
 //;
 
-// Open GitHub when "Website" is clicked
-//websiteOption.addEventListener("click", function() {
-//    window.open("https://noteharbor.vercel.app/", "_blank");
-//});
+//Open homepage when "Website" is clicked
+websiteOption.addEventListener("click", function() {
+    window.open("https://noteharbor.vercel.app/", "_blank");
+});
 
 document.addEventListener("click", function(event) {
     if (!settingsMenu.contains(event.target) && event.target !== settingsButton) {

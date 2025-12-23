@@ -4,6 +4,8 @@
 Sticky Notes for Chrome, 
 Whenever You Need Them
 
+[We're on Chrome Web Store!!!](https://chromewebstore.google.com/detail/note-harbor/lphcgennjjaecdllfmkbfdemmdabcoel?authuser=0&hl=en)
+
 ## About
 
 A common pain point people experience during research is clutter. Whether it’s for schoolwork or professional projects, it's easy to find yourself jumping between a crapload of tabs. Our team designed Note Harbor to simplify situations like this. 

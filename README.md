@@ -8,7 +8,7 @@ Whenever You Need Them
 
 A common pain point people experience during research is clutter. Whether it’s for schoolwork or professional projects, it's easy to find yourself jumping between a crapload of tabs. Our team designed Note Harbor to simplify situations like this. 
 
-Our extension pops out of the side of your browser whenever you need it. Store whatever text you find or whatever ideas you come up with — all saved privately on your own computer.
+Our extension pops out of the side of your browser whenever you need it. Store whatever text you find or whatever ideas you come up with — all saved locally on your own computer.
 
 Also, [we're on Chrome Web Store!!!](https://chromewebstore.google.com/detail/note-harbor/lphcgennjjaecdllfmkbfdemmdabcoel?authuser=0&hl=en)
 

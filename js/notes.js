@@ -271,21 +271,26 @@ function addNoteHTML(title, content, folders, id, insertAfter = null) {
     noteTitle.className = "note-title title";
 
     if (notes[id].url) {
-        const link = document.createElement("a");
-        link.href = notes[id].url;
-        link.target = "_blank";
-        link.rel = "noopener noreferrer";
-        link.textContent = title;
+    const link = document.createElement("a");
 
-        link.addEventListener("click", (event) => {
-            const ok = confirm(`Open Link?\n\n${notes[id].url}`);
-            if (!ok) {
-                event.preventDefault();
-            }
-        });
-        noteTitle.appendChild(link);
+    link.href = "#";
+    link.target = "";
+    link.rel = "noopener noreferrer";
+    link.textContent = title;
+
+    link.addEventListener("click", (event) => {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+
+        const ok = confirm(`Open Link?\n\n${notes[id].url}`);
+        if (ok) {
+        window.open(notes[id].url, "_blank", "noopener,noreferrer");
+        }
+    });
+
+    noteTitle.appendChild(link);
     } else {
-        noteTitle.textContent = title;
+    noteTitle.textContent = title;
     }
 
     // Stop users from creating newline characters

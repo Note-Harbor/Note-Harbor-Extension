@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Note Harbor",
   "description": "Note-taking Chrome extension that lets you compose stickies wherever you are on the browser.",
-  "version": "0.5",
+  "version": "0.5.1",
   "background": {
     "service_worker": "background.js"
   },

@@ -271,22 +271,22 @@ function addNoteHTML(title, content, folders, id, insertAfter = null) {
     noteTitle.className = "note-title title";
 
     if (notes[id].url) {
-    const link = document.createElement("a");
+        const link = document.createElement("a");
 
-    link.href = "#";
-    link.target = "";
-    link.rel = "noopener noreferrer";
-    link.textContent = title;
+        link.href = "#";
+        link.target = "";
+        link.rel = "noopener noreferrer";
+        link.textContent = title;
 
-    link.addEventListener("click", (event) => {
-        event.preventDefault();
-        event.stopImmediatePropagation();
+        link.addEventListener("click", (event) => {
+            event.preventDefault();
+            event.stopImmediatePropagation();
 
-        const ok = confirm(`Open Link?\n\n${notes[id].url}`);
-        if (ok) {
-        window.open(notes[id].url, "_blank", "noopener,noreferrer");
-        }
-    });
+            const ok = confirm(`Open Link?\n\n${notes[id].url}`);
+            if (ok) {
+            window.open(notes[id].url, "_blank", "noopener,noreferrer");
+            }
+        });
 
     noteTitle.appendChild(link);
     } else {
